@@ -6,7 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Vendor extends Person {
 
@@ -19,6 +26,5 @@ public class Vendor extends Person {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "toVendor")
     private List<Evaluation> evaluations;
-
 
 }
