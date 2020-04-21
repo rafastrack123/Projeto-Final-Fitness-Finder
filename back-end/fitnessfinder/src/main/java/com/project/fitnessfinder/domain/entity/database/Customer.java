@@ -11,14 +11,15 @@ import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
-public class Customer {
+public class Customer extends Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

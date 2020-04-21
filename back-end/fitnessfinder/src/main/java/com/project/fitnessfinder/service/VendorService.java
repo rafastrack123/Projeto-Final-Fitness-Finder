@@ -1,7 +1,6 @@
 package com.project.fitnessfinder.service;
 
 import com.project.fitnessfinder.converter.VendorConverter;
-import com.project.fitnessfinder.domain.entity.api.CustomerJson;
 import com.project.fitnessfinder.domain.entity.api.VendorJson;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.exception.EntityNotFound;

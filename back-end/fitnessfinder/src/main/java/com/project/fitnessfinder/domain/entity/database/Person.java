@@ -1,6 +1,7 @@
 package com.project.fitnessfinder.domain.entity.database;
 
 import java.util.Date;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,17 +20,17 @@ public abstract class Person {
 
     private String firstName;
     private String lastName;
-    private String email;
     private Date birthDay;
-    private String cellphone;
-    private String linkToFacebook;
 
-    private String address;
-    private Long latitude;
-    private Long longitude;
+    @Embedded
+    private ContactInfo contactInfo;
+
+    @Embedded
+    private Address address;
 
     @CreatedDate
     private Date creationDate;
+
     @LastModifiedDate
     private Date updateDate;
 }

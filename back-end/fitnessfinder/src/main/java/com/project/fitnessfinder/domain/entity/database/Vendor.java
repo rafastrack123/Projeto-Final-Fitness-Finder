@@ -6,14 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
 public class Vendor extends Person {
 
