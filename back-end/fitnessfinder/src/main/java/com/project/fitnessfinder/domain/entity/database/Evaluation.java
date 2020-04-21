@@ -1,5 +1,6 @@
 package com.project.fitnessfinder.domain.entity.database;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 @Data
 @NoArgsConstructor
@@ -44,4 +46,6 @@ public class Evaluation {
     @JoinColumn(name = "vendor_id")
     private Vendor toVendor;
 
+    @CreatedDate
+    private Date leadCreationDate;
 }

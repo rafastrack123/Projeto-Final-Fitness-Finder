@@ -36,12 +36,6 @@ public class VendorOffer {
     private Vendor vendor;
 
     @ManyToOne
-    private ServiceArea serviceArea;
-
-    @ManyToOne
-    private ServiceGroup serviceGroup;
-
-    @ManyToOne
     private ServiceDetail serviceDetail;
 
     @OneToMany(mappedBy = "vendorOffer")

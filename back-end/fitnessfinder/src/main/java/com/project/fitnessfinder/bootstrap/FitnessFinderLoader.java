@@ -9,6 +9,7 @@ import com.project.fitnessfinder.domain.entity.database.ServiceArea;
 import com.project.fitnessfinder.domain.entity.database.ServiceDetail;
 import com.project.fitnessfinder.domain.entity.database.ServiceGroup;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
+import com.project.fitnessfinder.domain.entity.database.VendorOffer;
 import com.project.fitnessfinder.repository.AvailableScheduleRepository;
 import com.project.fitnessfinder.repository.CustomerRepository;
 import com.project.fitnessfinder.repository.EvaluationRepository;
@@ -22,6 +23,7 @@ import com.project.fitnessfinder.repository.VendorRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -79,14 +81,21 @@ public class FitnessFinderLoader implements CommandLineRunner {
         vendor.setContactInfo(buildContactInfo());
         vendor.setAddress(buildAddress());
 
-
         vendor = vendorRepository.save(vendor);
+
+        var vendorOffer = VendorOffer.builder()
+                .vendor(vendor)
+                .serviceDetail(details.get(0))
+                .build();
+
+        vendorOffer = vendorOfferRepository.save(vendorOffer);
 
         var lead = Lead.builder()
                 .customer(customer)
                 .vendor(vendor)
                 .strongLead(true)
                 .build();
+
 
         lead = leadRepository.save(lead);
 
@@ -153,7 +162,7 @@ public class FitnessFinderLoader implements CommandLineRunner {
         details.add(buildServiceDetails("Kickboxing", fightingGroup));
         details.add(buildServiceDetails("MMA", fightingGroup));
 
-        details.add(buildServiceDetails("Acadêmia", exerciseGroup));
+        details.add(buildServiceDetails("Musculação", exerciseGroup));
         details.add(buildServiceDetails("Spinning", exerciseGroup));
         details.add(buildServiceDetails("Crossfit", exerciseGroup));
         details.add(buildServiceDetails("Funcional", exerciseGroup));

@@ -1,5 +1,6 @@
 package com.project.fitnessfinder.domain.entity.database;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +30,7 @@ public class Lead {
 
     @ManyToOne
     private Vendor vendor;
+
+    @LastModifiedDate
+    private Date updateDate;
 }
