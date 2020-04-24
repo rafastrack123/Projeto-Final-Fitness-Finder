@@ -1,6 +1,6 @@
 package com.project.fitnessfinder.service;
 
-import com.project.fitnessfinder.converter.CustomerConverter;
+import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.CustomerJson;
 import com.project.fitnessfinder.domain.entity.database.Customer;
 import com.project.fitnessfinder.exception.EntityNotFound;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final CustomerConverter converter;
+    private final Converter converter;
 
     public Customer get(Long id) {
         return this.customerRepository.findById(id)

@@ -1,6 +1,6 @@
 package com.project.fitnessfinder.service;
 
-import com.project.fitnessfinder.converter.VendorConverter;
+import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.VendorJson;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.exception.EntityNotFound;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class VendorService {
 
     private final VendorRepository vendorRepository;
-    private final VendorConverter converter;
+    private final Converter converter;
 
     public Vendor get(Long id) {
         return this.vendorRepository.findById(id)

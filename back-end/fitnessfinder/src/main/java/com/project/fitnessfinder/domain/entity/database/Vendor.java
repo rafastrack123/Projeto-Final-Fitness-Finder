@@ -20,10 +20,10 @@ public class Vendor extends Person {
     @Column(length = 400)
     private String resume;
 
-    @OneToMany(mappedBy = "vendor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor")
     private List<VendorOffer> vendorOffers;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "toVendor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "toVendor")
     private List<Evaluation> evaluations;
 
 }

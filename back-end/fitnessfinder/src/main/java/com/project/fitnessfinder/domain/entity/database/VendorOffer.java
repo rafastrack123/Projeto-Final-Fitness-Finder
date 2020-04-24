@@ -32,6 +32,8 @@ public class VendorOffer {
 
     private boolean firstClassFree;
 
+    private String serviceDescription;
+
     @ManyToOne
     private Vendor vendor;
 

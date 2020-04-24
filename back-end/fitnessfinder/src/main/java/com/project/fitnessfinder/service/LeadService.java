@@ -1,6 +1,6 @@
 package com.project.fitnessfinder.service;
 
-import com.project.fitnessfinder.converter.LeadConverter;
+import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.LeadJson;
 import com.project.fitnessfinder.domain.entity.database.Customer;
 import com.project.fitnessfinder.domain.entity.database.Lead;
@@ -17,7 +17,7 @@ public class LeadService {
     private final LeadRepository leadRepository;
     private final CustomerService customerService;
     private final VendorService vendorService;
-    private final LeadConverter converter;
+    private final Converter converter;
 
 
     public void createLead(Long vendorId, Long customerId, boolean isStrongLead) {

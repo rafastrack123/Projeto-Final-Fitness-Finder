@@ -9,8 +9,11 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class CustomerJson {
+public class ServiceDetailJson {
 
     public Long id;
 
+    public String name;
+
+    public String detailDescription;
 }
