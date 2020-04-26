@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class ContactJson {
+public class ContactInfoJson {
 
     public String email;
     public String cellphone;

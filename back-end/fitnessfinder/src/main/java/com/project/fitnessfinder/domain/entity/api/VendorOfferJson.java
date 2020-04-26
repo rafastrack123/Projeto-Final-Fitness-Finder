@@ -14,19 +14,25 @@ public class VendorOfferJson {
 
     public Long id;
 
-    public BigDecimal price;
+    public boolean firstClassFree;
 
     public boolean isHomeService;
 
-    public boolean firstClassFree;
+    public BigDecimal price;
 
-    public String vendorName;
+    public String serviceDescription;
+
+    public String vendorFirstName;
+
+    public String vendorLastName;
 
     public String areaName;
 
     public String groupName;
 
     public String detailName;
+
+    public Double distance;
 
 
 }

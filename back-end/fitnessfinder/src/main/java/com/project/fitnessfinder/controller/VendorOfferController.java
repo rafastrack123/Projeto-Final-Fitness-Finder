@@ -18,26 +18,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class VendorOfferController {
 
     private final VendorOfferService vendorOfferService;
-    private final ServiceAreaService ServiceAreaService;
+    private final ServiceAreaService serviceAreaService;
 
 
     @GetMapping
-    public SearchVendorOfferResponse searchVendorOffers(@RequestParam Long serviceAreaId,
+    public SearchVendorOfferResponse searchVendorOffers(@RequestParam Long customerId,
+                                                        @RequestParam Long serviceAreaId,
                                                         @RequestParam(required = false) Long serviceGroupId,
                                                         @RequestParam(required = false) Long serviceDetailId,
+                                                        @RequestParam(required = false) String vendorFirstName,
+                                                        @RequestParam(required = false) String vendorLastName,
                                                         @RequestParam(required = false) BigDecimal maxPrice,
-                                                        @RequestParam(required = false) String vendorName,
-                                                        @RequestParam(required = false) boolean isHomeService,
-                                                        @RequestParam(required = false) boolean firstClassFree) {
+                                                        @RequestParam(required = false) Boolean isHomeService,
+                                                        @RequestParam(required = false) Boolean isFirstClassFree,
+                                                        @RequestParam(required = false) Long maxDistanceInKm) {
 
 
-        var serviceArea = ServiceAreaService.getById(serviceAreaId);
+        var serviceArea = serviceAreaService.getById(serviceAreaId);
 
-        var vendorOffersJsonList = vendorOfferService.searchVendorOffers(serviceAreaId, serviceGroupId, serviceDetailId,
-                maxPrice, vendorName, isHomeService, firstClassFree);
+        var vendorOffersJsonList = vendorOfferService.searchVendorOffers(customerId, serviceAreaId, serviceGroupId,
+                serviceDetailId, vendorFirstName, vendorLastName, maxPrice, isHomeService, isFirstClassFree, maxDistanceInKm);
 
-
-        return buildResponse("Name", vendorOffersJsonList);
+        return buildResponse(serviceArea.getName(), vendorOffersJsonList);
 
     }
 

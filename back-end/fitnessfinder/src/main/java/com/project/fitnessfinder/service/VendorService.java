@@ -31,21 +31,25 @@ public class VendorService {
         return converter.convert(vendor);
     }
 
-    public VendorJson update(Long id, VendorJson vendorJson) {
-        var vendorToUpdate = get(id);
-
-        var consumer = converter.convertSaved(vendorToUpdate.getId(), vendorJson);
-        vendorRepository.save(consumer);
-
-        return vendorJson;
-    }
-
     public VendorJson save(VendorJson vendorJson) {
-        var vendor = converter.convert(vendorJson);
 
-        var saved = vendorRepository.save(vendor);
+        var vendor = converter.convertSaved(new Vendor(), vendorJson);
 
-        vendorJson.setId(saved.getId());
+        vendor = vendorRepository.save(vendor);
+
+        vendorJson.id = vendor.getId();
+
         return vendorJson;
     }
+
+    public VendorJson update(Long id, VendorJson updatedVendorJson) {
+        var oldVendor = get(id);
+
+        var vendor = converter.convertSaved(oldVendor, updatedVendorJson);
+
+        vendorRepository.save(vendor);
+
+        return updatedVendorJson;
+    }
+
 }

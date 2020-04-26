@@ -3,10 +3,10 @@ package com.project.fitnessfinder.service;
 import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.VendorOfferJson;
 import com.project.fitnessfinder.domain.entity.database.VendorOffer;
+import com.project.fitnessfinder.exception.EntityNotFound;
 import com.project.fitnessfinder.repository.VendorOfferRepository;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,28 +14,38 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VendorOfferService {
 
+    private final CustomerService customerService;
     private final VendorOfferRepository vendorOfferRepository;
     private final Converter converter;
 
 
-    public List<VendorOfferJson> searchVendorOffers(Long serviceAreaId,
+    public List<VendorOfferJson> searchVendorOffers(Long customerId,
+                                                    Long serviceAreaId,
                                                     Long serviceGroupId,
                                                     Long serviceDetailId,
+                                                    String vendorFistName,
+                                                    String vendorLastName,
                                                     BigDecimal maxPrice,
-                                                    String vendorName,
-                                                    boolean isHomeService,
-                                                    boolean firstClassFree) {
+                                                    Boolean isHomeService,
+                                                    Boolean firstClassFree,
+                                                    Long maxDistance) {
 
-        var vendorOffers = vendorOfferRepository.searchVendorOffersByFilter(serviceAreaId,
+        var customer = customerService.get(customerId);
+
+        return vendorOfferRepository.searchVendorOffersByFilters(serviceAreaId,
                 serviceGroupId,
                 serviceDetailId,
+                vendorFistName,
+                vendorLastName,
                 maxPrice,
-                vendorName,
                 isHomeService,
-                firstClassFree);
+                firstClassFree,
+                maxDistance,
+                customer.getAddress());
+    }
 
-        return vendorOffers.stream().map( converter::convert).collect(Collectors.toList());
-
-
+    public VendorOffer get(Long id) {
+        return vendorOfferRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFound("Vendor Offer", id));
     }
 }
