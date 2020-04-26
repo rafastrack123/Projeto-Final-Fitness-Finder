@@ -25,13 +25,13 @@ public class LeadController {
         return leadService.getAllVendorLeads(vendorId);
     }
 
-    @PostMapping("/{vendorId}/{customerId}")
+    @PostMapping("/{vendorOfferId}/{customerId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void generateLead(@PathVariable Long vendorId,
+    public void generateLead(@PathVariable Long vendorOfferId,
                              @PathVariable Long customerId,
-                             @RequestParam(value = "isStrongLead", defaultValue = "false") boolean isStrongLead) {
+                             @RequestParam(value = "isStrongLead") boolean isStrongLead) {
 
-        leadService.createLead(vendorId, customerId, isStrongLead);
+        leadService.createLead(vendorOfferId, customerId, isStrongLead);
     }
 
 

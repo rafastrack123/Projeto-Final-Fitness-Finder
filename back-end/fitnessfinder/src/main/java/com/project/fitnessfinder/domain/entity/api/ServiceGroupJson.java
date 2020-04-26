@@ -9,9 +9,9 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class ContactJson {
+public class ServiceGroupJson {
 
-    public String email;
-    public String cellphone;
-    public String linkToFacebook;
+    public Long id;
+
+    public String name;
 }

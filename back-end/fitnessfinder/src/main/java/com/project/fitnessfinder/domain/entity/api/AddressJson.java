@@ -11,4 +11,7 @@ import lombok.Data;
 @JsonInclude(NON_NULL)
 public class AddressJson {
 
+    public String fullAddress;
+    public Double latitude;
+    public Double longitude;
 }

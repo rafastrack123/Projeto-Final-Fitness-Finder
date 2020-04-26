@@ -21,7 +21,9 @@ import com.project.fitnessfinder.repository.ServiceGroupRepository;
 import com.project.fitnessfinder.repository.VendorOfferRepository;
 import com.project.fitnessfinder.repository.VendorRepository;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.boot.CommandLineRunner;
@@ -44,7 +46,6 @@ public class FitnessFinderLoader implements CommandLineRunner {
     private final VendorOfferRepository vendorOfferRepository;
     private final VendorRepository vendorRepository;
 
-    //attributes
     @Override
     public void run(String... args) {
 
@@ -56,49 +57,41 @@ public class FitnessFinderLoader implements CommandLineRunner {
     }
 
     private void loadData() {
+        var random = new Random();// To get Random element of list
+
         var objectives = buildObjectives();
         var details = buildServiceDetails();
 
 
-        var customer = new Customer();
+        var randomObjectiveOne = objectives.get(random.nextInt(objectives.size()));
+        var customerLebron = buildCustomer("Lebron", "James", randomObjectiveOne);
 
-        customer.setFirstName("Ronaldo");
-        customer.setLastName("Fenomeno");
+        var randomObjetiveTwo = objectives.get(random.nextInt(objectives.size()));
+        var customerRonaldo = buildCustomer("Ronaldo", "Fenomeno", randomObjetiveTwo);
 
-        customer.setContactInfo(buildContactInfo());
-        customer.setAddress(buildAddress());
-
-        customer.setObjective(objectives.get(0));
-
-        customer = customerRepository.save(customer);
+        var randomObjetiveThree = objectives.get(random.nextInt(objectives.size()));
+        var customerObama = buildCustomer("Barrack", "Obama", randomObjetiveThree);
 
 
-        var vendor = new Vendor();
+        var vendorBrady = buildVendor("Tom", "Brady");
 
-        vendor.setFirstName("Ronaldo");
-        vendor.setLastName("Fenomeno");
+        var vendorSnow = buildVendor("John", "Snow");
 
-        vendor.setContactInfo(buildContactInfo());
-        vendor.setAddress(buildAddress());
-
-        vendor = vendorRepository.save(vendor);
-
-        var vendorOffer = VendorOffer.builder()
-                .vendor(vendor)
-                .serviceDetail(details.get(0))
-                .build();
-
-        vendorOffer = vendorOfferRepository.save(vendorOffer);
-
-        var lead = Lead.builder()
-                .customer(customer)
-                .vendor(vendor)
-                .strongLead(true)
-                .build();
+        var vendorWhite = buildVendor("Walter", "White");
 
 
-        lead = leadRepository.save(lead);
+        var vendorOfferBrady = buildVendorOffer(vendorBrady, details.get(random.nextInt(details.size())));
+        var vendorOfferBradyTwo = buildVendorOffer(vendorBrady, details.get(random.nextInt(details.size())));
 
+        var vendorOfferSnow = buildVendorOffer(vendorSnow, details.get(random.nextInt(details.size())));
+        var vendorOfferTwo = buildVendorOffer(vendorSnow, details.get(random.nextInt(details.size())));
+
+        var vendorOfferWhite = buildVendorOffer(vendorWhite, details.get(random.nextInt(details.size())));
+        var vendorOfferWhiteTwo = buildVendorOffer(vendorWhite, details.get(random.nextInt(details.size())));
+
+        var strongLead = buildLead(customerLebron, vendorOfferBrady, true);
+
+        var weakLead = buildLead(customerRonaldo, vendorOfferTwo, false);
     }
 
     private List<Objective> buildObjectives() {
@@ -207,26 +200,84 @@ public class FitnessFinderLoader implements CommandLineRunner {
 
     }
 
+    private Customer buildCustomer(String firstName, String lastName, Objective objective) {
+        var customer = new Customer();
+
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+
+        customer.setContactInfo(buildContactInfo());
+        customer.setAddress(buildAddressCustomer());
+
+        customer.setObjective(objective);
+
+        return customerRepository.save(customer);
+    }
+
+    private Vendor buildVendor(String firstname, String lastName) {
+        var vendor = new Vendor();
+
+        vendor.setFirstName(firstname);
+        vendor.setLastName(lastName);
+
+        vendor.setContactInfo(buildContactInfo());
+        vendor.setAddress(buildAddressVendor());
+
+        return vendorRepository.save(vendor);
+    }
+
 
     private ContactInfo buildContactInfo() {
         var contact = new ContactInfo();
 
         contact.setEmail("teste@hotmail.com");
         contact.setCellphone("51992465588");
-        contact.setLinkToFacebook("facebook.com/Customer");
+
 
         return contact;
     }
 
-    private Address buildAddress() {
+    private Address buildAddressCustomer() {
         var address = new Address();
 
         address.setFullAddress("Rua Piauí 40");
-        address.setLatitude(99L);
-        address.setLongitude(99L);
+        address.setLatitude(-30.0077714);
+        address.setLongitude(-51.1769566);
 
         return address;
+    }
 
+    private Address buildAddressVendor() {
+        var address = new Address();
+
+        address.setFullAddress("Estádio Beira-Rio");
+        address.setLatitude(-30.0654331);
+        address.setLongitude(-51.235908);
+
+        return address;
+    }
+
+    private VendorOffer buildVendorOffer(Vendor vendor, ServiceDetail detail) {
+
+        var vendorOffer = VendorOffer.builder()
+                .vendor(vendor)
+                .serviceDetail(detail)
+                .build();
+
+        return vendorOfferRepository.save(vendorOffer);
+
+    }
+
+    private Lead buildLead(Customer customer, VendorOffer vendorOffer, boolean isStrongLead) {
+
+        var lead = Lead.builder()
+                .customer(customer)
+                .vendorOffer(vendorOffer)
+                .isStrongLead(isStrongLead)
+                .updateDate(new Date())
+                .build();
+
+        return leadRepository.save(lead);
     }
 
 }

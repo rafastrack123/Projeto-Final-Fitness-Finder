@@ -20,7 +20,6 @@ public abstract class Person {
 
     private String firstName;
     private String lastName;
-    private Date birthDay;
 
     private String username;
     private String password;

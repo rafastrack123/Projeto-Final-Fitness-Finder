@@ -23,8 +23,6 @@ public class ServiceDetail {
 
     private String name;
 
-    private String serviceDescription;
-
     @ManyToOne
     private ServiceGroup serviceGroup;
 

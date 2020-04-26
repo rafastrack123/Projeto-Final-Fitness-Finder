@@ -1,6 +1,6 @@
 package com.project.fitnessfinder.service;
 
-import com.project.fitnessfinder.converter.CustomerConverter;
+import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.CustomerJson;
 import com.project.fitnessfinder.domain.entity.database.Customer;
 import com.project.fitnessfinder.exception.EntityNotFound;
@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomerService {
 
+    private final ObjectiveService objectiveService;
     private final CustomerRepository customerRepository;
-    private final CustomerConverter converter;
+    private final Converter converter;
+
 
     public Customer get(Long id) {
-        return this.customerRepository.findById(id)
+        return this.findById(id)
                 .orElseThrow(() -> new EntityNotFound("customer", id));
 
     }
@@ -27,25 +29,47 @@ public class CustomerService {
         return converter.convert(customer);
     }
 
-    public Optional<Customer> find(Long id) {
+    public Optional<Customer> findById(Long id) {
         return this.customerRepository.findById(id);
     }
 
     public CustomerJson update(Long id, CustomerJson customerJson) {
-        var customerToUpdate = get(id);
+        var customer = get(id);
 
-        var consumer = converter.convertSaved(customerToUpdate.getId(), customerJson);
-        customerRepository.save(consumer);
+        customer = converter.convert(customer, customerJson);
+
+        this.updateObjective(customer, customerJson);
+
+        customerRepository.save(customer);
 
         return customerJson;
     }
 
     public CustomerJson save(CustomerJson customerJson) {
-        var customer = converter.convert(customerJson);
+        var customer = converter.convert(new Customer(), customerJson);
 
-        var saved = customerRepository.save(customer);
+        this.updateObjective(customer, customerJson);
 
-        customerJson.setId(saved.getId());
+        customer = customerRepository.save(customer);
+
+        customerJson.setId(customer.getId());
         return customerJson;
+    }
+
+    private void updateObjective(Customer customer, CustomerJson customerJson) {
+
+        if (shouldUpdateObjective(customer, customerJson)) {
+
+            var newObject = objectiveService.getObjectById(customerJson.objective.id);
+
+            customer.setObjective(newObject);
+
+        }
+
+    }
+
+    private boolean shouldUpdateObjective(Customer customer, CustomerJson customerJson) {
+        return customer.getObjective() == null
+                || !customer.getObjective().getId().equals(customerJson.objective.id);
     }
 }
