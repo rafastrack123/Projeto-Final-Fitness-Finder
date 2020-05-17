@@ -4,15 +4,15 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.project.fitnessfinder.domain.entity.enums.UserType;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
+@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class ObjectiveJson {
+@Data
+public class AuthenticatedUser {
 
-    public Long id;
-
-    public String name;
+    public UserType userType;
 }

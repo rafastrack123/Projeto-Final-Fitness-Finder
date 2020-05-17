@@ -10,9 +10,10 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class ObjectiveJson {
+@Builder
+public class UserLoginJson {
 
-    public Long id;
+    public String username;
+    public String password;
 
-    public String name;
 }

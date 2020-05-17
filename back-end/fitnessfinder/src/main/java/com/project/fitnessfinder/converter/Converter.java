@@ -223,5 +223,10 @@ public class Converter {
         return address;
     }
 
-
+//    public ObjectiveJson convert(Objective objective){
+//        return ObjectiveJson.builder()
+//                .id(objective.getId())
+//                .name(objective.getName())
+//                .build();
+//    }
 }
