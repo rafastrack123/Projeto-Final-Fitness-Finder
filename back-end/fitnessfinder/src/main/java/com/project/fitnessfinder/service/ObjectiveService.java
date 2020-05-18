@@ -19,12 +19,11 @@ public class ObjectiveService {
 
 
     public List<ObjectiveJson> findAll() {
-        var x= objectiveRepository.findAll()
+        return objectiveRepository.findAll()
                 .stream()
                 .map(converter::convert)
                 .collect(Collectors.toList());
 
-        return x;
     }
 
     public Objective getObjectById(Long id) {
