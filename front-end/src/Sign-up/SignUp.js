@@ -2,39 +2,40 @@ import React, { Component } from 'react';
 import './SignUp.css';
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
-import { throwStatement, tsObjectKeyword } from '@babel/types';
 
 class SignUp extends Component {
 
     state = {
         objectives: [],
-        selectedObjective: ""
+        selectedObjective: "",
+        userType: "Customer"
     }
 
     componentDidMount() {
         this.fetchObjectives();
     }
 
+
     fetchObjectives = () => {
         axios.get('http://localhost:8080/objective/findAll')
             .then(response => {
-                console.log("objective:");
-                console.log(response.data[2]);
-                this.setState({ selectedObjective: response.data[2]});
+                this.setState({ selectedObjective: response.data[0].id });
                 this.setState({ objectives: response.data });
             });
     }
 
     selectObjective = (event) => {
-        //var objective = this.objectives.find(obj => obj.id === objectiveId);
-        console.log("O baita");
-        console.log( event.target.value);
-       this.setState({ selectedObjective: event.target.value });
+        this.setState({ selectedObjective: event.target.value });
+    }
+
+    selectUserType = (event) => {
+        this.setState({ userType: event.target.value });
     }
 
     signUp = () => {
         console.log("signUp:");
         console.log(this.state.selectedObjective);
+        console.log(this.state.userType);
     }
 
     render() {
@@ -46,9 +47,11 @@ class SignUp extends Component {
 
                     <Form.Group>
                         <Form.Label>Modalidade</Form.Label>
-                        <Form.Control as="select">
-                            <option>Cliente</option>
-                            <option>Fornecedor</option>
+                        <Form.Control as="select"
+                            onChange={this.selectUserType}
+                            value={this.state.userType} >
+                            <option value="Customer">Cliente</option>
+                            <option value="Vendor">Fornecedor</option>
 
                         </Form.Control>
                     </Form.Group>
@@ -83,7 +86,8 @@ class SignUp extends Component {
                         <input type="text" className="form-control" placeholder="Endereço" />
                     </div>
 
-                    <Form.Group>
+                    {this.state.userType === "Customer"?
+                        <Form.Group>
                         <Form.Label>Objetivo</Form.Label>
                         <Form.Control as="select" onChange={this.selectObjective} value={this.state.selectedObjective}>
                             {this.state.objectives.map(objective => (
@@ -92,7 +96,8 @@ class SignUp extends Component {
                                 </option>
                             ))}
                         </Form.Control>
-                    </Form.Group>
+                    </Form.Group> : null
+                    }
 
 
                     <button type="button" href="#" className="btn btn-primary btn-block"
