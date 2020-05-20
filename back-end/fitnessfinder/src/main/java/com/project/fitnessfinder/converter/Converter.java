@@ -123,30 +123,24 @@ public class Converter {
     }
 
     public ServiceAreaJson convert(ServiceArea serviceArea) {
-        var json = new ServiceAreaJson();
-
-        json.id = serviceArea.getId();
-        json.name = serviceArea.getName();
-
-        return json;
+        return ServiceAreaJson.builder()
+                .id(serviceArea.getId())
+                .name(serviceArea.getName())
+                .build();
     }
 
     public ServiceGroupJson convert(ServiceGroup serviceGroup) {
-        var json = new ServiceGroupJson();
-
-        json.id = serviceGroup.getId();
-        json.name = serviceGroup.getName();
-
-        return json;
+        return ServiceGroupJson.builder()
+                .id(serviceGroup.getId())
+                .name(serviceGroup.getName())
+                .build();
     }
 
     public ServiceDetailJson convert(ServiceDetail serviceDetail) {
-        var json = new ServiceDetailJson();
-
-        json.id = serviceDetail.getId();
-        json.name = serviceDetail.getName();
-
-        return json;
+        return ServiceDetailJson.builder()
+                .id(serviceDetail.getId())
+                .name(serviceDetail.getName())
+                .build();
     }
 
     public VendorJson convert(Vendor vendor) {
@@ -223,10 +217,4 @@ public class Converter {
         return address;
     }
 
-//    public ObjectiveJson convert(Objective objective){
-//        return ObjectiveJson.builder()
-//                .id(objective.getId())
-//                .name(objective.getName())
-//                .build();
-//    }
 }

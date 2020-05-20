@@ -4,7 +4,6 @@ import com.project.fitnessfinder.domain.entity.api.ObjectiveJson;
 import com.project.fitnessfinder.service.ObjectiveService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

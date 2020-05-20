@@ -4,10 +4,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.project.fitnessfinder.domain.entity.database.Address;
-import com.project.fitnessfinder.domain.entity.database.ContactInfo;
-import java.util.Date;
-import javax.persistence.Embedded;
 import lombok.Data;
 
 @Data

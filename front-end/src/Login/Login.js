@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import './Login.css';
 import axios from 'axios';
+import { Button, Spinner } from 'react-bootstrap';
+
 
 class Login extends Component {
 
     state = {
         login: "",
-        password: ""
+        password: "",
+        loading: false
     }
 
     loginChangeHandle = (event) => {
@@ -19,14 +22,22 @@ class Login extends Component {
 
     authenticate = () => {
 
+        this.setState({ loading: true })
+
         var userLogin = {
             username: this.state.login,
             password: this.state.password
         }
 
         axios.post('http://localhost:8080/login', userLogin)
-            .then(response => console.log(response.data))
-            .catch(response => console.log("ERRO!"));
+            .then(response => {
+                console.log(response.data);
+                this.setState({ loading: false })
+            })
+            .catch(response => {
+                console.log("ERRO!");
+                this.setState({ loading: false })
+            });
     }
 
     render() {
@@ -60,7 +71,21 @@ class Login extends Component {
             </div>
         </div> */}
 
-                <button type="button" className="btn btn-primary btn-block" onClick={this.authenticate}>Entrar</button>
+                {this.state.loading ?
+                    <Button variant="btn btn-primary btn-block" disabled>
+                        <Spinner
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                        />
+                        Loading...
+                         </Button>
+                    :
+                    <button type="button" className="btn btn-primary btn-block" onClick={this.authenticate}>Entrar</button>
+                }
+
                 {/* <p className="forgot-password text-right">
             Forgot <a href="#">password?</a>
         </p> */}

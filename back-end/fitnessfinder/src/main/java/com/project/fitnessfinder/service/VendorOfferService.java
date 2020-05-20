@@ -16,7 +16,6 @@ public class VendorOfferService {
 
     private final CustomerService customerService;
     private final VendorOfferRepository vendorOfferRepository;
-    private final Converter converter;
 
 
     public List<VendorOfferJson> searchVendorOffers(Long customerId,
