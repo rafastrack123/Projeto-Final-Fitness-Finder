@@ -126,7 +126,7 @@ class SignUp extends Component {
 
                         </Form.Control>
                     </Form.Group>
-
+                    
                     <div className="form-group">
                         <label>Name</label>
                         <input type="text" value={this.state.firstName} onChange={this.firstNameChangeHandle} className="form-control" placeholder="Nome" />
