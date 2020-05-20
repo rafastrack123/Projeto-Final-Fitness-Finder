@@ -13,6 +13,7 @@ import javax.persistence.Tuple;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 
@@ -98,7 +99,8 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
     }
 
     private void addFirstNameClause(StringBuilder querySb, String firstName) {
-        if (firstName != null) {
+
+        if (StringUtils.isNotBlank(firstName)) {
             var clause = String.format(" AND vendor.first_name LIKE %s \n", firstName);
 
             querySb.append(clause);
@@ -106,7 +108,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
     }
 
     private void addLastNameClause(StringBuilder querySb, String lastName) {
-        if (lastName != null) {
+        if (StringUtils.isNotBlank(lastName)) {
             var clause = String.format(" AND vendor.last_name LIKE %s \n", lastName);
 
             querySb.append(clause);
