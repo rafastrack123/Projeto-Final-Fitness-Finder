@@ -1,0 +1,19 @@
+@media all and (min-width: 480px) {
+    .SignUp {
+      padding: 60px 0;
+    }
+  
+    .SignUp form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  }
+
+  #sign-up-header{
+    text-align: center;
+    margin: auto;
+  }
+
+  #sign-up-from{
+    padding-top: 20px;
+  }

@@ -45,7 +45,7 @@ class Login extends Component {
             <div className="Login">
                 <h3 id="login-header">Login</h3>
                 <form id="login-from">
-                    
+
 
                     <FormGroup controlId="email" bsSize="large">
                         <Form.Label>Email</Form.Label>
@@ -54,17 +54,8 @@ class Login extends Component {
                             type="email"
                             value={this.state.login}
                             onChange={this.loginChangeHandle}
-                            placeholder="Insira email"/>
-                    </FormGroup>
-                    {/* <div className="form-group">
-                        <label>Email</label>
-
-                        <input type="text"
-                            className="form-control"
-                            value={this.state.login}
-                            onChange={this.loginChangeHandle}
                             placeholder="Insira email" />
-                    </div> */}
+                    </FormGroup>
 
                     <FormGroup controlId="password" bsSize="large">
                         <Form.Label>Senha</Form.Label>
@@ -72,17 +63,8 @@ class Login extends Component {
                             type="password"
                             value={this.state.password}
                             onChange={this.passwordChangeHandle}
-                            placeholder="Insira senha"/>
-                    </FormGroup>
-
-                    {/* <div className="form-group">
-                        <label>Senha</label>
-                        <input type="password"
-                            className="form-control"
-                            value={this.state.password}
-                            onChange={this.passwordChangeHandle}
                             placeholder="Insira senha" />
-                    </div> */}
+                    </FormGroup>
 
                     {this.state.loading ?
                         <Button variant="btn btn-primary btn-block" disabled>
@@ -97,9 +79,8 @@ class Login extends Component {
                          </Button>
                         :
                         <Button block variant="btn btn-primary btn-block" bsSize="large"
-                            onClick={this.authenticate} type="submit">Entrar</Button>
+                            onClick={this.authenticate} type="button">Entrar</Button>
                     }
-
 
                     <p className="forgot-password text-right">
                         Ainda não tem cadastro? <a href="/sign-up">Inscrever-se</a>

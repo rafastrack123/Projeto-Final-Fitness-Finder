@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './SignUp.css';
-import { Form } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import axios from 'axios';
 
 class SignUp extends Component {
@@ -111,11 +111,13 @@ class SignUp extends Component {
     render() {
 
         return (
-            <div className="Signup">
-                <form>
-                    <h3>Cadastro</h3>
+            <div className="SignUp">
+                <h3 id="sign-up-header">Cadastro</h3>
+
+                <form id="sign-up-from">
 
                     {/* Remove to component */}
+
                     <Form.Group>
                         <Form.Label>Modalidade</Form.Label>
                         <Form.Control as="select"
@@ -126,36 +128,60 @@ class SignUp extends Component {
 
                         </Form.Control>
                     </Form.Group>
-                    
-                    <div className="form-group">
-                        <label>Name</label>
-                        <input type="text" value={this.state.firstName} onChange={this.firstNameChangeHandle} className="form-control" placeholder="Nome" />
-                    </div>
 
-                    <div className="form-group">
-                        <label>Sobrenome</label>
-                        <input type="text" value={this.state.lastName} onChange={this.lastNameChangeHandle} className="form-control" placeholder="Sobrenome" />
-                    </div>
+                    <FormGroup controlId="firstName" bsSize="large">
+                        <Form.Label>Nome</Form.Label>
+                        <FormControl
+                            type="text"
+                            value={this.state.firstName}
+                            onChange={this.firstNameChangeHandle}
+                            placeholder="Insira nome" />
+                    </FormGroup>
 
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input type="email" value={this.state.email} onChange={this.emailChangeHandle} className="form-control" placeholder="Email" />
-                    </div>
+                    <FormGroup controlId="LastName" bsSize="large">
+                        <Form.Label>Sobrenome</Form.Label>
+                        <FormControl
+                            type="text"
+                            value={this.state.lastName}
+                            onChange={this.lastNameChangeHandle}
+                            placeholder="Insira sobrenome" />
+                    </FormGroup>
 
-                    <div className="form-group">
-                        <label>Celular</label>
-                        <input type="tel" value={this.state.cellphone} onChange={this.cellphoneChangeHandle} className="form-control" placeholder="Celular" />
-                    </div>
+                    <FormGroup controlId="email" bsSize="large">
+                        <Form.Label>Email</Form.Label>
+                        <FormControl
+                            type="email"
+                            value={this.state.email}
+                            onChange={this.emailChangeHandle}
+                            placeholder="Insira E-mail" />
+                    </FormGroup>
 
-                    <div className="form-group">
-                        <label>Senha</label>
-                        <input type="password" value={this.state.password} onChange={this.passwordChangeHandle} className="form-control" placeholder="Senha" />
-                    </div>
+                    <FormGroup controlId="cellphone" bsSize="large">
+                        <Form.Label>Celular</Form.Label>
+                        <FormControl
+                            type="tel"
+                            value={this.state.cellphone}
+                            onChange={this.cellphoneChangeHandle}
+                            placeholder="Insira celular" />
+                    </FormGroup>
 
-                    <div className="form-group">
-                        <label>Endereço</label>
-                        <input type="text" value={this.state.address} onChange={this.addressChangeHandle} className="form-control" placeholder="Endereço" />
-                    </div>
+                    <FormGroup controlId="password" bsSize="large">
+                        <Form.Label>Senha</Form.Label>
+                        <FormControl
+                            type="password"
+                            value={this.state.password}
+                            onChange={this.passwordChangeHandle}
+                            placeholder="Insira senha" />
+                    </FormGroup>
+
+                    <FormGroup controlId="text" bsSize="large">
+                        <Form.Label>Endereço</Form.Label>
+                        <FormControl
+                            type="text"
+                            value={this.state.address}
+                            onChange={this.addressChangeHandle}
+                            placeholder="Insira senha" />
+                    </FormGroup>
 
                     {this.state.userType === "Customer" ?
                         // Remove to component
@@ -168,11 +194,12 @@ class SignUp extends Component {
                                     </option>
                                 ))}
                             </Form.Control>
-                        </Form.Group> : null
+                        </Form.Group> 
+                        : null
                     }
+                    <Button block variant="btn btn-primary btn-block" bsSize="large"
+                        onClick={() => this.signUp()} type="button">Inscrever-se</Button>
 
-                    <button type="button" href="#" className="btn btn-primary btn-block"
-                        onClick={() => this.signUp()}>Inscrever-se</button>
                     <p className="forgot-password text-right">
                         Já cadastrado? <a href="/login">Login</a>
                     </p>
