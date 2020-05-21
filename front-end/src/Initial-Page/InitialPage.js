@@ -9,7 +9,7 @@ import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
 const intialPage = () => {
     return (
         <div className="IntialPage">
-            {/* <InitialPageHeader/> */}
+            <InitialPageHeader/>
             <div className="auth-wrapper">
                 <div className="auth-inner">
                     <Switch>
