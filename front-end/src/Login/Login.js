@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import axios from 'axios';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, Form, Spinner } from "react-bootstrap";
 
 
 class Login extends Component {
@@ -42,57 +42,70 @@ class Login extends Component {
 
     render() {
         return (
-            <form>
-                <h3>Login</h3>
+            <div className="Login">
+                <h3 id="login-header">Login</h3>
+                <form id="login-from">
+                    
 
-                <div className="form-group">
-                    <label>Email</label>
+                    <FormGroup controlId="email" bsSize="large">
+                        <Form.Label>Email</Form.Label>
+                        <FormControl
+                            autoFocus
+                            type="email"
+                            value={this.state.login}
+                            onChange={this.loginChangeHandle}
+                            placeholder="Insira email"/>
+                    </FormGroup>
+                    {/* <div className="form-group">
+                        <label>Email</label>
 
-                    <input type="text"
-                        className="form-control"
-                        value={this.state.login}
-                        onChange={this.loginChangeHandle}
-                        placeholder="Insira email" />
-                </div>
+                        <input type="text"
+                            className="form-control"
+                            value={this.state.login}
+                            onChange={this.loginChangeHandle}
+                            placeholder="Insira email" />
+                    </div> */}
 
-                <div className="form-group">
-                    <label>Senha</label>
-                    <input type="password"
-                        className="form-control"
-                        value={this.state.password}
-                        onChange={this.passwordChangeHandle}
-                        placeholder="Insira senha" />
-                </div>
+                    <FormGroup controlId="password" bsSize="large">
+                        <Form.Label>Senha</Form.Label>
+                        <FormControl
+                            type="password"
+                            value={this.state.password}
+                            onChange={this.passwordChangeHandle}
+                            placeholder="Insira senha"/>
+                    </FormGroup>
 
-                {/* <div className="form-group">
-            <div className="custom-control custom-checkbox">
-                <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-            </div>
-        </div> */}
+                    {/* <div className="form-group">
+                        <label>Senha</label>
+                        <input type="password"
+                            className="form-control"
+                            value={this.state.password}
+                            onChange={this.passwordChangeHandle}
+                            placeholder="Insira senha" />
+                    </div> */}
 
-                {this.state.loading ?
-                    <Button variant="btn btn-primary btn-block" disabled>
-                        <Spinner
-                            as="span"
-                            animation="grow"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                        />
-                        Loading...
+                    {this.state.loading ?
+                        <Button variant="btn btn-primary btn-block" disabled>
+                            <Spinner
+                                as="span"
+                                animation="grow"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />
+                            Loading...
                          </Button>
-                    :
-                    <button type="button" className="btn btn-primary btn-block" onClick={this.authenticate}>Entrar</button>
-                }
+                        :
+                        <Button block variant="btn btn-primary btn-block" bsSize="large"
+                            onClick={this.authenticate} type="submit">Entrar</Button>
+                    }
 
-                {/* <p className="forgot-password text-right">
-            Forgot <a href="#">password?</a>
-        </p> */}
-                <p className="forgot-password text-right">
-                    Ainda não tem cadastro? <a href="/sign-up">Inscrever-se</a>
-                </p>
-            </form>
+
+                    <p className="forgot-password text-right">
+                        Ainda não tem cadastro? <a href="/sign-up">Inscrever-se</a>
+                    </p>
+                </form>
+            </div>
         )
     }
 }
