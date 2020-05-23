@@ -2,15 +2,15 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router } from "react-router-dom";
 import InitialPage from './Initial-Page/InitialPage';
-import VendorOfferSearch from './Vendor-Offer-Search/VendorOfferSearch'
+import CustomerPage from './Customer/CustomerPage';
 
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <InitialPage/>
-        {/* <VendorOfferSearch/> */}
+        {/* <InitialPage/> */}
+        <CustomerPage/>
       </div>
     </Router>
   );

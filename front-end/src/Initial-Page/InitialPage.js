@@ -1,9 +1,9 @@
 import React from 'react';
 import {Switch, Route } from "react-router-dom";
-import Login from '../Login/Login';
-import SignUp from '../Sign-up/SignUp';
+import Login from './Login/Login';
+import SignUp from './Sign-up/SignUp';
 import './InitialPage.css';
-import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
+import InitialPageHeader from './Initial-Page-Header/InitialPageHeader';
 
 
 const intialPage = () => {
