@@ -16,7 +16,7 @@ public class VendorJson {
     public String firstName;
     public String lastName;
 
-    public String username;
+    public String email;
     public String password;
 
     public ContactInfoJson contactInfo;

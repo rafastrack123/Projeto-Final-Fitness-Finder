@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import axios from 'axios';
-import { Button, FormGroup, FormControl, Form, Spinner } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form, Spinner, Alert } from "react-bootstrap";
 
 
 class Login extends Component {
@@ -9,7 +9,9 @@ class Login extends Component {
     state = {
         login: "",
         password: "",
-        loading: false
+        loading: false,
+
+        showUnauthorizedAlert: false
     }
 
     loginChangeHandle = (event) => {
@@ -25,7 +27,7 @@ class Login extends Component {
         this.setState({ loading: true })
 
         var userLogin = {
-            username: this.state.login,
+            email: this.state.login,
             password: this.state.password
         }
 
@@ -37,15 +39,21 @@ class Login extends Component {
             .catch(response => {
                 console.log("ERRO!");
                 this.setState({ loading: false })
+                this.setState({ showUnauthorizedAlert: true });
             });
     }
 
     render() {
         return (
             <div className="Login">
+
                 <h3 id="login-header">Login</h3>
                 <form id="login-from">
 
+                    <Alert
+                        show={this.state.showUnauthorizedAlert}
+                        className="text-center"
+                        variant="danger">Usuário não encontrado</Alert>
 
                     <FormGroup controlId="email" bsSize="large">
                         <Form.Label>Email</Form.Label>
@@ -78,7 +86,7 @@ class Login extends Component {
                             Loading...
                          </Button>
                         :
-                        <Button block variant="btn btn-primary btn-block" bsSize="large"
+                        <Button block variant="btn btn-primary btn-block mb-2" bsSize="large"
                             onClick={this.authenticate} type="button">Entrar</Button>
                     }
 

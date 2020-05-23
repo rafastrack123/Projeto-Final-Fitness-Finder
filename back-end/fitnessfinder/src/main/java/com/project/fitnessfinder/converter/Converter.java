@@ -35,7 +35,7 @@ public class Converter {
         customerJson.firstName = customer.getFirstName();
         customerJson.lastName = customer.getLastName();
 
-        customerJson.username = customer.getUsername();
+        customerJson.email = customer.getEmail();
 
         customerJson.address = convert(customer.getAddress());
 
@@ -59,7 +59,7 @@ public class Converter {
         customer.setFirstName(updatedCustomerJson.firstName);
         customer.setLastName(updatedCustomerJson.lastName);
 
-        customer.setUsername(updatedCustomerJson.username);
+        customer.setEmail(updatedCustomerJson.email);
         customer.setPassword(updatedCustomerJson.password);
 
         customer.setAddress(convert(updatedCustomerJson.address));
@@ -151,7 +151,7 @@ public class Converter {
         vendorJson.firstName = vendor.getFirstName();
         vendorJson.lastName = vendor.getLastName();
 
-        vendorJson.username = vendor.getUsername();
+        vendorJson.email = vendor.getEmail();
 
         vendorJson.address = convert(vendor.getAddress());
 
@@ -175,7 +175,7 @@ public class Converter {
         var contactJson = new ContactInfoJson();
 
         contactJson.setCellphone(contact.getCellphone());
-        contactJson.setEmail(contact.getEmail());
+
         contactJson.setLinkToFacebook(contact.getLinkToFacebook());
 
         return contactJson;
@@ -186,7 +186,7 @@ public class Converter {
         vendor.setFirstName(updatedVendorJson.firstName);
         vendor.setLastName(updatedVendorJson.lastName);
 
-        vendor.setUsername(updatedVendorJson.username);
+        vendor.setEmail(updatedVendorJson.email);
         vendor.setPassword(updatedVendorJson.password);
 
         vendor.setAddress(convert(updatedVendorJson.address));
@@ -199,7 +199,6 @@ public class Converter {
     public ContactInfo convert(ContactInfoJson contactInfoJson) {
         var contact = new ContactInfo();
 
-        contact.setEmail(contactInfoJson.email);
         contact.setCellphone(contactInfoJson.cellphone);
         contact.setLinkToFacebook(contactInfoJson.linkToFacebook);
 

@@ -13,7 +13,7 @@ import lombok.Data;
 @Builder
 public class UserLoginJson {
 
-    public String username;
+    public String email;
     public String password;
 
 }
