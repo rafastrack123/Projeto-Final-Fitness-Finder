@@ -187,14 +187,16 @@ class SignUp extends Component {
                         // Remove to component
                         <Form.Group>
                             <Form.Label>Objetivo</Form.Label>
-                            <Form.Control as="select" onChange={this.selectObjective} value={this.state.selectedObjective}>
+                            <Form.Control as="select"
+                                onChange={this.selectObjective}
+                                value={this.state.selectedObjective}>
                                 {this.state.objectives.map(objective => (
                                     <option key={objective.id} value={objective.id}>
                                         {objective.name}
                                     </option>
                                 ))}
                             </Form.Control>
-                        </Form.Group> 
+                        </Form.Group>
                         : null
                     }
                     <Button block variant="btn btn-primary btn-block" bsSize="large"
