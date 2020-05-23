@@ -5,6 +5,7 @@ import com.project.fitnessfinder.domain.entity.api.VendorJson;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.exception.EntityNotFound;
 import com.project.fitnessfinder.repository.VendorRepository;
+import com.project.fitnessfinder.validator.EmailValidator;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VendorService {
 
-    private final VendorRepository vendorRepository;
     private final Converter converter;
+    private final VendorRepository vendorRepository;
+
 
     public Vendor get(Long id) {
         return this.vendorRepository.findById(id)
@@ -32,7 +34,6 @@ public class VendorService {
     }
 
     public VendorJson save(VendorJson vendorJson) {
-
         var vendor = converter.convertSaved(new Vendor(), vendorJson);
 
         vendor = vendorRepository.save(vendor);
@@ -50,6 +51,14 @@ public class VendorService {
         vendorRepository.save(vendor);
 
         return updatedVendorJson;
+    }
+
+    public Optional<Vendor> findByEmailAndPassword(String email, String password) {
+        return vendorRepository.findByEmailAndPassword(email, password);
+    }
+
+    public Optional<Vendor> findByEmail(String email) {
+        return vendorRepository.findByEmail(email);
     }
 
 }

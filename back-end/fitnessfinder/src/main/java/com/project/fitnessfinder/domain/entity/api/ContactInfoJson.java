@@ -11,7 +11,6 @@ import lombok.Data;
 @JsonInclude(NON_NULL)
 public class ContactInfoJson {
 
-    public String email;
     public String cellphone;
     public String linkToFacebook;
 }

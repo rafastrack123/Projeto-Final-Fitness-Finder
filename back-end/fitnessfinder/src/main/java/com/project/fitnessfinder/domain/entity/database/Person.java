@@ -21,7 +21,7 @@ public abstract class Person {
     private String firstName;
     private String lastName;
 
-    private String username;
+    private String email;
     private String password;
 
     @Embedded

@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class ContactInfo {
 
-    private String email;
     private String cellphone;
     private String linkToFacebook;
 

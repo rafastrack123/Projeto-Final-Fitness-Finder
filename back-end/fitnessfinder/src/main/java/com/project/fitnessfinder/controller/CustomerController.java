@@ -2,6 +2,7 @@ package com.project.fitnessfinder.controller;
 
 import com.project.fitnessfinder.domain.entity.api.CustomerJson;
 import com.project.fitnessfinder.service.CustomerService;
+import com.project.fitnessfinder.validator.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final EmailValidator emailValidator;
 
     @GetMapping("/{id}")
     public CustomerJson getCustomer(@PathVariable Long id) {
@@ -28,6 +30,8 @@ public class CustomerController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerJson postCustomer(@RequestBody CustomerJson customerJson) {
+        emailValidator.emailIsUnique(customerJson.email);
+
         return customerService.save(customerJson);
     }
 

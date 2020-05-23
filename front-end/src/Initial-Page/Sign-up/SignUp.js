@@ -67,11 +67,8 @@ class SignUp extends Component {
         var user = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            username: "Remover",
+            email: this.state.email,
             password: this.state.password,
-            contactInfo: {
-                email: this.state.email
-            },
             address: {
                 fullAddress: this.state.address
             }
