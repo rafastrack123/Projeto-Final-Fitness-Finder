@@ -1,5 +1,6 @@
 package com.project.fitnessfinder.service;
 
+import com.project.fitnessfinder.domain.entity.api.AuthenticatedUser;
 import com.project.fitnessfinder.domain.entity.api.UserLoginJson;
 import com.project.fitnessfinder.domain.entity.enums.UserType;
 import lombok.RequiredArgsConstructor;
@@ -13,17 +14,25 @@ public class LoginService {
     private final VendorService vendorService;
 
 
-    public UserType authenticate(UserLoginJson userLogin) {
+    public AuthenticatedUser authenticate(UserLoginJson userLogin) {
         var vendorOptional = vendorService.findByEmailAndPassword(userLogin.email, userLogin.password);
 
         if (vendorOptional.isPresent()) {
-            return UserType.Vendor;
+
+            return AuthenticatedUser.builder()
+                    .userType(UserType.Vendor)
+                    .userId(vendorOptional.get().getId())
+                    .build();
+
         }
 
         var customerOptional = customerService.findByEmailAndPassword(userLogin.email, userLogin.password);
 
         if (customerOptional.isPresent()) {
-            return UserType.Customer;
+            return AuthenticatedUser.builder()
+                    .userType(UserType.Customer)
+                    .userId(customerOptional.get().getId())
+                    .build();
         }
 
         throw new RuntimeException();

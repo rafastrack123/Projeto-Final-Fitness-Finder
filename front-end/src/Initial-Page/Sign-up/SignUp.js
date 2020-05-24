@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './SignUp.css';
 import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import axios from 'axios';
+import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
 
 class SignUp extends Component {
 
@@ -108,101 +109,104 @@ class SignUp extends Component {
     render() {
 
         return (
-            <div className="SignUp">
-                <h3 id="sign-up-header">Cadastro</h3>
+            <div>
+                <InitialPageHeader />
+                <div className="SignUp">
+                    <h3 id="sign-up-header">Cadastro</h3>
 
-                <form id="sign-up-from">
+                    <form id="sign-up-from">
 
-                    {/* Remove to component */}
+                        {/* Remove to component */}
 
-                    <Form.Group>
-                        <Form.Label>Modalidade</Form.Label>
-                        <Form.Control as="select"
-                            onChange={this.selectUserType}
-                            value={this.state.userType} >
-                            <option value="Customer">Cliente</option>
-                            <option value="Vendor">Fornecedor</option>
-
-                        </Form.Control>
-                    </Form.Group>
-
-                    <FormGroup controlId="firstName" bsSize="large">
-                        <Form.Label>Nome</Form.Label>
-                        <FormControl
-                            type="text"
-                            value={this.state.firstName}
-                            onChange={this.firstNameChangeHandle}
-                            placeholder="Insira nome" />
-                    </FormGroup>
-
-                    <FormGroup controlId="LastName" bsSize="large">
-                        <Form.Label>Sobrenome</Form.Label>
-                        <FormControl
-                            type="text"
-                            value={this.state.lastName}
-                            onChange={this.lastNameChangeHandle}
-                            placeholder="Insira sobrenome" />
-                    </FormGroup>
-
-                    <FormGroup controlId="email" bsSize="large">
-                        <Form.Label>Email</Form.Label>
-                        <FormControl
-                            type="email"
-                            value={this.state.email}
-                            onChange={this.emailChangeHandle}
-                            placeholder="Insira E-mail" />
-                    </FormGroup>
-
-                    <FormGroup controlId="cellphone" bsSize="large">
-                        <Form.Label>Celular</Form.Label>
-                        <FormControl
-                            type="tel"
-                            value={this.state.cellphone}
-                            onChange={this.cellphoneChangeHandle}
-                            placeholder="Insira celular" />
-                    </FormGroup>
-
-                    <FormGroup controlId="password" bsSize="large">
-                        <Form.Label>Senha</Form.Label>
-                        <FormControl
-                            type="password"
-                            value={this.state.password}
-                            onChange={this.passwordChangeHandle}
-                            placeholder="Insira senha" />
-                    </FormGroup>
-
-                    <FormGroup controlId="text" bsSize="large">
-                        <Form.Label>Endereço</Form.Label>
-                        <FormControl
-                            type="text"
-                            value={this.state.address}
-                            onChange={this.addressChangeHandle}
-                            placeholder="Insira senha" />
-                    </FormGroup>
-
-                    {this.state.userType === "Customer" ?
-                        // Remove to component
                         <Form.Group>
-                            <Form.Label>Objetivo</Form.Label>
+                            <Form.Label>Modalidade</Form.Label>
                             <Form.Control as="select"
-                                onChange={this.selectObjective}
-                                value={this.state.selectedObjective}>
-                                {this.state.objectives.map(objective => (
-                                    <option key={objective.id} value={objective.id}>
-                                        {objective.name}
-                                    </option>
-                                ))}
+                                onChange={this.selectUserType}
+                                value={this.state.userType} >
+                                <option value="Customer">Cliente</option>
+                                <option value="Vendor">Fornecedor</option>
+
                             </Form.Control>
                         </Form.Group>
-                        : null
-                    }
-                    <Button block variant="btn btn-primary btn-block" bsSize="large"
-                        onClick={() => this.signUp()} type="button">Inscrever-se</Button>
 
-                    <p className="forgot-password text-right">
-                        Já cadastrado? <a href="/login">Login</a>
-                    </p>
-                </form>
+                        <FormGroup controlId="firstName" bsSize="large">
+                            <Form.Label>Nome</Form.Label>
+                            <FormControl
+                                type="text"
+                                value={this.state.firstName}
+                                onChange={this.firstNameChangeHandle}
+                                placeholder="Insira nome" />
+                        </FormGroup>
+
+                        <FormGroup controlId="LastName" bsSize="large">
+                            <Form.Label>Sobrenome</Form.Label>
+                            <FormControl
+                                type="text"
+                                value={this.state.lastName}
+                                onChange={this.lastNameChangeHandle}
+                                placeholder="Insira sobrenome" />
+                        </FormGroup>
+
+                        <FormGroup controlId="email" bsSize="large">
+                            <Form.Label>Email</Form.Label>
+                            <FormControl
+                                type="email"
+                                value={this.state.email}
+                                onChange={this.emailChangeHandle}
+                                placeholder="Insira E-mail" />
+                        </FormGroup>
+
+                        <FormGroup controlId="cellphone" bsSize="large">
+                            <Form.Label>Celular</Form.Label>
+                            <FormControl
+                                type="tel"
+                                value={this.state.cellphone}
+                                onChange={this.cellphoneChangeHandle}
+                                placeholder="Insira celular" />
+                        </FormGroup>
+
+                        <FormGroup controlId="password" bsSize="large">
+                            <Form.Label>Senha</Form.Label>
+                            <FormControl
+                                type="password"
+                                value={this.state.password}
+                                onChange={this.passwordChangeHandle}
+                                placeholder="Insira senha" />
+                        </FormGroup>
+
+                        <FormGroup controlId="text" bsSize="large">
+                            <Form.Label>Endereço</Form.Label>
+                            <FormControl
+                                type="text"
+                                value={this.state.address}
+                                onChange={this.addressChangeHandle}
+                                placeholder="Insira senha" />
+                        </FormGroup>
+
+                        {this.state.userType === "Customer" ?
+                            // Remove to component
+                            <Form.Group>
+                                <Form.Label>Objetivo</Form.Label>
+                                <Form.Control as="select"
+                                    onChange={this.selectObjective}
+                                    value={this.state.selectedObjective}>
+                                    {this.state.objectives.map(objective => (
+                                        <option key={objective.id} value={objective.id}>
+                                            {objective.name}
+                                        </option>
+                                    ))}
+                                </Form.Control>
+                            </Form.Group>
+                            : null
+                        }
+                        <Button block variant="btn btn-primary btn-block mb-2" bsSize="large"
+                            onClick={() => this.signUp()} type="button">Inscrever-se</Button>
+
+                        <p className="forgot-password text-right">
+                            Já cadastrado? <a href="/login">Login</a>
+                        </p>
+                    </form>
+                </div>
             </div>
         )
     }

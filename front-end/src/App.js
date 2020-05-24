@@ -1,16 +1,23 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router } from "react-router-dom";
-import InitialPage from './Initial-Page/InitialPage';
-import CustomerPage from './Customer/CustomerPage';
+import { Router } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import Login from './Initial-Page/Login/Login';
+import SignUp from './Initial-Page/Sign-up/SignUp';
+import VendorOfferSearch from './Customer/Vendor-Offer-Search/VendorOfferSearch';
+import history from './History.js'
 
 
 function App() {
   return (
-    <Router>
+    <Router history={history}>
       <div className="App">
-        <InitialPage/>
-        {/* <CustomerPage/> */}
+        <Switch>
+          <Route exact path='/' component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/sign-up" component={SignUp} />
+          <Route exact path='/vendor-offer-search' component={VendorOfferSearch} />
+        </Switch>
       </div>
     </Router>
   );
