@@ -16,6 +16,7 @@ public interface VendorOfferRepositoryCustom {
                                                       BigDecimal maxPrice,
                                                       Boolean isHomeService,
                                                       Boolean isFirstClassFree,
+                                                      Boolean isRemoteService,
                                                       Long maxDistanceInKm,
                                                       Address customerAddress);
 

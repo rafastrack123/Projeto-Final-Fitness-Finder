@@ -101,26 +101,28 @@ public class Converter {
         return area.getName() + " - " + group.getName() + " - " + detail.getName();
     }
 
-    public VendorOfferJson convert(VendorOffer vendorOffer) {
-        var json = new VendorOfferJson();
-
-        json.id = vendorOffer.getId();
-        json.price = vendorOffer.getPrice();
-        json.isHomeService = vendorOffer.isHomeService();
-        json.firstClassFree = vendorOffer.isFirstClassFree();
-
-        json.vendorFirstName = vendorOffer.getVendor().getFirstName();
-        json.vendorLastName = vendorOffer.getVendor().getLastName();
-
-        var detail = vendorOffer.getServiceDetail();
-        var group = detail.getServiceGroup();
-        json.groupName = group.getName();
-        json.detailName = detail.getName();
-        json.areaName = group.getServiceArea().getName();
-
-
-        return json;
-    }
+//    public VendorOfferJson convert(VendorOffer vendorOffer) {
+//        var json = new VendorOfferJson();
+//
+//        json.id = vendorOffer.getId();
+//        json.price = vendorOffer.getPrice();
+//
+//        json.isHomeService = vendorOffer.isHomeService();
+//
+//        json.firstClassFree = vendorOffer.isFirstClassFree();
+//
+//        json.vendorFirstName = vendorOffer.getVendor().getFirstName();
+//        json.vendorLastName = vendorOffer.getVendor().getLastName();
+//
+//        var detail = vendorOffer.getServiceDetail();
+//        var group = detail.getServiceGroup();
+//        json.groupName = group.getName();
+//        json.detailName = detail.getName();
+//        json.areaName = group.getServiceArea().getName();
+//
+//
+//        return json;
+//    }
 
     public ServiceAreaJson convert(ServiceArea serviceArea) {
         return ServiceAreaJson.builder()

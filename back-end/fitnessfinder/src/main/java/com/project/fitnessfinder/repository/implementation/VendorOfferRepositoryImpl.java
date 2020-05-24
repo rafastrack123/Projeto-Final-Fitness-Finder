@@ -33,6 +33,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
                                                              BigDecimal maxPrice,
                                                              Boolean isHomeService,
                                                              Boolean isFirstClassFree,
+                                                             Boolean isRemoteService,
                                                              Long maxDistanceInKm,
                                                              Address customerAddress) {
 
@@ -58,8 +59,10 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
         // Vendor Offer Clauses
         addMaxPriceClause(querySb, maxPrice);
-        addIsHomeServiceClause(querySb, isHomeService);
+
         addIsFirstClassFreeClause(querySb, isFirstClassFree);
+        addIsHomeServiceClause(querySb, isHomeService);
+        addIsRemoteServiceClause(querySb, isRemoteService);
 
         //Distance Clause
         addMaxDistanceClause(querySb, customerAddress, maxDistanceInKm);
@@ -101,7 +104,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
     private void addFirstNameClause(StringBuilder querySb, String firstName) {
 
         if (StringUtils.isNotBlank(firstName)) {
-            var clause = String.format(" AND vendor.first_name LIKE %s \n", firstName);
+            var clause = String.format(" AND vendor.first_name LIKE '%s' \n", firstName);
 
             querySb.append(clause);
         }
@@ -109,7 +112,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
     private void addLastNameClause(StringBuilder querySb, String lastName) {
         if (StringUtils.isNotBlank(lastName)) {
-            var clause = String.format(" AND vendor.last_name LIKE %s \n", lastName);
+            var clause = String.format(" AND vendor.last_name LIKE '%s' \n", lastName);
 
             querySb.append(clause);
         }
@@ -124,16 +127,24 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
     }
 
     private void addIsHomeServiceClause(StringBuilder querySb, Boolean isHomeService) {
-        if (isHomeService != null) {
-            var clause = String.format("  AND vendor_offer.is_home_service = %s \n", isHomeService);
+        if (isHomeService) {
+            var clause = "  AND vendor_offer.is_home_service = true \n";
+
+            querySb.append(clause);
+        }
+    }
+
+    private void addIsRemoteServiceClause(StringBuilder querySb, Boolean isRemoteService) {
+        if (isRemoteService) {
+            var clause = "  AND vendor_offer.is_remote_service = true \n";
 
             querySb.append(clause);
         }
     }
 
     private void addIsFirstClassFreeClause(StringBuilder querySb, Boolean isFirstClassFree) {
-        if (isFirstClassFree != null) {
-            var clause = String.format("   AND vendor_offer.first_class_free = %s \n", isFirstClassFree);
+        if (isFirstClassFree) {
+            var clause = "   AND vendor_offer.first_class_free = true \n";
 
             querySb.append(clause);
         }
@@ -160,6 +171,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
             vendorOfferJson.firstClassFree = tuple.get("first_class_free", Boolean.class);
             vendorOfferJson.isHomeService = tuple.get("is_home_service", Boolean.class);
+            vendorOfferJson.isRemoteService = tuple.get("is_remote_service", Boolean.class);
 
             vendorOfferJson.price = tuple.get("price", BigDecimal.class);
 

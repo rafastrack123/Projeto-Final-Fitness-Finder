@@ -13,6 +13,10 @@ public class LeadJson {
 
     public String customerLastName;
 
+    public String customerEmail;
+
+    public String customerObjective;
+
     public ContactInfoJson customerContact;
 
     public boolean isStrongLead;
