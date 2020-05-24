@@ -19,10 +19,7 @@ public class LoginController {
     @PostMapping
     public AuthenticatedUser login(@RequestBody UserLoginJson userLogin) {
 
-        var userType = loginService.authenticate(userLogin);
+        return loginService.authenticate(userLogin);
 
-        return AuthenticatedUser.builder()
-                .userType(userType)
-                .build();
     }
 }

@@ -14,5 +14,6 @@ import lombok.Data;
 @Data
 public class AuthenticatedUser {
 
+    public Long userId;
     public UserType userType;
 }
