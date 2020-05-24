@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import './VendorOfferSearch.css';
 import { Form, Container, Card, Button, Col, Table, Modal } from 'react-bootstrap';
 import axios from 'axios';
+import CustomerHeader from '../Customer-Header/CustomerHeader';
+import { withRouter } from 'react-router-dom';
+import Cookies from 'js-cookie'
 
 class VendorOfferSearch extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
-            customerId: null, // TODO: Get from login
+            customerId: Cookies.get('userId'),
 
             //arrays of service types
             serviceAreaArray: [],
@@ -116,7 +119,7 @@ class VendorOfferSearch extends Component {
 
         axios.get('http://localhost:8080/vendor-offer', {
             params: {
-                customerId: 29, // TODO: remover hard code
+                customerId: this.state.customerId,
                 serviceAreaId: this.state.serviceAreaIdSelected,
                 serviceGroupId: this.state.serviceGroupIdSelected,
                 serviceDetailId: this.state.serviceDetailIdSelected,
@@ -137,7 +140,7 @@ class VendorOfferSearch extends Component {
         console.log('sendStrongLead:');
         console.log(vendorOfferId);
 
-        var customerId = 29; // TODO: remover hard code
+        var customerId = this.state.customerId;
 
         axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, {
             params: {
@@ -154,175 +157,183 @@ class VendorOfferSearch extends Component {
 
 
     render() {
-        return (<div className="VendorOfferSearch">
-            <Container>
-                <Card>
-                    <h3 className="m-a text-center mt-2">Busca por Fornecedores</h3>
-                    <Form>
-                        <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
-                            <Col md={6} xs={11}>
-                                <Form.Group controlId="firstName">
-                                    <Form.Label>Nome:</Form.Label>
-                                    <Form.Control type="text"
-                                        value={this.state.vendorFirstName}
-                                        onChange={this.vendorFirstNameChangeHandle}
-                                        placeholder="Nome do Fornecedor" />
+        return (
+            <div>
+                <CustomerHeader />
+                <div className="VendorOfferSearch">
+                    <Container>
+                        <Card>
+                            <h3 className="m-a text-center mt-2">Busca por Fornecedores</h3>
+                            <Form>
+                                <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
+                                    <Col md={6} xs={11}>
+                                        <Form.Group controlId="firstName">
+                                            <Form.Label>Nome:</Form.Label>
+                                            <Form.Control type="text"
+                                                value={this.state.vendorFirstName}
+                                                onChange={this.vendorFirstNameChangeHandle}
+                                                placeholder="Nome do Fornecedor" />
 
-                                </Form.Group>
-                            </Col>
-                            <Col md={6} xs={11}>
-                                <Form.Group controlId="lastName">
-                                    <Form.Label>Sobrenome:</Form.Label>
-                                    <Form.Control type="text"
-                                        value={this.state.vendorLastName}
-                                        onChange={this.vendorLastNamehangeHandle}
-                                        placeholder="Sobrenome do Fornecedor" />
-                                </Form.Group>
-                            </Col>
-                        </Form.Row>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md={6} xs={11}>
+                                        <Form.Group controlId="lastName">
+                                            <Form.Label>Sobrenome:</Form.Label>
+                                            <Form.Control type="text"
+                                                value={this.state.vendorLastName}
+                                                onChange={this.vendorLastNamehangeHandle}
+                                                placeholder="Sobrenome do Fornecedor" />
+                                        </Form.Group>
+                                    </Col>
+                                </Form.Row>
 
-                        <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
-                            <Col md={6} xs={11}>
-                                <Form.Group controlId="distance">
-                                    <Form.Label>Distância:</Form.Label>
-                                    <Form.Control type="number" placeholder="Distância Máxima KM" />
+                                <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
+                                    <Col md={6} xs={11}>
+                                        <Form.Group controlId="distance">
+                                            <Form.Label>Distância:</Form.Label>
+                                            <Form.Control type="number" placeholder="Distância Máxima KM" />
 
-                                </Form.Group>
-                            </Col>
-                            <Col md={6} xs={11}>
-                                <Form.Group controlId="maxprice">
-                                    <Form.Label>Preço Máximo:</Form.Label>
-                                    <Form.Control type="number" placeholder="Preço máximo" />
-                                </Form.Group>
-                            </Col>
-                        </Form.Row>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md={6} xs={11}>
+                                        <Form.Group controlId="maxprice">
+                                            <Form.Label>Preço Máximo:</Form.Label>
+                                            <Form.Control type="number" placeholder="Preço máximo" />
+                                        </Form.Group>
+                                    </Col>
+                                </Form.Row>
 
 
-                        <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>Area do Serviço: </Form.Label>
-                                    <Form.Control as="select"
-                                        onChange={this.selectServiceArea}
-                                        value={this.state.serviceAreaIdSelected}>
-                                        <option key="" value=""></option>
-                                        {this.state.serviceAreaArray.map(serviceArea => (
+                                <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Area do Serviço: </Form.Label>
+                                            <Form.Control as="select"
+                                                onChange={this.selectServiceArea}
+                                                value={this.state.serviceAreaIdSelected}>
+                                                <option key="" value=""></option>
+                                                {this.state.serviceAreaArray.map(serviceArea => (
 
-                                            <option key={serviceArea.id} value={serviceArea.id}>
-                                                {serviceArea.name}
-                                            </option>
+                                                    <option key={serviceArea.id} value={serviceArea.id}>
+                                                        {serviceArea.name}
+                                                    </option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
+
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Tipo de Serviço: </Form.Label>
+                                            <Form.Control as="select"
+                                                onChange={this.selectServiceGroup}
+                                                value={this.state.serviceGroupIdSelected}>
+                                                <option key="" value=""></option>
+                                                {this.state.serviceGroupArray.map(serviceGroup => (
+
+                                                    <option key={serviceGroup.id} value={serviceGroup.id}>
+                                                        {serviceGroup.name}
+                                                    </option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
+                                </Form.Row>
+
+                                <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
+                                    <Col xs={8}>
+                                        <Form.Group>
+                                            <Form.Label>Especialização: </Form.Label>
+                                            <Form.Control as="select"
+                                                onChange={this.selectServiceDetail}
+                                                value={this.state.serviceDetailIdSelected}>
+                                                <option key="" value=""></option>
+                                                {this.state.serviceDetailArray.map(serviceDetail => (
+                                                    <option key={serviceDetail.id} value={serviceDetail.id}>
+                                                        {serviceDetail.name}
+                                                    </option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
+                                </Form.Row>
+
+                                <Form.Row>
+                                    <Col>
+                                        <Form.Group id="isHomeServiceCheckbox">
+                                            <Form.Check type="checkbox" label="Atendimento a domicílio" />
+                                        </Form.Group>
+
+                                    </Col>
+                                    <Col>
+                                        <Form.Group id="isFirstClassFree">
+                                            <Form.Check type="checkbox" label="Primeiro atendimento gratuito" />
+                                        </Form.Group>
+
+                                    </Col>
+                                </Form.Row>
+
+                                <Button className="mb-3"
+                                    variant="primary"
+                                    type="button"
+                                    onClick={this.searchVendorOffer}> Pesquisar</Button>
+                            </Form>
+                        </Card>
+
+
+                        {this.state.vendorOffers.length > 0 ?
+                            <div className="mt-5">
+                                <h3 className="m-a text-center mt-3 mb-3">Resultado</h3>
+
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th>Fornecedor</th>
+                                            <th>Tipo de serviço</th>
+                                            <th>Especialização</th>
+                                            <th>Preço</th>
+                                            <th>Distância</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.vendorOffers.map(vendorOffer => (
+                                            <tr><td>{vendorOffer.vendorFirstName} {vendorOffer.vendorLastName}</td>
+                                                <td>{vendorOffer.groupName}</td>
+                                                <td>{vendorOffer.detailName}</td>
+                                                <td>{vendorOffer.price}</td>
+                                                <td>{vendorOffer.distance} Km</td>
+                                                <td> <Button className="mr-2"
+                                                    variant="primary">Detalhe</Button>
+
+                                                    <Button variant="success"
+                                                        onClick={() => this.sendStrongLead(vendorOffer.id)}>Contatar</Button>
+                                                </td>
+                                            </tr>
                                         ))}
-                                    </Form.Control>
-                                </Form.Group>
-                            </Col>
 
-                            <Col>
-                                <Form.Group>
-                                    <Form.Label>Tipo de Serviço: </Form.Label>
-                                    <Form.Control as="select"
-                                        onChange={this.selectServiceGroup}
-                                        value={this.state.serviceGroupIdSelected}>
-                                        <option key="" value=""></option>
-                                        {this.state.serviceGroupArray.map(serviceGroup => (
+                                    </tbody>
+                                </Table>
+                            </div>
+                            : null}
 
-                                            <option key={serviceGroup.id} value={serviceGroup.id}>
-                                                {serviceGroup.name}
-                                            </option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
-                            </Col>
-                        </Form.Row>
 
-                        <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
-                            <Col xs={8}>
-                                <Form.Group>
-                                    <Form.Label>Especialização: </Form.Label>
-                                    <Form.Control as="select"
-                                        onChange={this.selectServiceDetail}
-                                        value={this.state.serviceDetailIdSelected}>
-                                        <option key="" value=""></option>
-                                        {this.state.serviceDetailArray.map(serviceDetail => (
-                                            <option key={serviceDetail.id} value={serviceDetail.id}>
-                                                {serviceDetail.name}
-                                            </option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
-                            </Col>
-                        </Form.Row>
+                    </Container>
 
-                        <Form.Row>
-                            <Col>
-                                <Form.Group id="isHomeServiceCheckbox">
-                                    <Form.Check type="checkbox" label="Atendimento a domicílio" />
-                                </Form.Group>
-
-                            </Col>
-                            <Col>
-                                <Form.Group id="isFirstClassFree">
-                                    <Form.Check type="checkbox" label="Primeiro atendimento gratuito" />
-                                </Form.Group>
-
-                            </Col>
-                        </Form.Row>
-
-                        <Button className="mb-3"
-                            variant="primary"
-                            type="button"
-                            onClick={this.searchVendorOffer}> Pesquisar</Button>
-                    </Form>
-                </Card>
-
-                <div className="mt-5">
-                    <h3 className="m-a text-center mt-3 mb-3">Resultado</h3>
-
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th>Fornecedor</th>
-                                <th>Tipo de serviço</th>
-                                <th>Especialização</th>
-                                <th>Preço</th>
-                                <th>Distância</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.vendorOffers.map(vendorOffer => (
-                                <tr><td>{vendorOffer.vendorFirstName} {vendorOffer.vendorLastName}</td>
-                                    <td>{vendorOffer.groupName}</td>
-                                    <td>{vendorOffer.detailName}</td>
-                                    <td>{vendorOffer.price}</td>
-                                    <td>{vendorOffer.distance} Km</td>
-                                    <td> <Button className="mr-2"
-                                        variant="primary">Detalhe</Button>
-
-                                        <Button variant="success"
-                                            onClick={()=> this.sendStrongLead(vendorOffer.id)}>Contatar</Button>
-                                    </td>
-                                </tr>
-                            ))}
-
-                        </tbody>
-                    </Table>
-                </div>
-
-            </Container>
-
-            <Modal centered show={this.state.showLeadSendModal} onHide={this.hideLeadSendModal} animation={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title className="text-success">Sucesso!</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Seu interesse foi enviado com sucesso ao fornecedor! <br />
+                    <Modal centered show={this.state.showLeadSendModal} onHide={this.hideLeadSendModal} animation={false}>
+                        <Modal.Header closeButton>
+                            <Modal.Title className="text-success">Sucesso!</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>Seu interesse foi enviado com sucesso ao fornecedor! <br />
                      Logo você será contatado para proceder com a negociação.</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="danger" onClick={this.hideLeadSendModal} >Fechar </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
+                        <Modal.Footer>
+                            <Button variant="danger" onClick={this.hideLeadSendModal} >Fechar </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+            </div>
         )
     }
 }
 
-export default VendorOfferSearch;
+export default withRouter(VendorOfferSearch);

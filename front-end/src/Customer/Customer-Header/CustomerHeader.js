@@ -11,6 +11,9 @@ const customerHeader = () => {
                 <Nav.Link href="#">Mensagens</Nav.Link>
                 <Nav.Link href="#">Editar Cadastro</Nav.Link>
             </Nav>
+            <Nav>
+                <Nav.Link href="/login">Sair</Nav.Link>
+            </Nav>
         </Navbar>
     )
 }
