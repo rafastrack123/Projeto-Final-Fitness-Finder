@@ -72,7 +72,6 @@ class Login extends Component {
             <div>
                 <InitialPageHeader />
                 <div className="Login">
-
                     <h3 id="login-header">Login</h3>
                     <form id="login-from">
 

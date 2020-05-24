@@ -29,8 +29,11 @@ class VendorOfferSearch extends Component {
             vendorLastName: "",
             maxDistanceInKm: null,
             maxPrice: null,
+
+            // checkboxs
             isHomeService: false,
             isFirstClassFree: false,
+            isRemoteService: false,
 
             // search result
             vendorOffers: [],
@@ -110,9 +113,31 @@ class VendorOfferSearch extends Component {
         this.setState({ vendorFirstName: event.target.value });
     }
 
-    vendorLastNamehangeHandle = (event) => {
+    vendorLastNameChangeHandle = (event) => {
         this.setState({ vendorLastName: event.target.value });
     }
+
+    maxDistanceChangeHandle = (event) => {
+        this.setState({ maxDistanceInKm: event.target.value });
+    }
+
+    maxPriceChangeHandle = (event) => {
+        this.setState({ maxPrice: event.target.value });
+    }
+
+    isHomeServiceChangeHandle = () => {
+        this.setState({ isHomeService: !this.state.isHomeService });
+    }
+
+    isFirstClassFreeChangeHandle = () => {
+        this.setState({ isFirstClassFree: !this.state.isFirstClassFree });
+    }
+
+    isRemoteServiceChangeHandle = () => {
+        this.setState({ isRemoteService: !this.state.isRemoteService });
+    }
+
+
 
     searchVendorOffer() {
         console.log('searchVendorOffer:');
@@ -128,7 +153,8 @@ class VendorOfferSearch extends Component {
                 maxPrice: this.state.maxPrice,
                 maxDistanceInKm: this.state.maxDistanceInKm,
                 isHomeService: this.state.isHomeService,
-                isFirstClassFree: this.state.isFirstClassFree
+                isFirstClassFree: this.state.isFirstClassFree,
+                isRemoteService: this.state.isRemoteService
             }
         }).then(response => {
             console.log('searchVendorOffer Success');
@@ -181,7 +207,7 @@ class VendorOfferSearch extends Component {
                                             <Form.Label>Sobrenome:</Form.Label>
                                             <Form.Control type="text"
                                                 value={this.state.vendorLastName}
-                                                onChange={this.vendorLastNamehangeHandle}
+                                                onChange={this.vendorLastNameChangeHandle}
                                                 placeholder="Sobrenome do Fornecedor" />
                                         </Form.Group>
                                     </Col>
@@ -191,14 +217,20 @@ class VendorOfferSearch extends Component {
                                     <Col md={6} xs={11}>
                                         <Form.Group controlId="distance">
                                             <Form.Label>Distância:</Form.Label>
-                                            <Form.Control type="number" placeholder="Distância Máxima KM" />
+                                            <Form.Control type="number"
+                                                value={this.state.maxDistanceInKm}
+                                                onChange={this.maxDistanceChangeHandle}
+                                                placeholder="Distância Máxima KM" />
 
                                         </Form.Group>
                                     </Col>
                                     <Col md={6} xs={11}>
                                         <Form.Group controlId="maxprice">
                                             <Form.Label>Preço Máximo:</Form.Label>
-                                            <Form.Control type="number" placeholder="Preço máximo" />
+                                            <Form.Control type="number"
+                                                value={this.state.maxPrice}
+                                                onChange={this.maxPriceChangeHandle}
+                                                placeholder="Preço máximo" />
                                         </Form.Group>
                                     </Col>
                                 </Form.Row>
@@ -261,15 +293,28 @@ class VendorOfferSearch extends Component {
                                 <Form.Row>
                                     <Col>
                                         <Form.Group id="isHomeServiceCheckbox">
-                                            <Form.Check type="checkbox" label="Atendimento a domicílio" />
+                                            <Form.Check type="checkbox"
+                                                value={this.state.isHomeService}
+                                                onChange={this.isHomeServiceChangeHandle}
+                                                label="Atendimento a domicílio" />
                                         </Form.Group>
 
                                     </Col>
                                     <Col>
-                                        <Form.Group id="isFirstClassFree">
-                                            <Form.Check type="checkbox" label="Primeiro atendimento gratuito" />
+                                        <Form.Group id="isRemoteServiceCheckbox">
+                                            <Form.Check type="checkbox"
+                                                value={this.state.isRemoteService}
+                                                onChange={this.isRemoteServiceChangeHandle}
+                                                label="Atendimento Remoto" />
                                         </Form.Group>
-
+                                    </Col>
+                                    <Col>
+                                        <Form.Group id="isFirstClassFree">
+                                            <Form.Check type="checkbox"
+                                                value={this.state.isFirstClassFree}
+                                                onChange={this.isFirstClassFreeChangeHandle}
+                                                label="Primeiro atendimento gratuito" />
+                                        </Form.Group>
                                     </Col>
                                 </Form.Row>
 
