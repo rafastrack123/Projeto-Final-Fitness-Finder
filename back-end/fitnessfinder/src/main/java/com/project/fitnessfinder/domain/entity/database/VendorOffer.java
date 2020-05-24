@@ -28,6 +28,8 @@ public class VendorOffer {
 
     private boolean isHomeService;
 
+    private boolean isRemoteService;
+
     private boolean firstClassFree;
 
     private String serviceDescription;

@@ -18,6 +18,8 @@ public class VendorOfferJson {
 
     public boolean isHomeService;
 
+    public boolean isRemoteService;
+
     public BigDecimal price;
 
     public String serviceDescription;

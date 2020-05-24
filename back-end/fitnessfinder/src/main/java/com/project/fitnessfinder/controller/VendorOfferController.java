@@ -31,13 +31,15 @@ public class VendorOfferController {
                                                         @RequestParam(required = false) BigDecimal maxPrice,
                                                         @RequestParam(required = false) Boolean isHomeService,
                                                         @RequestParam(required = false) Boolean isFirstClassFree,
+                                                        @RequestParam(required = false) Boolean isRemoteService,
                                                         @RequestParam(required = false) Long maxDistanceInKm) {
 
 
         var serviceArea = serviceAreaService.getById(serviceAreaId);
 
         var vendorOffersJsonList = vendorOfferService.searchVendorOffers(customerId, serviceAreaId, serviceGroupId,
-                serviceDetailId, vendorFirstName, vendorLastName, maxPrice, isHomeService, isFirstClassFree, maxDistanceInKm);
+                serviceDetailId, vendorFirstName, vendorLastName, maxPrice, isHomeService, isFirstClassFree, isRemoteService,
+                maxDistanceInKm);
 
         return buildResponse(serviceArea.getName(), vendorOffersJsonList);
 

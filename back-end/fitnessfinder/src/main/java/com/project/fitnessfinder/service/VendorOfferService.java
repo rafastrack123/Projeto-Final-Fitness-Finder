@@ -27,6 +27,7 @@ public class VendorOfferService {
                                                     BigDecimal maxPrice,
                                                     Boolean isHomeService,
                                                     Boolean firstClassFree,
+                                                    Boolean isRemoteService,
                                                     Long maxDistance) {
 
         var customer = customerService.get(customerId);
@@ -39,6 +40,7 @@ public class VendorOfferService {
                 maxPrice,
                 isHomeService,
                 firstClassFree,
+                isRemoteService,
                 maxDistance,
                 customer.getAddress());
     }
