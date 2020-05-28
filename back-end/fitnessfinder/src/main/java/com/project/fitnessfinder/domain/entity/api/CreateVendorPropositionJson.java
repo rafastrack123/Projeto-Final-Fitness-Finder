@@ -9,11 +9,11 @@ import lombok.Builder;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class CreateVendorPropositioJson {
+public class CreateVendorPropositionJson {
 
-    public String vendorOfferId;
+    public Long vendorOfferId;
 
-    public String customerId;
+    public Long customerId;
 
     public String message;
 

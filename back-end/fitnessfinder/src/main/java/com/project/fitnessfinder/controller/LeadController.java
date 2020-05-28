@@ -31,7 +31,7 @@ public class LeadController {
                              @PathVariable Long customerId,
                              @RequestParam(value = "isStrongLead", defaultValue = "false") boolean isStrongLead) {
 
-        leadService.createLead(vendorOfferId, customerId, isStrongLead);
+            leadService.createLead(vendorOfferId, customerId, isStrongLead);
     }
 
 }

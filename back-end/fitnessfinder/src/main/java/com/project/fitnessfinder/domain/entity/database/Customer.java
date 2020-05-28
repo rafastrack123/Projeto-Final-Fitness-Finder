@@ -30,4 +30,7 @@ public class Customer extends Person {
     @ManyToOne
     private Objective objective;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<VendorProposition> vendorPropositions;
+
 }

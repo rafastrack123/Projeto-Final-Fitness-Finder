@@ -10,6 +10,7 @@ import com.project.fitnessfinder.domain.entity.database.ServiceDetail;
 import com.project.fitnessfinder.domain.entity.database.ServiceGroup;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.domain.entity.database.VendorOffer;
+import com.project.fitnessfinder.domain.entity.database.VendorProposition;
 import com.project.fitnessfinder.repository.AvailableScheduleRepository;
 import com.project.fitnessfinder.repository.CustomerRepository;
 import com.project.fitnessfinder.repository.EvaluationRepository;
@@ -19,6 +20,7 @@ import com.project.fitnessfinder.repository.ServiceAreaRepository;
 import com.project.fitnessfinder.repository.ServiceDetailRepository;
 import com.project.fitnessfinder.repository.ServiceGroupRepository;
 import com.project.fitnessfinder.repository.VendorOfferRepository;
+import com.project.fitnessfinder.repository.VendorPropositionRepository;
 import com.project.fitnessfinder.repository.VendorRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class FitnessFinderLoader implements CommandLineRunner {
     private final ServiceGroupRepository serviceGroupRepository;
     private final VendorOfferRepository vendorOfferRepository;
     private final VendorRepository vendorRepository;
+    private final VendorPropositionRepository vendorPropositionRepository;
 
     @Override
     public void run(String... args) {
@@ -82,7 +85,6 @@ public class FitnessFinderLoader implements CommandLineRunner {
 
         var vendorWhite = buildVendor("Walter", "White", "walter.white@gmail.com", "password");
 
-
         var vendorOfferBrady = buildVendorOffer(vendorBrady, new BigDecimal("25"), "Descricao do serviço",
                 details.get(random.nextInt(details.size())));
         var vendorOfferBradyTwo = buildVendorOffer(vendorBrady, new BigDecimal("50"), "Descricao do serviço",
@@ -98,9 +100,11 @@ public class FitnessFinderLoader implements CommandLineRunner {
         var vendorOfferWhiteTwo = buildVendorOffer(vendorWhite, new BigDecimal("25"), "Descricao do serviço",
                 details.get(random.nextInt(details.size())));
 
-        var strongLead = buildLead(customerLebron, vendorOfferBrady, true);
+        var strongLead = buildLead(customerObama, vendorOfferBrady, true);
 
-        var weakLead = buildLead(customerRonaldo, vendorOfferTwo, false);
+        var weakLead = buildLead(customerRonaldo, vendorOfferBradyTwo, false);
+
+        buildVendorProposition(customerLebron, vendorOfferSnow);
     }
 
     private List<Objective> buildObjectives() {
@@ -296,6 +300,18 @@ public class FitnessFinderLoader implements CommandLineRunner {
                 .build();
 
         return leadRepository.save(lead);
+    }
+
+    private void buildVendorProposition(Customer customerLebron, VendorOffer vendorOfferSnow) {
+        var vendorProposition = new VendorProposition();
+
+        vendorProposition.setCustomer(customerLebron);
+        vendorProposition.setVendorOffer(vendorOfferSnow);
+
+        vendorProposition.setMessage("Boa tarde Lebron, " +
+                "vi que está procurando um serviço que ofereço, posso te dar 30% de desconto no primeiro mês");
+
+        vendorPropositionRepository.save(vendorProposition);
     }
 
 }
