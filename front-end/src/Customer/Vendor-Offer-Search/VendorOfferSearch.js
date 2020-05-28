@@ -213,7 +213,7 @@ class VendorOfferSearch extends Component {
                             </Form.Row>
 
                             <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
-                                <Col md={6} xs={11}>
+                                <Col md={3} xs={11}>
                                     <Form.Group controlId="distance">
                                         <Form.Label>Distância:</Form.Label>
                                         <Form.Control type="number"
@@ -223,7 +223,7 @@ class VendorOfferSearch extends Component {
 
                                     </Form.Group>
                                 </Col>
-                                <Col md={6} xs={11}>
+                                <Col md={3} xs={11}>
                                     <Form.Group controlId="maxprice">
                                         <Form.Label>Preço Máximo:</Form.Label>
                                         <Form.Control type="number"
@@ -232,11 +232,8 @@ class VendorOfferSearch extends Component {
                                             placeholder="Preço máximo" />
                                     </Form.Group>
                                 </Col>
-                            </Form.Row>
 
-
-                            <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
-                                <Col>
+                                <Col md={6} xs={11}>
                                     <Form.Group>
                                         <Form.Label>Area do Serviço: </Form.Label>
                                         <Form.Control as="select"
@@ -252,7 +249,11 @@ class VendorOfferSearch extends Component {
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
+                            </Form.Row>
 
+
+                            <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
+    
                                 <Col>
                                     <Form.Group>
                                         <Form.Label>Tipo de Serviço: </Form.Label>
@@ -269,10 +270,7 @@ class VendorOfferSearch extends Component {
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
-                            </Form.Row>
-
-                            <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
-                                <Col xs={8}>
+                                <Col >
                                     <Form.Group>
                                         <Form.Label>Especialização: </Form.Label>
                                         <Form.Control as="select"
