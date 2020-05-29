@@ -166,9 +166,9 @@ class VendorOfferSearch extends Component {
     sendStrongLead(vendorOfferId) {
         var customerId = this.state.customerId;
 
-        axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, {
+        axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, null,{
             params: {
-                isStrongLead: true
+                isStrongLead: 'true'
             }
         }).then(response => {
             this.setState({ showLeadSendModal: true });
@@ -343,7 +343,7 @@ class VendorOfferSearch extends Component {
                                             <tr><td>{vendorOffer.vendorFirstName} {vendorOffer.vendorLastName}</td>
                                                 <td>{vendorOffer.groupName}</td>
                                                 <td>{vendorOffer.detailName}</td>
-                                                <td>{vendorOffer.price}</td>
+                                        <td>{vendorOffer.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 , style: 'currency', currency: 'BRL' })}</td>
                                                 <td>{vendorOffer.distance} Km</td>
                                                 <td> <Button className="mr-2"
                                                     variant="primary">Detalhe</Button>

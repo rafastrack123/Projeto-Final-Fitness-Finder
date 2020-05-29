@@ -20,8 +20,8 @@ class VendorHeader extends Component {
                 <Navbar.Brand href="/leads" >Fitness-Finder</Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="/leads">Leads</Nav.Link>
-                    <Nav.Link href="/vendor-offers">Ofertar Serviços</Nav.Link>
-                    <Nav.Link href="/resume">Curriculo</Nav.Link>
+                    <Nav.Link href="#">Ofertar Serviços</Nav.Link>
+                    <Nav.Link href="#">Curriculo</Nav.Link>
                     <Nav.Link href="#">Cadastro</Nav.Link>
                 </Nav>
                 <Nav>

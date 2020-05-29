@@ -55,6 +55,11 @@ class VendorProposition extends Component {
         });
     }
 
+    denyProposition(selectedVendorPropositionId){
+        this.markAsViewed(selectedVendorPropositionId);
+        this.setState({ showRefusePropositionModal: false });
+    }
+
     markAsViewed(vendorPropositionId) {
         console.log('markAsViewed');
         axios.put('http://localhost:8080/vendor-proposition/' + vendorPropositionId)
@@ -147,7 +152,7 @@ class VendorProposition extends Component {
                         <Modal.Footer>
 
                             <Button variant="danger" 
-                            onClick={() => this.markAsViewed(this.state.selectedVendorPropositionId)} >Recusar </Button>
+                            onClick={() => this.denyProposition(this.state.selectedVendorPropositionId)} >Recusar </Button>
                             
                             <Button variant="primary" 
                             onClick={this.hideRefusePropositionModal} >Fechar </Button>
