@@ -10,6 +10,7 @@ import com.project.fitnessfinder.domain.entity.database.ServiceDetail;
 import com.project.fitnessfinder.domain.entity.database.ServiceGroup;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.domain.entity.database.VendorOffer;
+import com.project.fitnessfinder.domain.entity.database.VendorProposition;
 import com.project.fitnessfinder.repository.AvailableScheduleRepository;
 import com.project.fitnessfinder.repository.CustomerRepository;
 import com.project.fitnessfinder.repository.EvaluationRepository;
@@ -19,6 +20,7 @@ import com.project.fitnessfinder.repository.ServiceAreaRepository;
 import com.project.fitnessfinder.repository.ServiceDetailRepository;
 import com.project.fitnessfinder.repository.ServiceGroupRepository;
 import com.project.fitnessfinder.repository.VendorOfferRepository;
+import com.project.fitnessfinder.repository.VendorPropositionRepository;
 import com.project.fitnessfinder.repository.VendorRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class FitnessFinderLoader implements CommandLineRunner {
     private final ServiceGroupRepository serviceGroupRepository;
     private final VendorOfferRepository vendorOfferRepository;
     private final VendorRepository vendorRepository;
+    private final VendorPropositionRepository vendorPropositionRepository;
 
     @Override
     public void run(String... args) {
@@ -62,26 +65,29 @@ public class FitnessFinderLoader implements CommandLineRunner {
         var objectives = buildObjectives();
         var details = buildServiceDetails();
 
+        var addressList = buildAddressList();
 
         var randomObjectiveOne = objectives.get(random.nextInt(objectives.size()));
         var customerLebron = buildCustomer("Lebron", "James", "lebron.james@gmail.com",
-                "password", randomObjectiveOne);
+                "password", randomObjectiveOne, addressList.get(0));
 
         var randomObjetiveTwo = objectives.get(random.nextInt(objectives.size()));
         var customerRonaldo = buildCustomer("Ronaldo", "Fenomeno", "ronaldo@gmail.com",
-                "password", randomObjetiveTwo);
+                "password", randomObjetiveTwo, addressList.get(1));
 
         var randomObjetiveThree = objectives.get(random.nextInt(objectives.size()));
         var customerObama = buildCustomer("Barack", "Obama", "barack.obama@gmail.com",
-                "password", randomObjetiveThree);
+                "password", randomObjetiveThree, addressList.get(2));
 
 
-        var vendorBrady = buildVendor("Tom", "Brady", "tom.brady@gmail.com", "password");
+        var vendorBrady = buildVendor("Tom", "Brady", "tom.brady@gmail.com", "password",
+                addressList.get(3));
 
-        var vendorSnow = buildVendor("John", "Snow", "john.snow@gmail.com", "password");
+        var vendorSnow = buildVendor("John", "Snow", "john.snow@gmail.com", "password",
+                addressList.get(4));
 
-        var vendorWhite = buildVendor("Walter", "White", "walter.white@gmail.com", "password");
-
+        var vendorWhite = buildVendor("Walter", "White", "walter.white@gmail.com", "password",
+                addressList.get(5));
 
         var vendorOfferBrady = buildVendorOffer(vendorBrady, new BigDecimal("25"), "Descricao do serviço",
                 details.get(random.nextInt(details.size())));
@@ -98,9 +104,19 @@ public class FitnessFinderLoader implements CommandLineRunner {
         var vendorOfferWhiteTwo = buildVendorOffer(vendorWhite, new BigDecimal("25"), "Descricao do serviço",
                 details.get(random.nextInt(details.size())));
 
-        var strongLead = buildLead(customerLebron, vendorOfferBrady, true);
+        var strongLead = buildLead(customerObama, vendorOfferBrady, true);
 
-        var weakLead = buildLead(customerRonaldo, vendorOfferTwo, false);
+        var weakLead = buildLead(customerRonaldo, vendorOfferBradyTwo, false);
+
+        buildVendorProposition(customerLebron, vendorOfferSnow,
+                "Boa tarde Lebron, vi que está procurando um serviço que ofereço, posso te dar 30% de desconto no primeiro mês");
+
+        buildVendorProposition(customerLebron, vendorOfferWhite,
+                "Olá Lebron, vi que está procurando um serviço que ofereço, posso te dar 30% de desconto no primeiro mês");
+
+        buildVendorProposition(customerLebron, vendorOfferBrady,
+                "Vi seu interesse, gostaria de te fornecer duas aulas experimentais gratuitas. O que acha podemos negociar?");
+
     }
 
     private List<Objective> buildObjectives() {
@@ -209,7 +225,8 @@ public class FitnessFinderLoader implements CommandLineRunner {
 
     }
 
-    private Customer buildCustomer(String firstName, String lastName, String email, String password, Objective objective) {
+    private Customer buildCustomer(String firstName, String lastName, String email, String password, Objective objective,
+                                   Address address) {
         var customer = new Customer();
 
         customer.setFirstName(firstName);
@@ -219,14 +236,14 @@ public class FitnessFinderLoader implements CommandLineRunner {
         customer.setPassword(password);
 
         customer.setContactInfo(buildContactInfo());
-        customer.setAddress(buildAddressCustomer());
+        customer.setAddress(address);
 
         customer.setObjective(objective);
 
         return customerRepository.save(customer);
     }
 
-    private Vendor buildVendor(String firstname, String lastName, String email, String password) {
+    private Vendor buildVendor(String firstname, String lastName, String email, String password, Address address) {
         var vendor = new Vendor();
 
         vendor.setFirstName(firstname);
@@ -236,9 +253,24 @@ public class FitnessFinderLoader implements CommandLineRunner {
         vendor.setPassword(password);
 
         vendor.setContactInfo(buildContactInfo());
-        vendor.setAddress(buildAddressVendor());
+        vendor.setAddress(address);
 
         return vendorRepository.save(vendor);
+    }
+
+    private List<Address> buildAddressList() {
+        var addressList = new ArrayList<Address>();
+
+        addressList.add(buildAddress(-30.0654331, -51.235908, "Estádio Beira-Rio"));
+        addressList.add(buildAddress(-30.0077714, -51.1769566, "Rua Piauí 40"));
+
+        addressList.add(buildAddress(-30.0596973, -51.1738309, "Tecnopuc"));
+        addressList.add(buildAddress(-29.9739581, -51.1970725, "Arena Grêmio"));
+
+        addressList.add(buildAddress(-30.0368901, -51.23005, "Faculdade Senac Campus II"));
+        addressList.add(buildAddress(-30.0271233, -51.2029356, "Parque Moinhos de Vento"));
+
+        return addressList;
     }
 
 
@@ -250,22 +282,13 @@ public class FitnessFinderLoader implements CommandLineRunner {
         return contact;
     }
 
-    private Address buildAddressCustomer() {
+    private Address buildAddress(double lat, double longitude, String fullAddress) {
         var address = new Address();
 
-        address.setFullAddress("Rua Piauí 40");
-        address.setLatitude(-30.0077714);
-        address.setLongitude(-51.1769566);
-
-        return address;
-    }
-
-    private Address buildAddressVendor() {
-        var address = new Address();
+        address.setLatitude(lat);
+        address.setLongitude(longitude);
 
         address.setFullAddress("Estádio Beira-Rio");
-        address.setLatitude(-30.0654331);
-        address.setLongitude(-51.235908);
 
         return address;
     }
@@ -296,6 +319,17 @@ public class FitnessFinderLoader implements CommandLineRunner {
                 .build();
 
         return leadRepository.save(lead);
+    }
+
+    private void buildVendorProposition(Customer customerLebron, VendorOffer vendorOfferSnow, String message) {
+        var vendorProposition = new VendorProposition();
+
+        vendorProposition.setCustomer(customerLebron);
+        vendorProposition.setVendorOffer(vendorOfferSnow);
+
+        vendorProposition.setMessage(message);
+
+        vendorPropositionRepository.save(vendorProposition);
     }
 
 }

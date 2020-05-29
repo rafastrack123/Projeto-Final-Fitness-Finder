@@ -9,7 +9,7 @@ import com.project.fitnessfinder.domain.entity.api.ServiceAreaJson;
 import com.project.fitnessfinder.domain.entity.api.ServiceDetailJson;
 import com.project.fitnessfinder.domain.entity.api.ServiceGroupJson;
 import com.project.fitnessfinder.domain.entity.api.VendorJson;
-import com.project.fitnessfinder.domain.entity.api.VendorOfferJson;
+import com.project.fitnessfinder.domain.entity.api.VendorPropositionJson;
 import com.project.fitnessfinder.domain.entity.database.Address;
 import com.project.fitnessfinder.domain.entity.database.ContactInfo;
 import com.project.fitnessfinder.domain.entity.database.Customer;
@@ -19,7 +19,7 @@ import com.project.fitnessfinder.domain.entity.database.ServiceArea;
 import com.project.fitnessfinder.domain.entity.database.ServiceDetail;
 import com.project.fitnessfinder.domain.entity.database.ServiceGroup;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
-import com.project.fitnessfinder.domain.entity.database.VendorOffer;
+import com.project.fitnessfinder.domain.entity.database.VendorProposition;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
@@ -79,16 +79,25 @@ public class Converter {
 
     public LeadJson convert(Lead lead) {
         var json = new LeadJson();
+        json.id = lead.getId();
 
+        json.customerId = lead.getCustomer().getId();
         json.customerFirstName = lead.getCustomer().getFirstName();
-        json.customerLastName = lead.getCustomer().getLastName();
+
+        json.vendorOfferId = lead.getVendorOffer().getId();
+        json.vendorOfferDescription = buildVendorOfferDescription(lead);
+
+        json.customerObjective = lead.getCustomer().getObjective().getName();
 
         json.isStrongLead = lead.isStrongLead();
 
+        json.date = lead.getUpdateDate();
 
-        json.vendorOfferDescription = buildVendorOfferDescription(lead);
-
-        json.customerContact = convert(lead.getCustomer().getContactInfo());
+        if (lead.isStrongLead()) {
+            json.customerLastName = lead.getCustomer().getLastName();
+            json.customerEmail = lead.getCustomer().getEmail();
+            json.customerContact = convert(lead.getCustomer().getContactInfo());
+        }
 
         return json;
     }
@@ -98,7 +107,8 @@ public class Converter {
         var group = detail.getServiceGroup();
         var area = group.getServiceArea();
 
-        return area.getName() + " - " + group.getName() + " - " + detail.getName();
+//        return area.getName() + " - " + group.getName() + " - " + detail.getName();
+        return detail.getName();
     }
 
 //    public VendorOfferJson convert(VendorOffer vendorOffer) {
@@ -216,6 +226,29 @@ public class Converter {
         address.setLatitude(addressJson.latitude);
 
         return address;
+    }
+
+    public VendorPropositionJson convert(VendorProposition vendorProposition) {
+        var serviceDetail = vendorProposition.getVendorOffer().getServiceDetail();
+
+        var serviceGroup = serviceDetail.getServiceGroup();
+
+        var serviceDescription = serviceGroup.getName().concat(" ")
+                .concat(serviceDetail.getName());
+
+        var vendor = vendorProposition.getVendorOffer().getVendor();
+
+        return VendorPropositionJson.builder()
+                .id(vendorProposition.getId())
+                .customerId(vendorProposition.getCustomer().getId())
+                .serviceDescription(serviceDescription)
+                .message(vendorProposition.getMessage())
+                .viewedByCustomer(vendorProposition.isViewedByCustomer())
+                .vendorOfferId(vendorProposition.getVendorOffer().getId())
+                .vendorFirstName(vendor.getFirstName())
+                .vendorLastName(vendor.getLastName())
+                .build();
+
     }
 
 }

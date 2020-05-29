@@ -35,20 +35,24 @@ public class VendorOfferController {
                                                         @RequestParam(required = false) Long maxDistanceInKm) {
 
 
-        var serviceArea = serviceAreaService.getById(serviceAreaId);
+        //var serviceArea = serviceAreaService.getById(serviceAreaId);
 
         var vendorOffersJsonList = vendorOfferService.searchVendorOffers(customerId, serviceAreaId, serviceGroupId,
                 serviceDetailId, vendorFirstName, vendorLastName, maxPrice, isHomeService, isFirstClassFree, isRemoteService,
                 maxDistanceInKm);
 
-        return buildResponse(serviceArea.getName(), vendorOffersJsonList);
+        return buildResponse(
+               // serviceArea.getName(),
+                vendorOffersJsonList);
 
     }
 
-    private SearchVendorOfferResponse buildResponse(String serviceAreaName, List<VendorOfferJson> vendorOfferJsonList) {
+    private SearchVendorOfferResponse buildResponse(
+           // String serviceAreaName,
+            List<VendorOfferJson> vendorOfferJsonList) {
         var response = new SearchVendorOfferResponse();
 
-        response.serviceAreaName = serviceAreaName;
+       // response.serviceAreaName = serviceAreaName;
         response.offers = vendorOfferJsonList;
 
         return response;

@@ -29,9 +29,9 @@ public class LeadController {
     @ResponseStatus(HttpStatus.CREATED)
     public void generateLead(@PathVariable Long vendorOfferId,
                              @PathVariable Long customerId,
-                             @RequestParam(value = "isStrongLead", defaultValue = "false") boolean isStrongLead) {
+                             @RequestParam(required = false) boolean isStrongLead) {
 
-        leadService.createLead(vendorOfferId, customerId, isStrongLead);
+            leadService.createLead(vendorOfferId, customerId, isStrongLead);
     }
 
 }

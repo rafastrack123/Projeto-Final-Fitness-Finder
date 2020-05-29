@@ -80,9 +80,11 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
     }
 
     private void addServiceAreaClause(StringBuilder querySb, Long serviceAreaId) {
-        var clause = String.format(" WHERE service_area.id = %s \n", serviceAreaId);
+        if (serviceAreaId != null) {
+            var clause = String.format(" WHERE service_area.id = %s \n", serviceAreaId);
+            querySb.append(clause);
+        }
 
-        querySb.append(clause);
     }
 
     private void addServiceGroupClause(StringBuilder querySb, Long serviceGroupId) {

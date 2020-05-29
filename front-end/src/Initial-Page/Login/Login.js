@@ -53,16 +53,16 @@ class Login extends Component {
         console.log('redirectUser');
         console.log(authenticatedUser);
 
+        Cookies.set('userId', authenticatedUser.userId);
+        Cookies.set('userType', authenticatedUser.userType);
+
         if (authenticatedUser.userType === 'Customer') {
-            Cookies.set('userId', authenticatedUser.userId);
-            Cookies.set('userType', authenticatedUser.userType);
-
             console.log('é customer');
-
             history.push('/vendor-offer-search');
 
         } else if (authenticatedUser.userType === 'Vendor') {
             console.log('é vendor');
+            history.push('/leads');
         }
     }
 
