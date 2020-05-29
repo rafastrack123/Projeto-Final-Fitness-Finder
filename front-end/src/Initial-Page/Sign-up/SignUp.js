@@ -3,6 +3,9 @@ import './SignUp.css';
 import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import axios from 'axios';
 import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+// If you want to use the provided css
+import 'react-google-places-autocomplete/dist/index.min.css';
 
 class SignUp extends Component {
 
@@ -181,6 +184,9 @@ class SignUp extends Component {
                                 value={this.state.address}
                                 onChange={this.addressChangeHandle}
                                 placeholder="Insira senha" />
+                            {/* <GooglePlacesAutocomplete
+                                onSelect={console.log}
+                            /> */}
                         </FormGroup>
 
                         {this.state.userType === "Customer" ?
