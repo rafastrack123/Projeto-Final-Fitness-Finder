@@ -8,6 +8,7 @@ import VendorOfferSearch from './Customer/Vendor-Offer-Search/VendorOfferSearch'
 import history from './History.js'
 import Leads from './Vendor/Leads/Leads';
 import VendorProposition from './Customer/Vendor-Proposition/VendorProposition';
+import Resume from './Vendor/Resume/Resume';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route exact path='/vendor-offer-search' component={VendorOfferSearch} />
           <Route exact path='/leads' component={Leads}/>
           <Route exact path='/vendor-proposition' component={VendorProposition}/>
+          <Route exact path='/resume' component={Resume}/>
         </Switch>
       </div>
     </Router>

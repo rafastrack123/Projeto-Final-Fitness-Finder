@@ -21,7 +21,7 @@ class VendorHeader extends Component {
                 <Nav className="mr-auto">
                     <Nav.Link href="/leads">Leads</Nav.Link>
                     <Nav.Link href="#">Ofertar Serviços</Nav.Link>
-                    <Nav.Link href="#">Curriculo</Nav.Link>
+                    <Nav.Link href="/resume">Curriculo</Nav.Link>
                     <Nav.Link href="#">Cadastro</Nav.Link>
                 </Nav>
                 <Nav>

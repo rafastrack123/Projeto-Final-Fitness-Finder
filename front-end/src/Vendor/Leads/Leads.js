@@ -109,7 +109,8 @@ class Leads extends Component {
                         <Alert variant="success text-center"
                             show={this.state.showVendorPropositionSentAlert}
                             onClose={this.hideVendorPropositionSentAlert}
-                            dismissible> Oferta enviada com sucesso!</Alert>
+                            dismissible> Oferta enviada com sucesso!
+                        </Alert>
 
                         <Row>
                             {this.state.leads.map(lead => (
@@ -179,7 +180,7 @@ class Leads extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Group controlId="offerText">
                                 <Form.Label>Oferta:</Form.Label>
                                 <Form.Control as="textarea"
                                     value={this.state.vendorPropositionMessage}

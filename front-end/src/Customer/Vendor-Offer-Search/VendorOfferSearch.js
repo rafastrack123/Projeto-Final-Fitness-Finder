@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './VendorOfferSearch.css';
-import { Form, Container, Card, Button, Col, Table, Modal } from 'react-bootstrap';
+import { Form, Container, Button, Col, Table, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import CustomerHeader from '../Customer-Header/CustomerHeader';
 import { withRouter } from 'react-router-dom';
