@@ -10,6 +10,7 @@ import com.project.fitnessfinder.domain.entity.api.ServiceDetailJson;
 import com.project.fitnessfinder.domain.entity.api.ServiceGroupJson;
 import com.project.fitnessfinder.domain.entity.api.VendorJson;
 import com.project.fitnessfinder.domain.entity.api.VendorPropositionJson;
+import com.project.fitnessfinder.domain.entity.api.VendorResumeJson;
 import com.project.fitnessfinder.domain.entity.database.Address;
 import com.project.fitnessfinder.domain.entity.database.ContactInfo;
 import com.project.fitnessfinder.domain.entity.database.Customer;
@@ -249,6 +250,15 @@ public class Converter {
                 .vendorLastName(vendor.getLastName())
                 .build();
 
+    }
+
+    public VendorResumeJson convertVendorToResume(Vendor vendor) {
+        var resume = new VendorResumeJson();
+
+        resume.id = vendor.getId();
+        resume.resume = vendor.getResume();
+
+        return resume;
     }
 
 }
