@@ -2,10 +2,10 @@ package com.project.fitnessfinder.service;
 
 import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.VendorJson;
+import com.project.fitnessfinder.domain.entity.api.VendorResumeJson;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.exception.EntityNotFound;
 import com.project.fitnessfinder.repository.VendorRepository;
-import com.project.fitnessfinder.validator.EmailValidator;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -59,6 +59,20 @@ public class VendorService {
 
     public Optional<Vendor> findByEmail(String email) {
         return vendorRepository.findByEmail(email);
+    }
+
+    public void updateResume(VendorResumeJson vendorResumeJson) {
+        var vendor = get(vendorResumeJson.id);
+
+        vendor.setResume(vendorResumeJson.resume);
+
+        vendorRepository.save(vendor);
+    }
+
+    public VendorResumeJson getVendorResume(Long vendorId) {
+        var vendor = get(vendorId);
+
+        return converter.convertVendorToResume(vendor);
     }
 
 }

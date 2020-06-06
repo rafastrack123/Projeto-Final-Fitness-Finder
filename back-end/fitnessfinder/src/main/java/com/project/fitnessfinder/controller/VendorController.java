@@ -1,6 +1,7 @@
 package com.project.fitnessfinder.controller;
 
 import com.project.fitnessfinder.domain.entity.api.VendorJson;
+import com.project.fitnessfinder.domain.entity.api.VendorResumeJson;
 import com.project.fitnessfinder.service.VendorService;
 import com.project.fitnessfinder.validator.EmailValidator;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,16 @@ public class VendorController {
     public VendorJson putVendor(@PathVariable Long id,
                                 @RequestBody VendorJson vendorJson) {
         return vendorService.update(id, vendorJson);
+    }
+
+    @PostMapping("/resume")
+    public void updateResume(@RequestBody VendorResumeJson vendorResumeJson) {
+        vendorService.updateResume(vendorResumeJson);
+    }
+
+    @GetMapping("/resume/{vendorId}")
+    public VendorResumeJson getVendorResume(@PathVariable Long vendorId) {
+        return vendorService.getVendorResume(vendorId);
     }
 
 }
