@@ -108,7 +108,7 @@ public class Converter {
         var area = group.getServiceArea();
 
 //        return area.getName() + " - " + group.getName() + " - " + detail.getName();
-        return detail.getName();
+        return group.getName() + " " + detail.getName();
     }
 
 //    public VendorOfferJson convert(VendorOffer vendorOffer) {

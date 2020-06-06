@@ -109,10 +109,10 @@ public class FitnessFinderLoader implements CommandLineRunner {
         var weakLead = buildLead(customerRonaldo, vendorOfferBradyTwo, false);
 
         buildVendorProposition(customerLebron, vendorOfferSnow,
-                "Boa tarde Lebron, vi que está procurando um serviço que ofereço, posso te dar 30% de desconto no primeiro mês");
+                "Boa tarde Lebron, vi que está procurando um serviço que ofereço, posso te dar 30% de desconto no primeiro mês.");
 
         buildVendorProposition(customerLebron, vendorOfferWhite,
-                "Olá Lebron, vi que está procurando um serviço que ofereço, posso te dar 30% de desconto no primeiro mês");
+                "Olá Lebron, gostaría de ter aula de boxe? Podemos fechar um pacote semestral com pela metade do preço do concorrente.");
 
         buildVendorProposition(customerLebron, vendorOfferBrady,
                 "Vi seu interesse, gostaria de te fornecer duas aulas experimentais gratuitas. O que acha podemos negociar?");
