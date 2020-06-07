@@ -4,6 +4,8 @@ import static java.util.stream.Collectors.toList;
 
 import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.ServiceDetailJson;
+import com.project.fitnessfinder.domain.entity.database.ServiceDetail;
+import com.project.fitnessfinder.exception.EntityNotFound;
 import com.project.fitnessfinder.repository.ServiceDetailRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +18,15 @@ public class ServiceDetailService {
     private final ServiceDetailRepository serviceDetailRepository;
     private final Converter converter;
 
-    public List<ServiceDetailJson> findByServiceGroupId(Long serviceGroupId){
+    public List<ServiceDetailJson> findByServiceGroupId(Long serviceGroupId) {
         return serviceDetailRepository.findByServiceGroupId(serviceGroupId)
                 .stream()
                 .map(converter::convert)
                 .collect(toList());
+    }
+
+    public ServiceDetail getById(Long id) {
+        return serviceDetailRepository.findById(id).orElseThrow(() -> new EntityNotFound("Service Detail", id));
     }
 
 }

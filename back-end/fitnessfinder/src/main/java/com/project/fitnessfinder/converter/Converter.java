@@ -1,6 +1,7 @@
 package com.project.fitnessfinder.converter;
 
 import com.project.fitnessfinder.domain.entity.api.AddressJson;
+import com.project.fitnessfinder.domain.entity.api.AvailableScheduleJson;
 import com.project.fitnessfinder.domain.entity.api.ContactInfoJson;
 import com.project.fitnessfinder.domain.entity.api.CustomerJson;
 import com.project.fitnessfinder.domain.entity.api.LeadJson;
@@ -9,9 +10,11 @@ import com.project.fitnessfinder.domain.entity.api.ServiceAreaJson;
 import com.project.fitnessfinder.domain.entity.api.ServiceDetailJson;
 import com.project.fitnessfinder.domain.entity.api.ServiceGroupJson;
 import com.project.fitnessfinder.domain.entity.api.VendorJson;
+import com.project.fitnessfinder.domain.entity.api.VendorOfferJson;
 import com.project.fitnessfinder.domain.entity.api.VendorPropositionJson;
 import com.project.fitnessfinder.domain.entity.api.VendorResumeJson;
 import com.project.fitnessfinder.domain.entity.database.Address;
+import com.project.fitnessfinder.domain.entity.database.AvailableSchedule;
 import com.project.fitnessfinder.domain.entity.database.ContactInfo;
 import com.project.fitnessfinder.domain.entity.database.Customer;
 import com.project.fitnessfinder.domain.entity.database.Lead;
@@ -20,7 +23,11 @@ import com.project.fitnessfinder.domain.entity.database.ServiceArea;
 import com.project.fitnessfinder.domain.entity.database.ServiceDetail;
 import com.project.fitnessfinder.domain.entity.database.ServiceGroup;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
+import com.project.fitnessfinder.domain.entity.database.VendorOffer;
 import com.project.fitnessfinder.domain.entity.database.VendorProposition;
+import com.project.fitnessfinder.domain.entity.enums.DayOfWeekPtBr;
+import java.sql.Time;
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
@@ -111,29 +118,6 @@ public class Converter {
 //        return area.getName() + " - " + group.getName() + " - " + detail.getName();
         return group.getName() + " " + detail.getName();
     }
-
-//    public VendorOfferJson convert(VendorOffer vendorOffer) {
-//        var json = new VendorOfferJson();
-//
-//        json.id = vendorOffer.getId();
-//        json.price = vendorOffer.getPrice();
-//
-//        json.isHomeService = vendorOffer.isHomeService();
-//
-//        json.firstClassFree = vendorOffer.isFirstClassFree();
-//
-//        json.vendorFirstName = vendorOffer.getVendor().getFirstName();
-//        json.vendorLastName = vendorOffer.getVendor().getLastName();
-//
-//        var detail = vendorOffer.getServiceDetail();
-//        var group = detail.getServiceGroup();
-//        json.groupName = group.getName();
-//        json.detailName = detail.getName();
-//        json.areaName = group.getServiceArea().getName();
-//
-//
-//        return json;
-//    }
 
     public ServiceAreaJson convert(ServiceArea serviceArea) {
         return ServiceAreaJson.builder()
@@ -253,12 +237,152 @@ public class Converter {
     }
 
     public VendorResumeJson convertVendorToResume(Vendor vendor) {
-        var resume = new VendorResumeJson();
+        return VendorResumeJson.builder()
+                .id(vendor.getId())
+                .resume(vendor.getResume())
+                .build();
+    }
 
-        resume.id = vendor.getId();
-        resume.resume = vendor.getResume();
+    public DayOfWeekPtBr convert(DayOfWeek dayOfWeek) {
 
-        return resume;
+        switch (dayOfWeek) {
+            case MONDAY:
+                return DayOfWeekPtBr.SEGUNDA;
+            case TUESDAY:
+                return DayOfWeekPtBr.TERCA;
+            case WEDNESDAY:
+                return DayOfWeekPtBr.QUARTA;
+            case THURSDAY:
+                return DayOfWeekPtBr.QUINTA;
+            case FRIDAY:
+                return DayOfWeekPtBr.SEXTA;
+            case SATURDAY:
+                return DayOfWeekPtBr.SABADO;
+            case SUNDAY:
+                return DayOfWeekPtBr.DOMINGO;
+            default:
+                throw new RuntimeException();
+        }
+    }
+
+    public DayOfWeek convert(DayOfWeekPtBr dayOfWeekPtBr) {
+        switch (dayOfWeekPtBr) {
+            case SEGUNDA:
+                return DayOfWeek.MONDAY;
+            case TERCA:
+                return DayOfWeek.TUESDAY;
+            case QUARTA:
+                return DayOfWeek.WEDNESDAY;
+            case QUINTA:
+                return DayOfWeek.THURSDAY;
+            case SEXTA:
+                return DayOfWeek.FRIDAY;
+            case SABADO:
+                return DayOfWeek.SATURDAY;
+            case DOMINGO:
+                return DayOfWeek.SUNDAY;
+            default:
+                throw new RuntimeException();
+        }
+    }
+
+    public AvailableScheduleJson convert(AvailableSchedule availableSchedule) {
+
+        return AvailableScheduleJson.builder()
+                .id(availableSchedule.getId())
+                .dayOfWeek(convert(availableSchedule.getDayOfWeek()))
+                .startTime(availableSchedule.getStartTime().toString())
+                .endTime(availableSchedule.getEndTime().toString())
+                .build();
+    }
+
+    public AvailableSchedule convert(AvailableScheduleJson availableScheduleJson) {
+        var availableSchedule = new AvailableSchedule();
+
+        availableSchedule.setDayOfWeek(convert(availableScheduleJson.dayOfWeek));
+
+
+        var startTime = addSeconds(availableScheduleJson.startTime);
+        var endTime = addSeconds(availableScheduleJson.endTime);
+
+        availableSchedule.setStartTime(Time.valueOf(startTime));
+        availableSchedule.setEndTime(Time.valueOf(endTime));
+
+        return availableSchedule;
+    }
+
+    private String addSeconds(String time) {
+        if (time.length() == 5) {
+            return time.concat(":00");
+        }
+        return time;
+    }
+
+    public VendorOfferJson convert(VendorOffer vendorOffer) {
+        var vendorOfferJson = new VendorOfferJson();
+
+        var vendor = vendorOffer.getVendor();
+
+        // Vendor data
+        vendorOfferJson.vendorId = vendor.getId();
+        vendorOfferJson.vendorFirstName = vendor.getFirstName();
+        vendorOfferJson.vendorLastName = vendor.getLastName();
+
+
+        // Offer Data
+        vendorOfferJson.isHomeService = vendorOffer.isHomeService();
+        vendorOfferJson.firstClassFree = vendorOffer.isFirstClassFree();
+        vendorOfferJson.isRemoteService = vendorOffer.isRemoteService();
+
+        vendorOfferJson.price = vendorOffer.getPrice();
+
+        vendorOfferJson.serviceDescription = vendorOffer.getServiceDescription();
+
+        //Services detail
+        var serviceDetail = vendorOffer.getServiceDetail();
+
+        vendorOfferJson.serviceDetailId = serviceDetail.getId();
+        vendorOfferJson.detailName = serviceDetail.getName();
+
+        //Services group
+        var serviceGroup = serviceDetail.getServiceGroup();
+
+        vendorOfferJson.serviceGroupId = serviceGroup.getId();
+        vendorOfferJson.groupName = serviceGroup.getName();
+
+        //Services area
+        var serviceArea = serviceGroup.getServiceArea();
+
+        vendorOfferJson.serviceAreaId = serviceArea.getId();
+        vendorOfferJson.areaName = serviceArea.getName();
+
+
+        // Available schedule
+        vendorOfferJson.setAvailableSchedule(vendorOffer.getAvailableSchedule().stream().map(this::convert)
+                .collect(Collectors.toList()));
+
+
+        return vendorOfferJson;
+    }
+
+    public VendorOffer convert(VendorOfferJson json, Vendor vendor, ServiceDetail serviceDetail) {
+        var vendorOffer = new VendorOffer();
+
+
+        vendorOffer.setPrice(json.price);
+        vendorOffer.setServiceDescription(json.serviceDescription);
+
+        vendorOffer.setFirstClassFree(json.firstClassFree);
+        vendorOffer.setRemoteService(json.isRemoteService);
+        vendorOffer.setHomeService(json.isHomeService);
+
+        // Entities
+        vendorOffer.setAvailableSchedule(json.availableSchedule.stream().map(this::convert).collect(Collectors.toList()));
+        vendorOffer.setVendor(vendor);
+        vendorOffer.setServiceDetail(serviceDetail);
+
+
+        return vendorOffer;
     }
 
 }
