@@ -43,7 +43,7 @@ class VendorOfferSearch extends Component {
             showErrorModal: false,
 
         }
-        
+
         this.searchVendorOffer = this.searchVendorOffer.bind(this)
         this.sendStrongLead = this.sendStrongLead.bind(this)
 
@@ -166,7 +166,7 @@ class VendorOfferSearch extends Component {
     sendStrongLead(vendorOfferId) {
         var customerId = this.state.customerId;
 
-        axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, null,{
+        axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, null, {
             params: {
                 isStrongLead: 'true'
             }
@@ -253,7 +253,7 @@ class VendorOfferSearch extends Component {
 
 
                             <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
-    
+
                                 <Col>
                                     <Form.Group>
                                         <Form.Label>Tipo de Serviço: </Form.Label>
@@ -270,6 +270,7 @@ class VendorOfferSearch extends Component {
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
+                                
                                 <Col >
                                     <Form.Group>
                                         <Form.Label>Especialização: </Form.Label>
@@ -343,7 +344,7 @@ class VendorOfferSearch extends Component {
                                             <tr><td>{vendorOffer.vendorFirstName} {vendorOffer.vendorLastName}</td>
                                                 <td>{vendorOffer.groupName}</td>
                                                 <td>{vendorOffer.detailName}</td>
-                                        <td>{vendorOffer.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 , style: 'currency', currency: 'BRL' })}</td>
+                                                <td>{vendorOffer.price.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}</td>
                                                 <td>{vendorOffer.distance} Km</td>
                                                 <td> <Button className="mr-2"
                                                     variant="primary">Detalhe</Button>

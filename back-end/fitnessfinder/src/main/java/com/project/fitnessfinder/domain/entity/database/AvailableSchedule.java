@@ -23,7 +23,7 @@ public class AvailableSchedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private DayOfWeek day;
+    private DayOfWeek dayOfWeek;
 
     private Time startTime;
 

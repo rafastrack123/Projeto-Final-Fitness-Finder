@@ -5,6 +5,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -14,27 +15,33 @@ public class VendorOfferJson {
 
     public Long id;
 
-    public boolean firstClassFree;
+    public BigDecimal price;
 
     public boolean isHomeService;
 
     public boolean isRemoteService;
 
-    public BigDecimal price;
+    public boolean firstClassFree;
 
     public String serviceDescription;
+
+    public Long vendorId;
 
     public String vendorFirstName;
 
     public String vendorLastName;
 
+    public Long serviceAreaId;
     public String areaName;
 
+    public Long serviceGroupId;
     public String groupName;
 
+    public Long serviceDetailId;
     public String detailName;
 
     public Double distance;
 
+    public List<AvailableScheduleJson> availableSchedule;
 
 }

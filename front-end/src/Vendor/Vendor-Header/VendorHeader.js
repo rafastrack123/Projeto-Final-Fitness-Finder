@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import history from '../../History';
 import Cookies from 'js-cookie';
 
@@ -20,9 +20,11 @@ class VendorHeader extends Component {
                 <Navbar.Brand href="/leads" >Fitness-Finder</Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="/leads">Leads</Nav.Link>
-                    <Nav.Link href="#">Ofertar Serviços</Nav.Link>
+                    <NavDropdown title="Serviços">
+                        <NavDropdown.Item href="/vendor-offer/create">Ofertar</NavDropdown.Item>
+                        <NavDropdown.Item href="/vendor-offer/list">Visualizar</NavDropdown.Item>
+                    </NavDropdown>
                     <Nav.Link href="/resume">Curriculo</Nav.Link>
-                    <Nav.Link href="#">Cadastro</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link onClick={this.logout} >Sair</Nav.Link>
