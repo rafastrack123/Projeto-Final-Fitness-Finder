@@ -7,6 +7,8 @@ import { Container, Form, Button, Modal, Col, Row, Alert, Card } from 'react-boo
 import CurrencyFormat from 'react-currency-format';
 import TimeInput from 'react-time-input';
 import history from '../../History';
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class VendorOfferCreate extends Component {
 
@@ -49,6 +51,8 @@ class VendorOfferCreate extends Component {
             // invalid form 
             showInvalidAvailableScheduleAlert: false,
             showInvalidVendorOfferAlert: false,
+
+            showAvailableScheduledCreated: false,
 
             invalidAvailableScheduleMessage: "",
             invalidVendorOfferMessage: "",
@@ -240,17 +244,13 @@ class VendorOfferCreate extends Component {
 
             this.setState({ availableOffers: availableScheduleList });
 
-            this.clearModalFields();
+            this.setState({ showAvailableScheduledCreated: true });
+            this.setState({ showInvalidAvailableScheduleAlert: false });
         } else {
-
+            this.setState({ showAvailableScheduledCreated: false });
             this.setState({ showInvalidAvailableScheduleAlert: true });
         }
 
-    }
-
-    clearModalFields() {
-        this.setState({ newStartTimeSchedule: "" });
-        this.setState({ newEndTimeSchedule: "" });
     }
 
     validateVendorOffer() {
@@ -451,22 +451,22 @@ class VendorOfferCreate extends Component {
 
                         {this.state.availableOffers.length > 0 ?
 
-                            <Row className="justify-content-md-center">
+                            <Row className="justify-content-center">
                                 <Col xs={12}>
-                                    <h5 className="m-a text-center mt-4 mb-4"> Horarios Cadastrados</h5>
+                                    <h5 className="m-a text-center mt-2 mb-4"> Horarios Cadastrados</h5>
                                 </Col>
 
                                 {this.state.availableOffers.map((offer, index) => (
-                                    <Col md={12}>
+                                    <Col md={4} xs={8}>
                                         <Card className="mt-4 mb-4">
-                                            <Card.Body>
+                                            <Card.Body className="text-left">
                                                 {offer.dayOfWeek}: {offer.startTime} - {offer.endTime}
 
                                                 <Button className="btn btn-default float-right"
                                                     variant="danger"
                                                     type="button"
                                                     onClick={() => this.removeAvailableSchedule(index)}>
-                                                    Del
+                                                    <FontAwesomeIcon icon={faTrashAlt} />
                                                 </Button>
                                             </Card.Body>
                                         </Card>
@@ -496,6 +496,14 @@ class VendorOfferCreate extends Component {
                         <Modal.Title>Insira horário disponível!</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+
+                        <Alert
+                            show={this.state.showAvailableScheduledCreated}
+                            className="text-center"
+                            variant="success"
+                            onClose={() => { this.setState({ showAvailableScheduledCreated: false }) }}
+                            dismissible>Horário adicionado com sucesso</Alert>
+
 
                         <Alert
                             show={this.state.showInvalidAvailableScheduleAlert}

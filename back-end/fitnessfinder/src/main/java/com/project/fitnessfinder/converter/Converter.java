@@ -323,6 +323,8 @@ public class Converter {
 
         var vendor = vendorOffer.getVendor();
 
+        vendorOfferJson.id = vendorOffer.getId();
+
         // Vendor data
         vendorOfferJson.vendorId = vendor.getId();
         vendorOfferJson.vendorFirstName = vendor.getFirstName();
