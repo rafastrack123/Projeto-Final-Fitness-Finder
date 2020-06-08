@@ -4,6 +4,7 @@ import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.VendorOfferJson;
 import com.project.fitnessfinder.domain.entity.database.VendorOffer;
 import com.project.fitnessfinder.exception.EntityNotFound;
+import com.project.fitnessfinder.repository.AvailableScheduleRepository;
 import com.project.fitnessfinder.repository.VendorOfferRepository;
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,6 +21,7 @@ public class VendorOfferService {
     private final ServiceDetailService serviceDetailService;
     private final VendorService vendorService;
     private final VendorOfferRepository vendorOfferRepository;
+    private final AvailableScheduleRepository availableScheduleRepository;
 
 
     public List<VendorOfferJson> searchVendorOffers(Long customerId,
@@ -32,7 +34,10 @@ public class VendorOfferService {
                                                     Boolean isHomeService,
                                                     Boolean firstClassFree,
                                                     Boolean isRemoteService,
-                                                    Long maxDistance) {
+                                                    Long maxDistance,
+                                                    String dayOfWeek,
+                                                    String startTime,
+                                                    String endTime) {
 
         var customer = customerService.get(customerId);
 
@@ -46,7 +51,10 @@ public class VendorOfferService {
                 firstClassFree,
                 isRemoteService,
                 maxDistance,
-                customer.getAddress());
+                customer.getAddress(),
+                dayOfWeek,
+                startTime,
+                endTime);
     }
 
     public VendorOffer get(Long id) {
@@ -69,10 +77,17 @@ public class VendorOfferService {
 
         var vendorOffer = converter.convert(vendorOfferJson, vendor, serviceDetail);
 
+
+        vendorOffer.getAvailableSchedule().stream().forEach(availableSchedule -> {
+            availableSchedule.setVendorOffer(vendorOffer);
+        });
+
         vendorOfferRepository.save(vendorOffer);
+
+        availableScheduleRepository.saveAll(vendorOffer.getAvailableSchedule());
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         vendorOfferRepository.deleteById(id);
     }
 

@@ -1,5 +1,6 @@
 package com.project.fitnessfinder.repository.implementation;
 
+import com.project.fitnessfinder.converter.Converter;
 import com.project.fitnessfinder.domain.entity.api.VendorOfferJson;
 import com.project.fitnessfinder.domain.entity.database.Address;
 import com.project.fitnessfinder.repository.VendorOfferRepositoryCustom;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Repository;
 public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
     private final EntityManager em;
+    private final Converter converter;
 
     @Override
     public List<VendorOfferJson> searchVendorOffersByFilters(@NotNull Long serviceAreaId,
@@ -35,7 +37,10 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
                                                              Boolean isFirstClassFree,
                                                              Boolean isRemoteService,
                                                              Long maxDistanceInKm,
-                                                             Address customerAddress) {
+                                                             Address customerAddress,
+                                                             String dayOfWeek,
+                                                             String startTime,
+                                                             String endTime) {
 
         var querySb = new StringBuilder("  SELECT vendor_offer.*, service_area.name as areaName, \n" +
                 "    service_group.name as groupName, service_detail.name as detailName, \n" +
@@ -47,6 +52,9 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
                 "        JOIN service_detail  on vendor_offer.service_detail_id = service_detail.id \n" +
                 "        JOIN service_group on service_detail.service_group_id = service_group.id \n" +
                 "        JOIN service_area on service_group.service_area_id = service_area.id \n");
+
+        // available_schedule Join
+        addAvailableSchedule(querySb, dayOfWeek, startTime, endTime);
 
         // Service Clauses
         addServiceAreaClause(querySb, serviceAreaId);
@@ -67,6 +75,14 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
         //Distance Clause
         addMaxDistanceClause(querySb, customerAddress, maxDistanceInKm);
 
+        // Schedule
+        addDayOfWeek(querySb, dayOfWeek);
+        addStartTimeClause(querySb, startTime);
+        addEndTimeClause(querySb, endTime);
+
+        // Add group by to remove duplicates
+        querySb.append("    GROUP BY vendor_offer.id;");
+
         var query = querySb.toString();
 
         log.info("Vendor Offer Query:");
@@ -79,9 +95,20 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
         return tupleToVendorOfferJson(tupleList);
     }
 
+    private void addAvailableSchedule(StringBuilder querySb, String dayOfWeek, String startTime, String endTime) {
+
+        if (StringUtils.isNotBlank(dayOfWeek) ||
+                StringUtils.isNotBlank(startTime) ||
+                StringUtils.isNotBlank(endTime)) {
+            var join = "    JOIN available_schedule on vendor_offer.id = available_schedule.vendor_offer_id \n";
+
+            querySb.append(join);
+        }
+    }
+
     private void addServiceAreaClause(StringBuilder querySb, Long serviceAreaId) {
         if (serviceAreaId != null) {
-            var clause = String.format(" WHERE service_area.id = %s \n", serviceAreaId);
+            var clause = String.format(" AND service_area.id = %s \n", serviceAreaId);
             querySb.append(clause);
         }
 
@@ -156,6 +183,31 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
         if (maxDistanceInKm != null && customerAddress != null) {
             var clause = String.format(" HAVING distance <= %s \n", maxDistanceInKm);
+
+            querySb.append(clause);
+        }
+    }
+
+    private void addDayOfWeek(StringBuilder querySb, String dayOfWeek) {
+        if (StringUtils.isNotBlank(dayOfWeek)) {
+            var dayOfWeekInt = converter.convertDayInPtBrToInt(dayOfWeek);
+            var clause = String.format("    AND available_schedule.day_of_week = %s \n", dayOfWeekInt);
+
+            querySb.append(clause);
+        }
+    }
+
+    private void addStartTimeClause(StringBuilder querySb, String startTime) {
+        if (startTime != null) {
+
+            var clause = String.format("   AND available_schedule.start_time = '%s' \n", converter.addSeconds(startTime));
+            querySb.append(clause);
+        }
+    }
+
+    private void addEndTimeClause(StringBuilder querySb, String endTime) {
+        if (endTime != null) {
+            var clause = String.format("   AND available_schedule.end_time = '%s' \n", converter.addSeconds(endTime));
 
             querySb.append(clause);
         }

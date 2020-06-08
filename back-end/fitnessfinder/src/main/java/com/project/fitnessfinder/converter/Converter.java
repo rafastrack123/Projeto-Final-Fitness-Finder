@@ -25,7 +25,6 @@ import com.project.fitnessfinder.domain.entity.database.ServiceGroup;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.domain.entity.database.VendorOffer;
 import com.project.fitnessfinder.domain.entity.database.VendorProposition;
-import com.project.fitnessfinder.domain.entity.enums.DayOfWeekPtBr;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.util.List;
@@ -113,7 +112,7 @@ public class Converter {
     private String buildVendorOfferDescription(Lead lead) {
         var detail = lead.getVendorOffer().getServiceDetail();
         var group = detail.getServiceGroup();
-        var area = group.getServiceArea();
+//        var area = group.getServiceArea();
 
 //        return area.getName() + " - " + group.getName() + " - " + detail.getName();
         return group.getName() + " " + detail.getName();
@@ -243,44 +242,65 @@ public class Converter {
                 .build();
     }
 
-    public DayOfWeekPtBr convert(DayOfWeek dayOfWeek) {
+    public String convert(DayOfWeek dayOfWeek) {
 
         switch (dayOfWeek) {
             case MONDAY:
-                return DayOfWeekPtBr.SEGUNDA;
+                return "Segunda-Feira";
             case TUESDAY:
-                return DayOfWeekPtBr.TERCA;
+                return "Terça-Feira";
             case WEDNESDAY:
-                return DayOfWeekPtBr.QUARTA;
+                return "Quarta-Feira";
             case THURSDAY:
-                return DayOfWeekPtBr.QUINTA;
+                return "Quinta-Feira";
             case FRIDAY:
-                return DayOfWeekPtBr.SEXTA;
+                return "Sexta-Feira";
             case SATURDAY:
-                return DayOfWeekPtBr.SABADO;
+                return "Sábado";
             case SUNDAY:
-                return DayOfWeekPtBr.DOMINGO;
+                return "Domingo";
             default:
                 throw new RuntimeException();
         }
     }
 
-    public DayOfWeek convert(DayOfWeekPtBr dayOfWeekPtBr) {
+    public DayOfWeek convert(String dayOfWeekPtBr) {
         switch (dayOfWeekPtBr) {
-            case SEGUNDA:
+            case "Segunda-Feira":
                 return DayOfWeek.MONDAY;
-            case TERCA:
+            case "Terça-Feira":
                 return DayOfWeek.TUESDAY;
-            case QUARTA:
+            case "Quarta-Feira":
                 return DayOfWeek.WEDNESDAY;
-            case QUINTA:
+            case "Quinta-Feira":
                 return DayOfWeek.THURSDAY;
-            case SEXTA:
+            case "Sexta-Feira":
                 return DayOfWeek.FRIDAY;
-            case SABADO:
+            case "Sábado":
                 return DayOfWeek.SATURDAY;
-            case DOMINGO:
+            case "Domingo":
                 return DayOfWeek.SUNDAY;
+            default:
+                throw new RuntimeException();
+        }
+    }
+
+    public int convertDayInPtBrToInt(String dayOfWeekPtBr) {
+        switch (dayOfWeekPtBr) {
+            case "Segunda-Feira":
+                return 1;
+            case "Terça-Feira":
+                return 2;
+            case "Quarta-Feira":
+                return 3;
+            case "Quinta-Feira":
+                return 4;
+            case "Sexta-Feira":
+                return 5;
+            case "Sábado":
+                return 6;
+            case "Domingo":
+                return 7;
             default:
                 throw new RuntimeException();
         }
@@ -311,7 +331,7 @@ public class Converter {
         return availableSchedule;
     }
 
-    private String addSeconds(String time) {
+    public String addSeconds(String time) {
         if (time.length() == 5) {
             return time.concat(":00");
         }
@@ -382,7 +402,6 @@ public class Converter {
         vendorOffer.setAvailableSchedule(json.availableSchedule.stream().map(this::convert).collect(Collectors.toList()));
         vendorOffer.setVendor(vendor);
         vendorOffer.setServiceDetail(serviceDetail);
-
 
         return vendorOffer;
     }
