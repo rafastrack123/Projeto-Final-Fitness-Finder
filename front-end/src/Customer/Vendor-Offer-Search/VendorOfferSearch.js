@@ -4,7 +4,9 @@ import { Form, Container, Button, Col, Table, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import CustomerHeader from '../Customer-Header/CustomerHeader';
 import { withRouter } from 'react-router-dom';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import TimeInput from 'react-time-input';
+
 
 class VendorOfferSearch extends Component {
 
@@ -35,6 +37,11 @@ class VendorOfferSearch extends Component {
             isFirstClassFree: false,
             isRemoteService: false,
 
+            // Schedule filters
+            dayOfWeek: null,
+            startTime: null,
+            endTime: null,
+
             // search result
             vendorOffers: [],
 
@@ -42,6 +49,7 @@ class VendorOfferSearch extends Component {
             showLeadSendModal: false,
             showErrorModal: false,
 
+            daysOfTheWeekArray: this.buildDaysOfTheWeekArray()
         }
 
         this.searchVendorOffer = this.searchVendorOffer.bind(this)
@@ -49,6 +57,18 @@ class VendorOfferSearch extends Component {
 
         this.hideLeadSendModal = this.hideLeadSendModal.bind(this)
 
+    }
+
+    buildDaysOfTheWeekArray() {
+        return [
+            'Segunda-Feira',
+            'Terça-Feira',
+            'Quarta-Feira',
+            'Quinta-Feira',
+            'Sexta-Feira',
+            'Sábado',
+            'Domingo'
+        ]
     }
 
 
@@ -138,6 +158,17 @@ class VendorOfferSearch extends Component {
         this.setState({ isRemoteService: !this.state.isRemoteService });
     }
 
+    dayOfWeekChangeHandle = (event) => {
+        this.setState({ dayOfWeek: event.target.value });
+    }
+
+    startTimeChangeHandle = (val) => {
+        this.setState({ startTime: val });
+    }
+
+    endTimeChangeHandle = (val) => {
+        this.setState({ endTime: val });
+    }
 
 
     searchVendorOffer() {
@@ -155,7 +186,10 @@ class VendorOfferSearch extends Component {
                 maxDistanceInKm: this.state.maxDistanceInKm,
                 isHomeService: this.state.isHomeService,
                 isFirstClassFree: this.state.isFirstClassFree,
-                isRemoteService: this.state.isRemoteService
+                isRemoteService: this.state.isRemoteService,
+                dayOfWeek: this.state.dayOfWeek,
+                startTime: this.state.startTime,
+                endTime: this.state.endTime
             }
         }).then(response => {
             console.log('searchVendorOffer Success');
@@ -270,7 +304,7 @@ class VendorOfferSearch extends Component {
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
-                                
+
                                 <Col >
                                     <Form.Group>
                                         <Form.Label>Especialização: </Form.Label>
@@ -284,6 +318,45 @@ class VendorOfferSearch extends Component {
                                                 </option>
                                             ))}
                                         </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Form.Row>
+
+                            <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
+                                <Col md={6} xs={11}>
+                                    <Form.Group>
+                                        <Form.Label className="float-left">Dia da Semana: </Form.Label>
+                                        <Form.Control as="select"
+                                            onChange={this.dayOfWeekChangeHandle}
+                                            value={this.state.dayOfWeek}>
+                                            <option key="" value=""></option>
+                                            {this.state.daysOfTheWeekArray.map(dayOfweek => (
+                                                <option key={dayOfweek} value={dayOfweek}>
+                                                    {dayOfweek}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
+
+                                <Col md={3} xs={6}>
+                                    <Form.Group>
+                                        <Form.Label>Início do atendimento:</Form.Label>
+                                        <TimeInput
+                                            className='form-control'
+                                            mountFocus='true'
+                                            onTimeChange={this.startTimeChangeHandle}
+                                            value={this.state.startTime} />
+                                    </Form.Group>
+                                </Col>
+
+                                <Col md={3} xs={6}>
+                                    <Form.Group>
+                                        <Form.Label>Fim do atendimento:</Form.Label>
+                                        <TimeInput
+                                            className='form-control'
+                                            onTimeChange={this.endTimeChangeHandle}
+                                            value={this.state.endTime} />
                                     </Form.Group>
                                 </Col>
                             </Form.Row>

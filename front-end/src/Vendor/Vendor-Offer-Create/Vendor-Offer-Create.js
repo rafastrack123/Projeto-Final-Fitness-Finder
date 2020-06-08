@@ -76,20 +76,19 @@ class VendorOfferCreate extends Component {
     }
 
     componentDidMount() {
-        this.setState({ newDayOfWeekSchedule: this.state.daysOfTheWeekArray[0].key });
+        this.setState({ newDayOfWeekSchedule: this.state.daysOfTheWeekArray[0]});
         this.fetchServiceAreaArray();
     }
 
     buildDaysOfTheWeekArray() {
         return [
-            { key: "SEGUNDA", value: 'Segunda-Feira' },
-            { key: "TERCA", value: 'Terça-Feira' },
-            { key: "QUARTA", value: 'Quarta-Feira' },
-            { key: "QUINTA", value: 'Quinta-Feira' },
-            { key: "SEXTA", value: 'Sexta-Feira' },
-            { key: "SABADO", value: 'Sábado' },
-            { key: "DOMINGO", value: 'Domingo' }
-
+            'Segunda-Feira',
+            'Terça-Feira',
+            'Quarta-Feira',
+            'Quinta-Feira',
+            'Sexta-Feira',
+            'Sábado',
+            'Domingo'
         ]
     }
 
@@ -522,8 +521,8 @@ class VendorOfferCreate extends Component {
                                             onChange={this.dayOfWeekChangeHandle}
                                             value={this.state.newDayOfWeekSchedule}>
                                             {this.state.daysOfTheWeekArray.map(dayOfweek => (
-                                                <option key={dayOfweek.key} value={dayOfweek.key}>
-                                                    {dayOfweek.value}
+                                                <option key={dayOfweek} value={dayOfweek}>
+                                                    {dayOfweek}
                                                 </option>
                                             ))}
                                         </Form.Control>
