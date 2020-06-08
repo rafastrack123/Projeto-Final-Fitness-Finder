@@ -1,6 +1,7 @@
 package com.project.fitnessfinder.bootstrap;
 
 import com.project.fitnessfinder.domain.entity.database.Address;
+import com.project.fitnessfinder.domain.entity.database.AvailableSchedule;
 import com.project.fitnessfinder.domain.entity.database.ContactInfo;
 import com.project.fitnessfinder.domain.entity.database.Customer;
 import com.project.fitnessfinder.domain.entity.database.Lead;
@@ -23,6 +24,8 @@ import com.project.fitnessfinder.repository.VendorOfferRepository;
 import com.project.fitnessfinder.repository.VendorPropositionRepository;
 import com.project.fitnessfinder.repository.VendorRepository;
 import java.math.BigDecimal;
+import java.sql.Time;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -305,8 +308,34 @@ public class FitnessFinderLoader implements CommandLineRunner {
                 .firstClassFree(Math.random() < 0.5)
                 .build();
 
-        return vendorOfferRepository.save(vendorOffer);
+        var availableSchedules = buildAvailableSchedules(vendorOffer);
+        vendorOffer.setAvailableSchedule(availableSchedules);
 
+
+        vendorOffer = vendorOfferRepository.save(vendorOffer);
+
+        availableScheduleRepository.saveAll(availableSchedules);
+
+        return vendorOffer;
+    }
+
+    private List<AvailableSchedule> buildAvailableSchedules(VendorOffer vendorOffer) {
+
+        var availableSchedule1 = buildAvailableSchedule(vendorOffer, DayOfWeek.MONDAY, "12:00:00", "13:00:00");
+        var availableSchedule2 = buildAvailableSchedule(vendorOffer, DayOfWeek.MONDAY, "14:00:00", "15:00:00");
+        var availableSchedule3 = buildAvailableSchedule(vendorOffer, DayOfWeek.TUESDAY, "12:00:00", "13:00:00");
+
+        return List.of(availableSchedule1, availableSchedule2, availableSchedule3);
+    }
+
+    private AvailableSchedule buildAvailableSchedule(VendorOffer vendorOffer, DayOfWeek dayOfWeek, String startTime,
+                                                     String endTime) {
+        return AvailableSchedule.builder()
+                .vendorOffer(vendorOffer)
+                .dayOfWeek(dayOfWeek)
+                .startTime(Time.valueOf(startTime))
+                .endTime(Time.valueOf(endTime))
+                .build();
     }
 
     private Lead buildLead(Customer customer, VendorOffer vendorOffer, boolean isStrongLead) {

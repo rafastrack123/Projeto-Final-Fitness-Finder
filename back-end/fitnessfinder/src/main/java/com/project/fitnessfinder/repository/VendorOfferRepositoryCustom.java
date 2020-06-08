@@ -18,6 +18,9 @@ public interface VendorOfferRepositoryCustom {
                                                       Boolean isFirstClassFree,
                                                       Boolean isRemoteService,
                                                       Long maxDistanceInKm,
-                                                      Address customerAddress);
+                                                      Address customerAddress,
+                                                      String dayOfWeek,
+                                                      String startTime,
+                                                      String endTime);
 
 }

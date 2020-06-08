@@ -41,14 +41,17 @@ public class VendorOfferController {
                                                         @RequestParam(required = false) Boolean isHomeService,
                                                         @RequestParam(required = false) Boolean isFirstClassFree,
                                                         @RequestParam(required = false) Boolean isRemoteService,
-                                                        @RequestParam(required = false) Long maxDistanceInKm) {
+                                                        @RequestParam(required = false) Long maxDistanceInKm,
+                                                        @RequestParam(required = false) String dayOfWeek,
+                                                        @RequestParam(required = false) String startTime,
+                                                        @RequestParam(required = false) String endTime) {
 
 
         //var serviceArea = serviceAreaService.getById(serviceAreaId);
 
         var vendorOffersJsonList = vendorOfferService.searchVendorOffers(customerId, serviceAreaId, serviceGroupId,
                 serviceDetailId, vendorFirstName, vendorLastName, maxPrice, isHomeService, isFirstClassFree, isRemoteService,
-                maxDistanceInKm);
+                maxDistanceInKm,dayOfWeek,startTime,endTime);
 
         return buildResponse(
                 // serviceArea.getName(),
