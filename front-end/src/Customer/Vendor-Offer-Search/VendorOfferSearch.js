@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './VendorOfferSearch.css';
-import { Form, Container, Button, Col, Table, Modal } from 'react-bootstrap';
+import { Form, Container, Button, Col, Table, Modal, Tabs, Tab, Row, Card } from 'react-bootstrap';
 import axios from 'axios';
 import CustomerHeader from '../Customer-Header/CustomerHeader';
 import { withRouter } from 'react-router-dom';
@@ -48,6 +48,12 @@ class VendorOfferSearch extends Component {
             // modal control
             showLeadSendModal: false,
             showErrorModal: false,
+            showDetailModal: false,
+
+            //Tab control
+            tabsCurrentKey: "offerDetail",
+
+            selectedVendorOffer: null,
 
             daysOfTheWeekArray: this.buildDaysOfTheWeekArray()
         }
@@ -56,6 +62,7 @@ class VendorOfferSearch extends Component {
         this.sendStrongLead = this.sendStrongLead.bind(this)
 
         this.hideLeadSendModal = this.hideLeadSendModal.bind(this)
+        this.hideDetailModal = this.hideDetailModal.bind(this)
 
     }
 
@@ -213,6 +220,30 @@ class VendorOfferSearch extends Component {
         this.setState({ showLeadSendModal: false });
     }
 
+    tabsCurrentKeyHandle(key) {
+        this.setState({ tabsCurrentKey: key });
+    }
+
+    selectVendorOfferDetail(vendorOffer) {
+        this.getAvailableScheduleFromVendorOffer(vendorOffer);
+
+        this.setState({ showDetailModal: true });
+    }
+
+    getAvailableScheduleFromVendorOffer(vendorOffer) {
+        axios.get('http://localhost:8080/available-schedule/vendor-offers/' + vendorOffer.id)
+            .then(response => {
+                console.log('getAvailableScheduleFromVendorOffer');
+                console.log(response.data)
+                vendorOffer.availableSchedule = response.data;
+                this.setState({ selectedVendorOffer: vendorOffer });
+            })
+            .catch(response => console.log(response));
+    }
+
+    hideDetailModal() {
+        this.setState({ showDetailModal: false });
+    }
 
     render() {
         return (
@@ -344,7 +375,6 @@ class VendorOfferSearch extends Component {
                                         <Form.Label>Início do atendimento:</Form.Label>
                                         <TimeInput
                                             className='form-control'
-                                            mountFocus='true'
                                             onTimeChange={this.startTimeChangeHandle}
                                             value={this.state.startTime} />
                                     </Form.Group>
@@ -420,10 +450,11 @@ class VendorOfferSearch extends Component {
                                                 <td>{vendorOffer.price.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}</td>
                                                 <td>{vendorOffer.distance} Km</td>
                                                 <td> <Button className="mr-2"
+                                                    onClick={() => this.selectVendorOfferDetail(vendorOffer)}
                                                     variant="primary">Detalhe</Button>
 
-                                                    <Button variant="success"
-                                                        onClick={() => this.sendStrongLead(vendorOffer.id)}>Contatar</Button>
+                                                    <Button onClick={() => this.sendStrongLead(vendorOffer.id)}
+                                                        variant="success">Contatar</Button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -441,13 +472,86 @@ class VendorOfferSearch extends Component {
                             <Modal.Title className="text-success">Sucesso!</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>Seu interesse foi enviado com sucesso ao fornecedor! <br />
-                     Logo você será contatado para proceder com a negociação.</Modal.Body>
+                                    Logo você será contatado para proceder com a negociação.
+                        </Modal.Body>
                         <Modal.Footer>
                             <Button variant="danger" onClick={this.hideLeadSendModal} >Fechar </Button>
                         </Modal.Footer>
                     </Modal>
+
+
+                    <Modal centered show={true} show={this.state.showDetailModal} animation={true}>
+                        <Container>
+                            <Modal.Header>
+                                <Modal.Title>Detalhes da Oferta</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Tabs className="mt-2 ml-2"
+                                    activeKey={this.state.tabsCurrentKey}
+                                    onSelect={(k) => this.tabsCurrentKeyHandle(k)}>
+
+                                    <Tab eventKey="offerDetail" title="Detalhe" >
+
+                                        {this.state.selectedVendorOffer ?
+                                            <Row className="mt-2 ml-1">
+                                                <Col>
+                                                    <p>
+                                                        <strong>Área:</strong> {this.state.selectedVendorOffer.areaName}
+                                                        <br />
+                                                        <strong>Serviço:</strong> {this.state.selectedVendorOffer.groupName + this.state.selectedVendorOffer.detailName}
+                                                        <br />
+                                                        <strong>Descrição:</strong> {this.state.selectedVendorOffer.serviceDescription}
+                                                        <br />
+                                                        <strong>Preço:</strong> {this.state.selectedVendorOffer.price.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}
+                                                        <br />
+                                                        <strong>Distância:</strong> {this.state.selectedVendorOffer.distance} Km
+                                                        <br />
+                                                        <strong>Profissional:</strong> {this.state.selectedVendorOffer.vendorFirstName + this.state.selectedVendorOffer.vendorLastName}
+                                                        <br />
+                                                        <strong>Atendimento a Domicílio:</strong> {this.state.selectedVendorOffer.isHomeService ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
+                                                        <br />
+                                                        <strong>Atendimento Remoto:</strong> {this.state.selectedVendorOffer.isRemoteService ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
+                                                        <br />
+                                                        <strong>Primeiro Atendimento Grátis:</strong> {this.state.selectedVendorOffer.firstClassFree ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
+                                                        <br />
+                                                    </p>
+                                                </Col>
+                                            </Row>
+                                            : null}
+
+                                    </Tab>
+
+                                    <Tab eventKey="schedule" title="Horários" >
+                                        {this.state.selectedVendorOffer ?
+                                            <Row className="mt-2 ml-1 mb-2">
+                                                {/* {this.state.vendorOffers.map(vendorOffer => ( */}
+                                                {this.state.selectedVendorOffer.availableSchedule.map(
+                                                    availableSchedule => (
+                                                        <Col xs={12} className="mb-1">
+                                                            <Card>
+                                                                <Card.Body className="text-left">
+                                                                    {availableSchedule.dayOfWeek}: {availableSchedule.startTime} - {availableSchedule.endTime}
+                                                                </Card.Body>
+                                                            </Card>
+                                                        </Col>
+                                                    ))}
+                                            </Row>
+                                            : null}
+                                    </Tab>
+                                </Tabs>
+                            </Modal.Body>
+
+                            <Modal.Footer>
+                                <Button className="btn btn-default"
+                                    variant="danger"
+                                    type="button"
+                                    onClick={this.hideDetailModal}>Fechar</Button>
+                            </Modal.Footer>
+
+                        </Container>
+                    </Modal>
                 </div>
-            </div>
+            </div >
         )
     }
 }
