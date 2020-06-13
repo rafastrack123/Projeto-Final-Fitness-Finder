@@ -6,6 +6,7 @@ import CustomerHeader from '../Customer-Header/CustomerHeader';
 import { withRouter } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import TimeInput from 'react-time-input';
+import Loader from '../../Utils/Loader'
 
 
 class VendorOfferSearch extends Component {
@@ -54,6 +55,9 @@ class VendorOfferSearch extends Component {
             tabsCurrentKey: "offerDetail",
 
             selectedVendorOffer: null,
+
+            // Loader
+            showLoader: false,
 
             daysOfTheWeekArray: this.buildDaysOfTheWeekArray()
         }
@@ -180,6 +184,7 @@ class VendorOfferSearch extends Component {
 
     searchVendorOffer() {
         console.log('searchVendorOffer:');
+        this.setState({ showLoader: true });
 
         axios.get('http://localhost:8080/vendor-offer', {
             params: {
@@ -201,6 +206,10 @@ class VendorOfferSearch extends Component {
         }).then(response => {
             console.log('searchVendorOffer Success');
             this.setState({ vendorOffers: response.data.offers });
+            this.setState({ showLoader: false });
+        }).catch(err =>{
+            console.log(err);
+            this.setState({ showLoader: false });
         });
     }
 
@@ -248,10 +257,10 @@ class VendorOfferSearch extends Component {
     render() {
         return (
             <div>
+                {this.state.showLoader ? <Loader /> : null}
                 <CustomerHeader />
                 <div className="VendorOfferSearch">
                     <Container>
-
                         <h3 className="m-a text-center mt-2">Busca por Profissionais Fitness</h3>
                         <hr />
                         <Form>
