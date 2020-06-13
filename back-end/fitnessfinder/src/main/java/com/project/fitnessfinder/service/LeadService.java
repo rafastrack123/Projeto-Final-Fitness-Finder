@@ -37,7 +37,7 @@ public class LeadService {
     }
 
     private Lead buildNewLead(Customer customer, VendorOffer vendorOffer, boolean isStrongLead) {
-        return Lead.builder()
+         return Lead.builder()
                 .customer(customer)
                 .vendorOffer(vendorOffer)
                 .isStrongLead(isStrongLead)

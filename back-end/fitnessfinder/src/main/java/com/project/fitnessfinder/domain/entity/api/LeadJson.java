@@ -29,5 +29,5 @@ public class LeadJson {
 
     public String vendorOfferDescription;
 
-    public Date date;
+    public String updatedDate;
 }
