@@ -22,7 +22,7 @@ class Leads extends Component {
             vendorPropositionMessage: null,
             showVendorPropositionSentAlert: false
         }
-        this.postVendorProposition=this.postVendorProposition.bind(this);
+        this.postVendorProposition = this.postVendorProposition.bind(this);
 
         this.hideCustomerContactModal = this.hideCustomerContactModal.bind(this);
         this.hideSendOfferModal = this.hideSendOfferModal.bind(this);
@@ -40,6 +40,7 @@ class Leads extends Component {
         axios.get('http://localhost:8080/lead/' + vendorId)
             .then(response => {
                 console.log('fetchLeads');
+                console.log(response.data);
                 this.setState({ leads: response.data })
             });
     }
@@ -136,7 +137,7 @@ class Leads extends Component {
                                             }
 
                                         </Card.Body>
-                                        <Card.Footer className="text-muted">24/05/2020</Card.Footer>
+                                        <Card.Footer className="text-muted">{lead.updatedDate}</Card.Footer>
                                     </Card>
                                 </Col>
                             ))}
