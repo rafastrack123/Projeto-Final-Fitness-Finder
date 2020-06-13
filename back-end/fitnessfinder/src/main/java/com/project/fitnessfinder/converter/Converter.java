@@ -26,6 +26,7 @@ import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.domain.entity.database.VendorOffer;
 import com.project.fitnessfinder.domain.entity.database.VendorProposition;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,7 +99,7 @@ public class Converter {
 
         json.isStrongLead = lead.isStrongLead();
 
-        json.date = lead.getUpdateDate();
+        json.updatedDate = new SimpleDateFormat("dd/MM/yyyy").format(lead.getUpdateDate());
 
         if (lead.isStrongLead()) {
             json.customerLastName = lead.getCustomer().getLastName();

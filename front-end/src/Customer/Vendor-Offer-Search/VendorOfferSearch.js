@@ -207,7 +207,7 @@ class VendorOfferSearch extends Component {
             console.log('searchVendorOffer Success');
             this.setState({ vendorOffers: response.data.offers });
             this.setState({ showLoader: false });
-        }).catch(err =>{
+        }).catch(err => {
             console.log(err);
             this.setState({ showLoader: false });
         });
@@ -234,6 +234,12 @@ class VendorOfferSearch extends Component {
     }
 
     selectVendorOfferDetail(vendorOffer) {
+        axios.post('http://localhost:8080/lead/' + vendorOffer.id + '/' + this.state.customerId, null, {
+            params: {
+                isStrongLead: 'false'
+            }
+        });
+
         this.getAvailableScheduleFromVendorOffer(vendorOffer);
 
         this.setState({ showDetailModal: true });
@@ -251,6 +257,7 @@ class VendorOfferSearch extends Component {
     }
 
     hideDetailModal() {
+        this.setState({ tabsCurrentKey: "offerDetail" });
         this.setState({ showDetailModal: false });
     }
 
@@ -529,7 +536,7 @@ class VendorOfferSearch extends Component {
                                                         <br />
                                                         <strong>Distância:</strong> {this.state.selectedVendorOffer.distance} Km
                                                         <br />
-                                                        <strong>Profissional:</strong> {this.state.selectedVendorOffer.vendorFirstName + this.state.selectedVendorOffer.vendorLastName}
+                                                        <strong>Profissional:</strong> {this.state.selectedVendorOffer.vendorFirstName + ' ' + this.state.selectedVendorOffer.vendorLastName}
                                                         <br />
                                                         <strong>Atendimento a Domicílio:</strong> {this.state.selectedVendorOffer.isHomeService ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
                                                         <br />
