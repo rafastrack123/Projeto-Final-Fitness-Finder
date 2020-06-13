@@ -44,7 +44,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
         var querySb = new StringBuilder("  SELECT vendor_offer.*, service_area.name as areaName, \n" +
                 "    service_group.name as groupName, service_detail.name as detailName, \n" +
-                "vendor.first_name as vendorFirstName, vendor.last_name as vendorLastName, \n" +
+                "vendor.first_name as vendorFirstName, vendor.last_name as vendorLastName, vendor.resume as resume, \n" +
                 String.format(" round(st_distance_sphere( POINT( vendor.latitude, vendor.longitude) , POINT(%s,%s ))/1000) AS distance \n",
                         customerAddress.getLatitude(), customerAddress.getLongitude()) +
                 "        FROM vendor_offer \n" +
@@ -233,6 +233,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
             vendorOfferJson.vendorFirstName = tuple.get("vendorFirstName", String.class);
             vendorOfferJson.vendorLastName = tuple.get("vendorLastName", String.class);
+            vendorOfferJson.resume = tuple.get("resume", String.class);
 
             vendorOfferJson.areaName = tuple.get("areaName", String.class);
             vendorOfferJson.groupName = tuple.get("groupName", String.class);
