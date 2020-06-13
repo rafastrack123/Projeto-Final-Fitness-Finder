@@ -28,8 +28,9 @@ public class VendorOfferJson {
     public Long vendorId;
 
     public String vendorFirstName;
-
     public String vendorLastName;
+
+    public String resume;
 
     public Long serviceAreaId;
     public String areaName;

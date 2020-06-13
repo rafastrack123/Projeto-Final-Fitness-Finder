@@ -484,7 +484,6 @@ class VendorOfferSearch extends Component {
                                                             <Button onClick={() => this.sendStrongLead(vendorOffer.id)}
                                                                 variant="success btn-block">Contatar</Button>
                                                         </Col>
-
                                                     </Row>
                                                 </Card.Body>
                                             </Card>
@@ -493,7 +492,6 @@ class VendorOfferSearch extends Component {
                                 </Row>
                             </div>
                             : null}
-
 
                     </Container>
 
@@ -510,7 +508,7 @@ class VendorOfferSearch extends Component {
                     </Modal>
 
 
-                    <Modal centered show={true} show={this.state.showDetailModal} animation={true}>
+                    <Modal id="vendor-offer-modal-dialog" centered show={true} show={this.state.showDetailModal} animation={true}>
                         <Container>
                             <Modal.Header>
                                 <Modal.Title>Detalhes da Oferta</Modal.Title>
@@ -553,7 +551,7 @@ class VendorOfferSearch extends Component {
 
                                     <Tab eventKey="schedule" title="Horários" >
                                         {this.state.selectedVendorOffer ?
-                                            <Row className="mt-2 ml-1 mb-2">
+                                            <Row className="mt-2 ml-1 mb-2" id="vendor-offer-modal-body">
                                                 {/* {this.state.vendorOffers.map(vendorOffer => ( */}
                                                 {this.state.selectedVendorOffer.availableSchedule.map(
                                                     availableSchedule => (
@@ -568,6 +566,17 @@ class VendorOfferSearch extends Component {
                                             </Row>
                                             : null}
                                     </Tab>
+                                    {this.state.selectedVendorOffer && this.state.selectedVendorOffer.resume ?
+                                        <Tab eventKey="resume" title="Currículo">
+
+                                            <Row>
+                                                <Col className="mr-2 ml-2">
+                                                    <p className="mt-2">{this.state.selectedVendorOffer.resume}</p>
+                                                </Col>
+                                            </Row>
+
+                                        </Tab>
+                                        : null}
                                 </Tabs>
                             </Modal.Body>
 

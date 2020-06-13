@@ -18,4 +18,11 @@ p {
     height: 10px;
 }
 
-
+/* Important part */
+#vendor-offer-modal-dialog{
+  overflow-y: initial !important
+}
+#vendor-offer-modal-body{
+  height: 250px;
+  overflow-y: auto;
+}
