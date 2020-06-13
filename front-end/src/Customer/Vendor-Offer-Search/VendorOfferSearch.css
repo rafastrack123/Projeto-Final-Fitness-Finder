@@ -1,11 +1,19 @@
-.VendorOfferSearch{
-    text-align: center;
-    margin: auto;
-    margin-top: 30px ;
+.VendorOfferSearch {
+  text-align: center;
+  margin: auto;
+  margin-top: 30px;
 }
 
-.modal-button{
-    display:flex;
-    justify-content:center;
-    align-item:center
-  }
+.modal-button {
+  display: flex;
+  justify-content: center;
+  align-item: center;
+}
+
+p {
+  word-wrap: break-word;
+}
+
+.vendor-offer-image{
+    height: 10px;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './VendorOfferSearch.css';
-import { Form, Container, Button, Col, Table, Modal, Tabs, Tab, Row, Card } from 'react-bootstrap';
+import { Form, Container, Button, Col, Table, Modal, Tabs, Tab, Row, Card, Image } from 'react-bootstrap';
 import axios from 'axios';
 import CustomerHeader from '../Customer-Header/CustomerHeader';
 import { withRouter } from 'react-router-dom';
@@ -252,7 +252,7 @@ class VendorOfferSearch extends Component {
                 <div className="VendorOfferSearch">
                     <Container>
 
-                        <h3 className="m-a text-center mt-2">Busca por Fornecedores</h3>
+                        <h3 className="m-a text-center mt-2">Busca por Profissionais Fitness</h3>
                         <hr />
                         <Form>
                             <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
@@ -319,7 +319,7 @@ class VendorOfferSearch extends Component {
 
                             <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
 
-                                <Col>
+                                <Col md={6} xs={11}>
                                     <Form.Group>
                                         <Form.Label>Tipo de Serviço: </Form.Label>
                                         <Form.Control as="select"
@@ -336,7 +336,7 @@ class VendorOfferSearch extends Component {
                                     </Form.Group>
                                 </Col>
 
-                                <Col >
+                                <Col md={6} xs={11}>
                                     <Form.Group>
                                         <Form.Label>Especialização: </Form.Label>
                                         <Form.Control as="select"
@@ -380,7 +380,7 @@ class VendorOfferSearch extends Component {
                                     </Form.Group>
                                 </Col>
 
-                                <Col md={3} xs={6}>
+                                <Col md={3} xs={5}>
                                     <Form.Group>
                                         <Form.Label>Fim do atendimento:</Form.Label>
                                         <TimeInput
@@ -430,37 +430,51 @@ class VendorOfferSearch extends Component {
                         {this.state.vendorOffers.length > 0 ?
                             <div className="mt-5">
                                 <h3 className="m-a text-center mt-3 mb-3">Resultado</h3>
+                                <Row className="text-left">
+                                    {this.state.vendorOffers.map(vendorOffer => (
+                                        <Col md={6} xs={12}>
+                                            <Card className="mb-3">
+                                                <Card.Body>
+                                                    <Row>
 
-                                <Table striped bordered hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Fornecedor</th>
-                                            <th>Tipo de serviço</th>
-                                            <th>Especialização</th>
-                                            <th>Preço</th>
-                                            <th>Distância</th>
-                                            <th>Ações</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.state.vendorOffers.map(vendorOffer => (
-                                            <tr><td>{vendorOffer.vendorFirstName} {vendorOffer.vendorLastName}</td>
-                                                <td>{vendorOffer.groupName}</td>
-                                                <td>{vendorOffer.detailName}</td>
-                                                <td>{vendorOffer.price.toLocaleString("pt-BR", { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' })}</td>
-                                                <td>{vendorOffer.distance} Km</td>
-                                                <td> <Button className="mr-2"
-                                                    onClick={() => this.selectVendorOfferDetail(vendorOffer)}
-                                                    variant="primary">Detalhe</Button>
+                                                        <Col xs={12} className="mb-2 text-center m-a">
+                                                            <Image style={{ height: '300px' }}
+                                                                src="https://sportsregras.com/wp-content/uploads/2016/04/boxe-combate-1024x662.jpg"
+                                                                thumbnail />
+                                                        </Col>
 
-                                                    <Button onClick={() => this.sendStrongLead(vendorOffer.id)}
-                                                        variant="success">Contatar</Button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                        <Col xs={12}>
 
-                                    </tbody>
-                                </Table>
+                                                            <Col>
+                                                                <Card.Title>{vendorOffer.groupName} {vendorOffer.detailName}</Card.Title>
+                                                            </Col>
+
+                                                            <Col>
+                                                                <Card.Subtitle className="mb-2 text-muted">{vendorOffer.vendorFirstName} {vendorOffer.vendorLastName}</Card.Subtitle>
+                                                            </Col>
+
+                                                            <Col>
+                                                                <Card.Text>
+                                                                    {vendorOffer.serviceDescription}
+                                                                </Card.Text>
+                                                            </Col>
+
+                                                        </Col>
+                                                        <Col xs={12}>
+                                                            <Button className="mt-2 mr-2 mb-4"
+                                                                onClick={() => this.selectVendorOfferDetail(vendorOffer)}
+                                                                variant="primary btn-block">Detalhe</Button>
+
+                                                            <Button onClick={() => this.sendStrongLead(vendorOffer.id)}
+                                                                variant="success btn-block">Contatar</Button>
+                                                        </Col>
+
+                                                    </Row>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
                             </div>
                             : null}
 
@@ -495,10 +509,10 @@ class VendorOfferSearch extends Component {
                                         {this.state.selectedVendorOffer ?
                                             <Row className="mt-2 ml-1">
                                                 <Col>
-                                                    <p>
+                                                    <p >
                                                         <strong>Área:</strong> {this.state.selectedVendorOffer.areaName}
                                                         <br />
-                                                        <strong>Serviço:</strong> {this.state.selectedVendorOffer.groupName + this.state.selectedVendorOffer.detailName}
+                                                        <strong>Serviço:</strong> {this.state.selectedVendorOffer.groupName + ' ' + this.state.selectedVendorOffer.detailName}
                                                         <br />
                                                         <strong>Descrição:</strong> {this.state.selectedVendorOffer.serviceDescription}
                                                         <br />
