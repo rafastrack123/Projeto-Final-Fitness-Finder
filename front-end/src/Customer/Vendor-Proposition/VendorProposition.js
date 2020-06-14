@@ -45,7 +45,7 @@ class VendorProposition extends Component {
     sendStrongLead(vendorOfferId, vendorPropositionId) {
         var customerId = this.state.customerId;
 
-        axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, {
+        axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, null, {
             params: {
                 isStrongLead: true
             }
@@ -96,11 +96,13 @@ class VendorProposition extends Component {
                             {this.state.vendorPropositions.map(proposition => (
                                 <Col xs={12} md={4} className="mb-2 m-a">
                                     <Toast className="h-100 text-center d-flex flex-column">
-                                        <Toast.Header>
+                                        <Toast.Header className="text-left">
                                             <img src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
                                                 height="40px" className="rounded mr-2" />
                                             <strong
                                                 className="mr-auto">{proposition.vendorFirstName} {proposition.vendorLastName}</strong>
+                                                <span className="float-left"> {proposition.serviceDescription}</span>
+                                                
                                         </Toast.Header>
                                         <Toast.Body>
                                             <p>

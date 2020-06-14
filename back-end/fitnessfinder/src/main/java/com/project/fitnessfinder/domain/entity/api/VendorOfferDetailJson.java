@@ -4,15 +4,17 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import java.util.List;
+import lombok.Builder;
 
-@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class VendorDetailsJson {
+@Builder
+public class VendorDetailJson {
 
-    public String resume;
+    public List<AvailableScheduleJson> availableSchedules;
 
-    public Long averageRating;
+    public double averageRating;
 
+    public List<EvaluationJson> evaluations;
 }
