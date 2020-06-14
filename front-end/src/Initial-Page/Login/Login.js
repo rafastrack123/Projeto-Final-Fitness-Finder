@@ -100,7 +100,7 @@ class Login extends Component {
                         </FormGroup>
 
                         {this.state.loading ?
-                            <Button variant="btn btn-primary btn-block" disabled>
+                            <Button variant="btn btn-primary btn-block mb-2"  bsSize="large" disabled>
                                 <Spinner
                                     as="span"
                                     animation="grow"

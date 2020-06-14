@@ -11,6 +11,7 @@ import VendorProposition from './Customer/Vendor-Proposition/VendorProposition';
 import Resume from './Vendor/Resume/Resume';
 import VendorOfferCreate from './Vendor/Vendor-Offer-Create/Vendor-Offer-Create';
 import VendorOfferList from './Vendor/Vendor-Offer-List/Vendor-Offer-List';
+import EvaluationRequest from './Customer/Evaluation-Request/EvaluationRequest';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route exact path='/resume' component={Resume} />
           <Route exact path='/vendor-offer/create' component={VendorOfferCreate} />
           <Route exact path='/vendor-offer/list' component={VendorOfferList} />
+          <Route exact path='/evaluation-request' component={EvaluationRequest} />
         </Switch>
       </div>
     </Router>

@@ -55,7 +55,7 @@ class VendorProposition extends Component {
         });
     }
 
-    denyProposition(selectedVendorPropositionId){
+    denyProposition(selectedVendorPropositionId) {
         this.markAsViewed(selectedVendorPropositionId);
         this.setState({ showRefusePropositionModal: false });
     }
@@ -94,8 +94,8 @@ class VendorProposition extends Component {
                         <Row>
 
                             {this.state.vendorPropositions.map(proposition => (
-                                <Col xs={6} md={4}>
-                                    <Toast>
+                                <Col xs={12} md={4} className="mb-2 m-a">
+                                    <Toast className="h-100 text-center d-flex flex-column">
                                         <Toast.Header>
                                             <img src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
                                                 height="40px" className="rounded mr-2" />
@@ -103,18 +103,20 @@ class VendorProposition extends Component {
                                                 className="mr-auto">{proposition.vendorFirstName} {proposition.vendorLastName}</strong>
                                         </Toast.Header>
                                         <Toast.Body>
-                                            {proposition.message}
+                                            <p>
+                                                {proposition.message}
+                                            </p>
                                         </Toast.Body>
-                                        <Row className="justify-content-md-center">
+                                        <Row className="justify-content-center mt-auto">
                                             <Col xs={11}>
                                                 <Button variant="danger mt-2 mb-2"
                                                     onClick={() => this.showRefusePropositionModal(proposition.id)}
                                                     block >Recusar </Button>
                                             </Col>
                                         </Row>
-                                        <Row className="justify-content-md-center">
+                                        <Row className="justify-content-center">
                                             <Col xs={11}>
-                                                <Button variant="success  mb-2"
+                                                <Button variant="success mb-2"
                                                     onClick={() => this.sendStrongLead(proposition.vendorOfferId,
                                                         proposition.id)}
                                                     block >Aceitar </Button>
@@ -151,11 +153,11 @@ class VendorProposition extends Component {
 
                         <Modal.Footer>
 
-                            <Button variant="danger" 
-                            onClick={() => this.denyProposition(this.state.selectedVendorPropositionId)} >Recusar </Button>
-                            
-                            <Button variant="primary" 
-                            onClick={this.hideRefusePropositionModal} >Fechar </Button>
+                            <Button variant="danger"
+                                onClick={() => this.denyProposition(this.state.selectedVendorPropositionId)} >Recusar </Button>
+
+                            <Button variant="primary"
+                                onClick={this.hideRefusePropositionModal} >Fechar </Button>
                         </Modal.Footer>
                     </Modal>
                 </div>

@@ -552,7 +552,6 @@ class VendorOfferSearch extends Component {
                                     <Tab eventKey="schedule" title="Horários" >
                                         {this.state.selectedVendorOffer ?
                                             <Row className="mt-2 ml-1 mb-2" id="vendor-offer-modal-body">
-                                                {/* {this.state.vendorOffers.map(vendorOffer => ( */}
                                                 {this.state.selectedVendorOffer.availableSchedule.map(
                                                     availableSchedule => (
                                                         <Col xs={12} className="mb-1">
