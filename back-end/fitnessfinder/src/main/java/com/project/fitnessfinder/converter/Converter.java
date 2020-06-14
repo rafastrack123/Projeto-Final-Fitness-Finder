@@ -4,6 +4,8 @@ import com.project.fitnessfinder.domain.entity.api.AddressJson;
 import com.project.fitnessfinder.domain.entity.api.AvailableScheduleJson;
 import com.project.fitnessfinder.domain.entity.api.ContactInfoJson;
 import com.project.fitnessfinder.domain.entity.api.CustomerJson;
+import com.project.fitnessfinder.domain.entity.api.EvaluationJson;
+import com.project.fitnessfinder.domain.entity.api.EvaluationRequestJson;
 import com.project.fitnessfinder.domain.entity.api.LeadJson;
 import com.project.fitnessfinder.domain.entity.api.ObjectiveJson;
 import com.project.fitnessfinder.domain.entity.api.ServiceAreaJson;
@@ -17,6 +19,8 @@ import com.project.fitnessfinder.domain.entity.database.Address;
 import com.project.fitnessfinder.domain.entity.database.AvailableSchedule;
 import com.project.fitnessfinder.domain.entity.database.ContactInfo;
 import com.project.fitnessfinder.domain.entity.database.Customer;
+import com.project.fitnessfinder.domain.entity.database.Evaluation;
+import com.project.fitnessfinder.domain.entity.database.EvaluationRequest;
 import com.project.fitnessfinder.domain.entity.database.Lead;
 import com.project.fitnessfinder.domain.entity.database.Objective;
 import com.project.fitnessfinder.domain.entity.database.ServiceArea;
@@ -405,6 +409,40 @@ public class Converter {
         vendorOffer.setServiceDetail(serviceDetail);
 
         return vendorOffer;
+    }
+
+    public EvaluationRequestJson convert(EvaluationRequest evaluationRequest) {
+        var vendorOffer = evaluationRequest.getVendorOffer();
+        var vendor = vendorOffer.getVendor();
+
+        var serviceDetail = vendorOffer.getServiceDetail();
+        var serviceGroup = serviceDetail.getServiceGroup();
+
+        return EvaluationRequestJson.builder()
+                .id(evaluationRequest.getId())
+                .customerId(evaluationRequest.getCustomer().getId())
+                .vendorOfferid(vendorOffer.getId())
+                .vendorId(vendor.getId())
+                .vendorFirstName(vendor.getFirstName())
+                .vendorLastName(vendor.getLastName())
+                .groupName(serviceGroup.getName())
+                .detailName(serviceDetail.getName())
+                .build();
+    }
+
+    public EvaluationJson convert(Evaluation evaluation) {
+        var customer = evaluation.getFromCustomer();
+
+
+        return EvaluationJson.builder()
+                .id(evaluation.getId())
+                .vendorId(evaluation.getToVendor().getId())
+                .customerId(customer.getId())
+                .customerFirstName(customer.getFirstName())
+                .customerLastName(customer.getFirstName())
+                .rating(evaluation.getRating())
+                .feedback(evaluation.getFeedback())
+                .build();
     }
 
 }

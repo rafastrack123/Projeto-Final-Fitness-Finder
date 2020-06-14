@@ -21,6 +21,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-select": "^3.1.0",
+    "react-star-ratings": "^2.3.0",
     "react-time-input": "0.0.19"
   },
   "scripts": {

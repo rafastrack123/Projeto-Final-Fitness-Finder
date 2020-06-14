@@ -11,21 +11,19 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
 @Builder
-public class EvaluationJson {
+public class EvaluationRequestJson {
 
     public Long id;
+
+    public Long vendorOfferid;
 
     public Long vendorId;
 
     public Long customerId;
 
-    public Long evaluationRequestId;
+    public String vendorFirstName;
+    public String vendorLastName;
 
-    public String customerFirstName;
-
-    public String customerLastName;
-
-    public Integer rating;
-
-    public String feedback;
+    public String groupName;
+    public String detailName;
 }

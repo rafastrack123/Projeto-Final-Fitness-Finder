@@ -4,28 +4,16 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
+import java.util.List;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-@Builder
-public class EvaluationJson {
-
-    public Long id;
+public class VendorEvaluationsJson {
 
     public Long vendorId;
+    public Double averageRating;
 
-    public Long customerId;
-
-    public Long evaluationRequestId;
-
-    public String customerFirstName;
-
-    public String customerLastName;
-
-    public Integer rating;
-
-    public String feedback;
+    public List<EvaluationJson> evaluations;
 }
