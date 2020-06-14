@@ -439,7 +439,7 @@ public class Converter {
                 .vendorId(evaluation.getToVendor().getId())
                 .customerId(customer.getId())
                 .customerFirstName(customer.getFirstName())
-                .customerLastName(customer.getFirstName())
+                .customerLastName(customer.getLastName())
                 .rating(evaluation.getRating())
                 .feedback(evaluation.getFeedback())
                 .build();

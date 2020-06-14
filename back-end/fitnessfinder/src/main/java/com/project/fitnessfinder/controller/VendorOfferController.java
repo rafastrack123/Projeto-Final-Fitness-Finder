@@ -1,9 +1,11 @@
 package com.project.fitnessfinder.controller;
 
+import com.project.fitnessfinder.domain.entity.api.VendorOfferDetailJson;
 import com.project.fitnessfinder.domain.entity.api.VendorOfferJson;
 import com.project.fitnessfinder.domain.entity.api.response.SearchVendorOfferResponse;
 import com.project.fitnessfinder.domain.entity.api.response.VendorOfferByVendorResponse;
 import com.project.fitnessfinder.service.ServiceAreaService;
+import com.project.fitnessfinder.service.VendorOfferDetailService;
 import com.project.fitnessfinder.service.VendorOfferService;
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,6 +30,7 @@ public class VendorOfferController {
 
     private final VendorOfferService vendorOfferService;
     private final ServiceAreaService serviceAreaService;
+    private final VendorOfferDetailService vendorOfferDetailService;
 
 
     @GetMapping
@@ -93,5 +96,9 @@ public class VendorOfferController {
         vendorOfferService.deleteById(vendorOfferId);
     }
 
+    @GetMapping("/detail/{vendorOfferId}")
+    public VendorOfferDetailJson getDetailByVendorOfferId(@PathVariable Long vendorOfferId){
+        return vendorOfferDetailService.getByVendorOfferId(vendorOfferId);
+    }
 
 }

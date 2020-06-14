@@ -240,17 +240,24 @@ class VendorOfferSearch extends Component {
             }
         });
 
-        this.getAvailableScheduleFromVendorOffer(vendorOffer);
+        this.getVendorOfferDetail(vendorOffer);
 
         this.setState({ showDetailModal: true });
     }
 
-    getAvailableScheduleFromVendorOffer(vendorOffer) {
-        axios.get('http://localhost:8080/available-schedule/vendor-offers/' + vendorOffer.id)
+    getVendorOfferDetail(vendorOffer) {
+        axios.get('http://localhost:8080/vendor-offer/detail/' + vendorOffer.id)
             .then(response => {
-                console.log('getAvailableScheduleFromVendorOffer');
-                console.log(response.data)
-                vendorOffer.availableSchedule = response.data;
+                console.log('getVendorOfferDetail:');
+                console.log(response.data);
+
+                vendorOffer.availableSchedules = response.data.availableSchedules;
+                vendorOffer.avgRating = response.data.vendorEvaluations.averageRating;
+                vendorOffer.evaluations = response.data.vendorEvaluations.evaluations;
+
+                console.log('vendorOffer:');
+                console.log(vendorOffer);
+
                 this.setState({ selectedVendorOffer: vendorOffer });
             })
             .catch(response => console.log(response));
@@ -552,7 +559,7 @@ class VendorOfferSearch extends Component {
                                     <Tab eventKey="schedule" title="Horários" >
                                         {this.state.selectedVendorOffer ?
                                             <Row className="mt-2 ml-1 mb-2" id="vendor-offer-modal-body">
-                                                {this.state.selectedVendorOffer.availableSchedule.map(
+                                                {this.state.selectedVendorOffer.availableSchedules.map(
                                                     availableSchedule => (
                                                         <Col xs={12} className="mb-1">
                                                             <Card>
@@ -576,6 +583,37 @@ class VendorOfferSearch extends Component {
 
                                         </Tab>
                                         : null}
+
+                                    {this.state.selectedVendorOffer && this.state.selectedVendorOffer.evaluations ?
+                                        <Tab eventKey="evaluations" title="Avaliações">
+                                            <Row>
+                                                <Col className="mt-2 mb-3 text-center" xs={12}><strong>Avaliação média:</strong> {this.state.selectedVendorOffer.avgRating}</Col>
+
+                                            </Row>
+                                            <Row>
+                                                {this.state.selectedVendorOffer.evaluations.filter(evaluation => evaluation.feedback)
+                                                    .map(evaluation => (
+                                                        <Col xs={12}>
+                                                            <Card className="ml-2 mr-2 mb-4">
+                                                                <Row>
+                                                                    <Col xs={12} >
+                                                                        <Card.Header>{evaluation.customerFirstName + ' ' + evaluation.customerLastName}
+                                                                            <span className="text-muted"> {'- Nota: ' + evaluation.rating}</span> </Card.Header>
+                                                                    </Col>
+                                                                    <Col xs={12} className="ml-2">
+                                                                        <p>{evaluation.feedback}</p>
+                                                                    </Col>
+                                                                </Row>
+
+                                                            </Card>
+                                                        </Col>
+                                                        
+                                                    ))}
+                                            </Row>
+
+                                        </Tab>
+                                        : null}
+
                                 </Tabs>
                             </Modal.Body>
 
