@@ -59,4 +59,8 @@ public class LeadService {
         return converter.convert(leads);
     }
 
+    public void deleteById(Long id){
+        leadRepository.deleteById(id);
+    }
+
 }

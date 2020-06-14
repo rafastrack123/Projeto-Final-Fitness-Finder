@@ -32,11 +32,7 @@ public class Evaluation {
 
     @Lob
     @Column(length = 200)
-    private String description;
-
-    private boolean customerConfirmation;
-
-    private boolean vendorConfirmation;
+    private String feedback;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -46,6 +42,5 @@ public class Evaluation {
     @JoinColumn(name = "vendor_id")
     private Vendor toVendor;
 
-    @CreatedDate
-    private Date leadCreationDate;
+    private Date createdDate;
 }
