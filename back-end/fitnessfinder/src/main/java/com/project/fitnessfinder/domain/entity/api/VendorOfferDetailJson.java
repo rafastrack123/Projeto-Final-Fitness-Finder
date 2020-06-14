@@ -10,11 +10,13 @@ import lombok.Builder;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
 @Builder
-public class VendorDetailJson {
+public class VendorOfferDetailJson {
+
+    public Long vendorOfferId;
 
     public List<AvailableScheduleJson> availableSchedules;
 
-    public double averageRating;
+    public VendorEvaluationsJson vendorEvaluations;
 
-    public List<EvaluationJson> evaluations;
+
 }

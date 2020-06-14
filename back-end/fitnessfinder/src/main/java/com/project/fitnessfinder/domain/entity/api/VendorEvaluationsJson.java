@@ -12,7 +12,6 @@ import lombok.Data;
 @JsonInclude(NON_NULL)
 public class VendorEvaluationsJson {
 
-    public Long vendorId;
     public Double averageRating;
 
     public List<EvaluationJson> evaluations;

@@ -5,6 +5,7 @@ import com.project.fitnessfinder.domain.entity.api.EvaluationJson;
 import com.project.fitnessfinder.domain.entity.api.VendorEvaluationsJson;
 import com.project.fitnessfinder.domain.entity.database.Evaluation;
 import com.project.fitnessfinder.repository.EvaluationRepository;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -45,8 +46,6 @@ public class EvaluationService {
 
         var vendorEvaluations = new VendorEvaluationsJson();
 
-        vendorEvaluations.setVendorId(vendorId);
-
         if (!evaluations.isEmpty()) {
             var evaluationsJson = evaluations.stream()
                     .map(converter::convert)
@@ -59,7 +58,9 @@ public class EvaluationService {
                     .average()
                     .getAsDouble();
 
-            vendorEvaluations.setAverageRating(avgRating);
+            var roundedAvg = (double) Math.round(avgRating * 10) / 10;
+
+            vendorEvaluations.setAverageRating(roundedAvg);
         }
 
         return vendorEvaluations;
