@@ -4,7 +4,8 @@
 2) Realização de busca de fornecedores com a aplicação de filtros.
 3) Cliente envia interesse para fornecedor.
 4) Fornecedor recebe notificação com os dados do cliente e informações para contato, nessas informações estão compostas: e-mail, telefone e redes sociais fornecidas pelo cliente.
-Avaliação do cliente ao fornecedor.
+5) Avaliação do cliente ao fornecedor.
+
 
 # User stories:
 Funcionalidade 1) Eu, como cliente, gostaria de realizar o cadastro dos meus dados para que eu possa procurar fornecedores que se encaixam em minha necessidade através do Fitness-Finder.
