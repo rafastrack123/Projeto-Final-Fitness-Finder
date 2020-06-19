@@ -7,6 +7,4 @@
 
 
 
-
-
-<img src="Arquitetura.md">
+![test image size](Arquitetura.jpg){:class="img-responsive"}
