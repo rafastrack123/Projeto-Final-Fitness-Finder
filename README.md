@@ -9,7 +9,7 @@ Esse documento tem como objetivo apresentar e descrever o projeto final, fornece
 
 ## [Diagrama ER](Read-me/DiagramaEr.md)
 
-## [Diagrama de Classes](Read-me/DiagramaClass.jpg)
+## [Diagrama de Classes](Read-me/DiagramaClasse.md)
 
 ## [User Stories](Read-me/UserStories.md)
 
