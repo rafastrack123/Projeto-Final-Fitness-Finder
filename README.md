@@ -9,8 +9,8 @@ Esse documento tem como objetivo apresentar e descrever o projeto final, fornece
 
 ## [Diagrama ER](Read-me/TabelaComparativa.jpg)
 
-## [Diagrama de Classes](Read-me/TabelaComparativa.png)
+## [Diagrama de Classes](Read-me/TabelaComparativa.jpg)
 
 ## [User Stories](Read-me/UserStories.md)
 
-## [Representação da Arquitetura](Read-me/Arquitetura.png)
+## [Representação da Arquitetura](Read-me/Arquitetura.jpg)
