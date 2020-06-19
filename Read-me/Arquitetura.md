@@ -1,10 +1,3 @@
-# VAMO TIME
+# Arquitetura:
 
-
-
-
-
-
-
-
-![test image size](Arquitetura.jpg){:class="img-responsive"}
+![arquitetura](Arquitetura.jpg)
