@@ -7,9 +7,9 @@ Esse documento tem como objetivo apresentar e descrever o projeto final, fornece
 
 ## [Tabela Comparativa](Read-me/TabelaComparativa.md)
 
-## [Diagrama ER](Read-me/ddd.jpg)
+## [Diagrama ER](Read-me/DiagramaEr.md)
 
-## [Diagrama de Classes](Read-me/sss.jpg)
+## [Diagrama de Classes](Read-me/DiagramaClass.jpg)
 
 ## [User Stories](Read-me/UserStories.md)
 
