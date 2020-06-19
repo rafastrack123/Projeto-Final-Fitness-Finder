@@ -13,7 +13,6 @@ Esse documento tem como objetivo apresentar e descrever o projeto final, fornece
 
 ## [User Stories](Read-me/UserStories.md)
 
-## [Representação da Arquitetura](Read-me/Arquitetura.jpg)
+## [Representação da Arquitetura](Read-me/Arquitetura.md)
 
 
-<img src="https://github.com/favicon.ico" height="24">
