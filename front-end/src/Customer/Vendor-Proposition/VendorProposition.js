@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import CustomerHeader from '../Customer-Header/CustomerHeader';
-import { Container, Row, Toast, Col, Button, Modal } from 'react-bootstrap';
+import { Container, Row, Toast, Col, Button, Modal, Alert } from 'react-bootstrap';
+import Loader from '../../Utils/Loader'
 
 class VendorProposition extends Component {
 
@@ -19,6 +20,12 @@ class VendorProposition extends Component {
             // Modals
             showLeadSendModal: false,
             showRefusePropositionModal: false,
+
+            // Loader 
+            showLoader: false,
+
+            // Alert
+            showErrorAlert:false
         }
 
         this.showRefusePropositionModal = this.showRefusePropositionModal.bind(this);
@@ -32,6 +39,7 @@ class VendorProposition extends Component {
     }
 
     getVendorPropositions() {
+        this.setState({ showLoader: true });
 
         axios.get('http://localhost:8080/vendor-proposition/' + this.state.customerId)
             .then(response => {
@@ -39,10 +47,14 @@ class VendorProposition extends Component {
                 console.log(response.data);
 
                 this.setState({ vendorPropositions: response.data });
-            })
+                this.setState({ showLoader: false });
+            }).catch(response => {
+                this.handleError();
+            });
     }
 
     sendStrongLead(vendorOfferId, vendorPropositionId) {
+        this.setState({ showLoader: true });
         var customerId = this.state.customerId;
 
         axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, null, {
@@ -52,7 +64,9 @@ class VendorProposition extends Component {
         }).then(response => {
             this.setState({ showLeadSendModal: true });
             this.markAsViewed(vendorPropositionId);
-        });
+        }).catch(response => {
+            this.handleError();
+        });;
     }
 
     denyProposition(selectedVendorPropositionId) {
@@ -61,11 +75,14 @@ class VendorProposition extends Component {
     }
 
     markAsViewed(vendorPropositionId) {
+        this.setState({ showLoader: true });
         console.log('markAsViewed');
         axios.put('http://localhost:8080/vendor-proposition/' + vendorPropositionId)
             .then(response => {
                 this.getVendorPropositions();
-            })
+            }).catch(response => {
+                this.handleError();
+            });;
     }
 
     showRefusePropositionModal(vendorPropositionId) {
@@ -81,15 +98,30 @@ class VendorProposition extends Component {
         this.setState({ showLeadSendModal: false });
     }
 
+    handleError(){
+        this.setState({ showLoader: false });
+        this.setState({ showErrorAlert: true });
+    }
+
     render() {
         return (
             <div className="VendorProposition">
+                {this.state.showLoader ? <Loader /> : null}
                 <CustomerHeader />
 
                 <div className="Vendor-Proposition-body mt-5">
                     <Container>
                         <h3 className="m-a text-center mt-2">Ofertas</h3>
                         <hr />
+
+                        <Alert
+                            show={this.state.showErrorAlert}
+                            className="text-center"
+                            variant="danger"
+                            onClose={() => { this.setState({ showErrorAlert: false }) }}
+                            dismissible> Ocorreu um erro! Tente mais tarde.
+                        </Alert>
+
 
                         <Row>
 
@@ -101,8 +133,8 @@ class VendorProposition extends Component {
                                                 height="40px" className="rounded mr-2" />
                                             <strong
                                                 className="mr-auto">{proposition.vendorFirstName} {proposition.vendorLastName}</strong>
-                                                <span className="float-left"> {proposition.serviceDescription}</span>
-                                                
+                                            <span className="float-left"> {proposition.serviceDescription}</span>
+
                                         </Toast.Header>
                                         <Toast.Body>
                                             <p>
@@ -129,7 +161,6 @@ class VendorProposition extends Component {
                             )}
                         </Row>
                     </Container>
-
 
 
                     <Modal centered show={this.state.showLeadSendModal}

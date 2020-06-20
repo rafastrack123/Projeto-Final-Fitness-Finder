@@ -35,6 +35,7 @@ class VendorOfferCreate extends Component {
 
             serviceDescription: "",
             price: "",
+            imageUrl: "",
 
             availableOffers: [],
 
@@ -76,7 +77,7 @@ class VendorOfferCreate extends Component {
     }
 
     componentDidMount() {
-        this.setState({ newDayOfWeekSchedule: this.state.daysOfTheWeekArray[0]});
+        this.setState({ newDayOfWeekSchedule: this.state.daysOfTheWeekArray[0] });
         this.fetchServiceAreaArray();
     }
 
@@ -160,6 +161,10 @@ class VendorOfferCreate extends Component {
         this.setState({ serviceDescription: event.target.value });
     }
 
+    imageUrlChangeHandle = (event) => {
+        this.setState({ imageUrl: event.target.value });
+    }
+
     priceChangeHandle = (values) => {
         var { formattedValue, value } = values;
 
@@ -205,6 +210,7 @@ class VendorOfferCreate extends Component {
 
                 serviceDescription: this.state.serviceDescription,
                 price: this.state.price,
+                imageUrl: this.state.imageUrl,
 
                 isHomeService: this.state.isHomeService,
                 isRemoteService: this.state.isFirstClassFree,
@@ -272,6 +278,9 @@ class VendorOfferCreate extends Component {
         } else if (!this.state.serviceDetailIdSelected) {
             this.setState({ invalidVendorOfferMessage: "Especialização é obrigatório" })
             return false;
+        } else if (!this.state.imageUrl) {
+            this.setState({ invalidVendorOfferMessage: "Image da oferta é obrigatório" })
+            return false;
         }
 
         return true;
@@ -323,7 +332,6 @@ class VendorOfferCreate extends Component {
                         onClose={() => { this.setState({ showInvalidVendorOfferAlert: false }) }}
                         dismissible>{this.state.invalidVendorOfferMessage}
                     </Alert>
-
 
                     <Form>
                         <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
@@ -404,6 +412,18 @@ class VendorOfferCreate extends Component {
                                         onChange={this.serviceDescriptionChangeHandle}
                                         placeholder="Insira uma descrição para o serviço" />
 
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
+
+                        <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
+                            <Col md={12}>
+                                <Form.Group>
+                                    <Form.Label>Foto da oferta do serviço:</Form.Label>
+                                    <Form.Control type="text"
+                                        value={this.state.imageUrl}
+                                        onChange={this.imageUrlChangeHandle}
+                                        placeholder="Insira Url da foto" />
                                 </Form.Group>
                             </Col>
                         </Form.Row>

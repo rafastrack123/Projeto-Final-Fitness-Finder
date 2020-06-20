@@ -398,6 +398,7 @@ public class Converter {
 
         vendorOffer.setPrice(json.price);
         vendorOffer.setServiceDescription(json.serviceDescription);
+        vendorOffer.setImageUrl(json.imageUrl);
 
         vendorOffer.setFirstClassFree(json.firstClassFree);
         vendorOffer.setRemoteService(json.isRemoteService);

@@ -241,6 +241,8 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
             vendorOfferJson.distance = tuple.get("distance", Double.class);
 
+            vendorOfferJson.imageUrl = tuple.get("image_url", String.class);
+
             vendorOfferJsonList.add(vendorOfferJson);
         }
 
