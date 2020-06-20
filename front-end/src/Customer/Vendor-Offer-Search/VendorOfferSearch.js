@@ -462,7 +462,7 @@ class VendorOfferSearch extends Component {
 
                                                         <Col xs={12} className="mb-2 text-center m-a">
                                                             <Image style={{ height: '300px' }}
-                                                                src="https://sportsregras.com/wp-content/uploads/2016/04/boxe-combate-1024x662.jpg"
+                                                                src={vendorOffer.imageUrl}
                                                                 thumbnail />
                                                         </Col>
 
@@ -555,9 +555,9 @@ class VendorOfferSearch extends Component {
                                             : null}
 
                                     </Tab>
+                                    {this.state.selectedVendorOffer && this.state.selectedVendorOffer.availableSchedules.length>1 ?
+                                        <Tab eventKey="schedule" title="Horários" >
 
-                                    <Tab eventKey="schedule" title="Horários" >
-                                        {this.state.selectedVendorOffer ?
                                             <Row className="mt-2 ml-1 mb-2" id="vendor-offer-modal-body">
                                                 {this.state.selectedVendorOffer.availableSchedules.map(
                                                     availableSchedule => (
@@ -570,8 +570,10 @@ class VendorOfferSearch extends Component {
                                                         </Col>
                                                     ))}
                                             </Row>
-                                            : null}
-                                    </Tab>
+
+                                        </Tab>
+                                        : null}
+
                                     {this.state.selectedVendorOffer && this.state.selectedVendorOffer.resume ?
                                         <Tab eventKey="resume" title="Currículo">
 
@@ -607,7 +609,7 @@ class VendorOfferSearch extends Component {
 
                                                             </Card>
                                                         </Col>
-                                                        
+
                                                     ))}
                                             </Row>
 
