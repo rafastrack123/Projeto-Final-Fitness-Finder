@@ -43,6 +43,8 @@ public class VendorOfferJson {
 
     public Double distance;
 
+    public String imageUrl;
+
     public List<AvailableScheduleJson> availableSchedule;
 
 }

@@ -37,6 +37,8 @@ public class VendorOffer {
 
     private String serviceDescription;
 
+    private String imageUrl;
+
     @ManyToOne
     private Vendor vendor;
 

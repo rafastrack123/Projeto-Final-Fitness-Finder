@@ -93,19 +93,25 @@ public class FitnessFinderLoader implements CommandLineRunner {
                 addressList.get(5));
 
         var vendorOfferBrady = buildVendorOffer(vendorBrady, new BigDecimal("25"), "Descricao do serviço",
-                details.get(random.nextInt(details.size())));
+                details.get(random.nextInt(details.size())), "https://zh.rbsdirect.com.br/imagesrc/23027367.jpg?w=700");
         var vendorOfferBradyTwo = buildVendorOffer(vendorBrady, new BigDecimal("50"), "Descricao do serviço",
-                details.get(random.nextInt(details.size())));
+                details.get(random.nextInt(details.size())),
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS-Nk0agHUcpiONDre-UZUKrvqPhnbnauccld0TE3kiI3rzmmCm&usqp=CAU");
 
         var vendorOfferSnow = buildVendorOffer(vendorSnow, new BigDecimal("99.99"), "Descricao do serviço",
-                details.get(random.nextInt(details.size())));
+                details.get(random.nextInt(details.size())),
+                "https://rollingstone.uol.com.br/media/_versions/jon_snow_widelg.jpg");
+
         var vendorOfferTwo = buildVendorOffer(vendorSnow, new BigDecimal("36"), "Descricao do serviço",
-                details.get(random.nextInt(details.size())));
+                details.get(random.nextInt(details.size())), "https://imagens.canaltech.com.br/celebridades/487.400.jpg");
 
         var vendorOfferWhite = buildVendorOffer(vendorWhite, new BigDecimal("40"), "Descricao do serviço",
-                details.get(random.nextInt(details.size())));
+                details.get(random.nextInt(details.size())),
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQU45maD-w8VhMemWok7BE5DwBVWZQ-knELSezeJDWLYn7_tcsE&usqp=CAU");
+
         var vendorOfferWhiteTwo = buildVendorOffer(vendorWhite, new BigDecimal("25"), "Descricao do serviço",
-                details.get(random.nextInt(details.size())));
+                details.get(random.nextInt(details.size())),
+                "https://www.jornalopcao.com.br/wp-content/uploads/2018/09/walter-white.jpg");
 
         var strongLead = buildLead(customerObama, vendorOfferBrady, true);
 
@@ -296,7 +302,8 @@ public class FitnessFinderLoader implements CommandLineRunner {
         return address;
     }
 
-    private VendorOffer buildVendorOffer(Vendor vendor, BigDecimal price, String serviceDescription, ServiceDetail detail) {
+    private VendorOffer buildVendorOffer(Vendor vendor, BigDecimal price, String serviceDescription, ServiceDetail detail,
+                                         String imageUrl) {
 
         var vendorOffer = VendorOffer.builder()
                 .vendor(vendor)
@@ -306,6 +313,7 @@ public class FitnessFinderLoader implements CommandLineRunner {
                 .isHomeService(Math.random() < 0.5)
                 .isRemoteService(Math.random() < 0.5)
                 .firstClassFree(Math.random() < 0.5)
+                .imageUrl(imageUrl)
                 .build();
 
         var availableSchedules = buildAvailableSchedules(vendorOffer);
