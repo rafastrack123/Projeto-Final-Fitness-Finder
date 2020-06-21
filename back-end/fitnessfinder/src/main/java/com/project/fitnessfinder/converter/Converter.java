@@ -330,8 +330,8 @@ public class Converter {
         var startTime = addSeconds(availableScheduleJson.startTime);
         var endTime = addSeconds(availableScheduleJson.endTime);
 
-        availableSchedule.setStartTime(Time.valueOf(startTime));
-        availableSchedule.setEndTime(Time.valueOf(endTime));
+        availableSchedule.setStartTime(startTime);
+        availableSchedule.setEndTime(endTime);
 
         return availableSchedule;
     }
