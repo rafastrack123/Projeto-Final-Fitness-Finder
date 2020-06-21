@@ -6,6 +6,7 @@ import { Button, FormGroup, FormControl, Form, Spinner, Alert } from "react-boot
 import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
 import history from '../../History';
 import { withRouter } from 'react-router-dom';
+import CryptoJS from 'crypto-js/';
 
 class Login extends Component {
 
@@ -29,13 +30,16 @@ class Login extends Component {
 
         this.setState({ loading: true })
 
+        var cryptedPassword = CryptoJS.MD5(this.state.password).toString();
+
         var userLogin = {
             email: this.state.login,
-            password: this.state.password
+            password: cryptedPassword
         }
 
         try {
-
+            console.log('userLogin');
+            console.log(userLogin);
             var loginResponse = await axios.post('http://localhost:8080/login', userLogin);
             var authenticatedUser = loginResponse.data;
 
@@ -57,11 +61,9 @@ class Login extends Component {
         Cookies.set('userType', authenticatedUser.userType);
 
         if (authenticatedUser.userType === 'Customer') {
-            console.log('é customer');
             history.push('/vendor-offer-search');
 
         } else if (authenticatedUser.userType === 'Vendor') {
-            console.log('é vendor');
             history.push('/leads');
         }
     }
@@ -100,7 +102,7 @@ class Login extends Component {
                         </FormGroup>
 
                         {this.state.loading ?
-                            <Button variant="btn btn-primary btn-block mb-2"  bsSize="large" disabled>
+                            <Button variant="btn btn-primary btn-block mb-2" bsSize="large" disabled>
                                 <Spinner
                                     as="span"
                                     animation="grow"

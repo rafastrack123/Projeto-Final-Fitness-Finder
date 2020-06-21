@@ -24,7 +24,6 @@ import com.project.fitnessfinder.repository.VendorOfferRepository;
 import com.project.fitnessfinder.repository.VendorPropositionRepository;
 import com.project.fitnessfinder.repository.VendorRepository;
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,25 +71,25 @@ public class FitnessFinderLoader implements CommandLineRunner {
 
         var randomObjectiveOne = objectives.get(random.nextInt(objectives.size()));
         var customerLebron = buildCustomer("Lebron", "James", "lebron.james@gmail.com",
-                "password", randomObjectiveOne, addressList.get(0));
+                "5f4dcc3b5aa765d61d8327deb882cf99", randomObjectiveOne, addressList.get(0));
 
         var randomObjetiveTwo = objectives.get(random.nextInt(objectives.size()));
         var customerRonaldo = buildCustomer("Ronaldo", "Fenomeno", "ronaldo@gmail.com",
-                "password", randomObjetiveTwo, addressList.get(1));
+                "5f4dcc3b5aa765d61d8327deb882cf99", randomObjetiveTwo, addressList.get(1));
 
         var randomObjetiveThree = objectives.get(random.nextInt(objectives.size()));
         var customerObama = buildCustomer("Barack", "Obama", "barack.obama@gmail.com",
-                "password", randomObjetiveThree, addressList.get(2));
+                "5f4dcc3b5aa765d61d8327deb882cf99", randomObjetiveThree, addressList.get(2));
 
 
-        var vendorBrady = buildVendor("Tom", "Brady", "tom.brady@gmail.com", "password",
-                addressList.get(3));
+        var vendorBrady = buildVendor("Tom", "Brady", "tom.brady@gmail.com",
+                "5f4dcc3b5aa765d61d8327deb882cf99", addressList.get(3));
 
-        var vendorSnow = buildVendor("John", "Snow", "john.snow@gmail.com", "password",
-                addressList.get(4));
+        var vendorSnow = buildVendor("John", "Snow", "john.snow@gmail.com",
+                "5f4dcc3b5aa765d61d8327deb882cf99", addressList.get(4));
 
-        var vendorWhite = buildVendor("Walter", "White", "walter.white@gmail.com", "password",
-                addressList.get(5));
+        var vendorWhite = buildVendor("Walter", "White", "walter.white@gmail.com",
+                "5f4dcc3b5aa765d61d8327deb882cf99", addressList.get(5));
 
         var vendorOfferBrady = buildVendorOffer(vendorBrady, new BigDecimal("25"), "Descricao do serviço",
                 details.get(random.nextInt(details.size())), "https://zh.rbsdirect.com.br/imagesrc/23027367.jpg?w=700");

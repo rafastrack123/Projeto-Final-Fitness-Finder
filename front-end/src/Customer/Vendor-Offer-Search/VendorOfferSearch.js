@@ -462,7 +462,7 @@ class VendorOfferSearch extends Component {
 
                                                         <Col xs={12} className="mb-2 text-center m-a">
                                                             <Image style={{ height: '300px' }}
-                                                                src={vendorOffer.imageUrl}
+                                                                src={vendorOffer.imageUrl ? vendorOffer.imageUrl : 'https://www.recreiodajuventude.com.br/userfiles/conteudos/academia-guarany1.jpg'}
                                                                 thumbnail />
                                                         </Col>
 
@@ -555,7 +555,7 @@ class VendorOfferSearch extends Component {
                                             : null}
 
                                     </Tab>
-                                    {this.state.selectedVendorOffer && this.state.selectedVendorOffer.availableSchedules.length>1 ?
+                                    {this.state.selectedVendorOffer && this.state.selectedVendorOffer.availableSchedules.length > 1 ?
                                         <Tab eventKey="schedule" title="Horários" >
 
                                             <Row className="mt-2 ml-1 mb-2" id="vendor-offer-modal-body">
