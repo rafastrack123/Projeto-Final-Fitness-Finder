@@ -16,19 +16,22 @@ class VendorHeader extends Component {
 
     render() {
         return (
-            <Navbar bg="primary" variant="dark">
+            <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
                 <Navbar.Brand href="/leads" >Fitness-Finder</Navbar.Brand>
-                <Nav className="mr-auto">
-                    <Nav.Link href="/leads">Leads</Nav.Link>
-                    <NavDropdown title="Serviços">
-                        <NavDropdown.Item href="/vendor-offer/create">Ofertar</NavDropdown.Item>
-                        <NavDropdown.Item href="/vendor-offer/list">Visualizar</NavDropdown.Item>
-                    </NavDropdown>
-                    <Nav.Link href="/resume">Curriculo</Nav.Link>
-                </Nav>
-                <Nav>
-                    <Nav.Link onClick={this.logout} >Sair</Nav.Link>
-                </Nav>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link href="/leads">Leads</Nav.Link>
+                        <NavDropdown title="Serviços">
+                            <NavDropdown.Item href="/vendor-offer/create">Ofertar</NavDropdown.Item>
+                            <NavDropdown.Item href="/vendor-offer/list">Visualizar</NavDropdown.Item>
+                        </NavDropdown>
+                        <Nav.Link href="/resume">Curriculo</Nav.Link>
+                    </Nav>
+                    <Nav>
+                        <Nav.Link onClick={this.logout} >Sair</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
         )
     }
