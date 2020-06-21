@@ -6,6 +6,8 @@ import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
 //import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 // If you want to use the provided css
 import 'react-google-places-autocomplete/dist/index.min.css';
+import CryptoJS from 'crypto-js/';
+import history from '../../History';
 
 class SignUp extends Component {
 
@@ -72,9 +74,12 @@ class SignUp extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            password: this.state.password,
+            password: CryptoJS.MD5(this.state.password).toString(),
             address: {
                 fullAddress: this.state.address
+            },
+            contactInfo:{
+                cellphone: this.state.cellphone
             }
         };
 
@@ -97,6 +102,7 @@ class SignUp extends Component {
             .then(response => {
                 console.log('Post Customer Success');
                 console.log(response.data);
+                history.push('/login');
             });
     }
 
@@ -106,6 +112,7 @@ class SignUp extends Component {
         axios.post('http://localhost:8080/vendor', vendor).then(response => {
             console.log('Post Vendor Success');
             console.log(response.data);
+            history.push('/login');
         });
     }
 
