@@ -1,14 +1,11 @@
 package com.project.fitnessfinder.domain.entity.database;
 
-import java.util.Date;
 import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 @Data
 @MappedSuperclass
@@ -29,10 +26,4 @@ public abstract class Person {
 
     @Embedded
     private Address address;
-
-    @CreatedDate
-    private Date creationDate;
-
-    @LastModifiedDate
-    private Date updateDate;
 }

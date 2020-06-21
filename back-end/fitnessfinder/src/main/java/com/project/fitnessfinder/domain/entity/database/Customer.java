@@ -33,4 +33,6 @@ public class Customer extends Person {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<VendorProposition> vendorPropositions;
 
+    private String preferredContact;
+
 }

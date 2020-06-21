@@ -12,5 +12,6 @@ import lombok.Data;
 public class ContactInfoJson {
 
     public String cellphone;
-    public String linkToFacebook;
+    public String facebook;
+    public String instagram;
 }

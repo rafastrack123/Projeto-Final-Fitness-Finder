@@ -29,7 +29,6 @@ import com.project.fitnessfinder.domain.entity.database.ServiceGroup;
 import com.project.fitnessfinder.domain.entity.database.Vendor;
 import com.project.fitnessfinder.domain.entity.database.VendorOffer;
 import com.project.fitnessfinder.domain.entity.database.VendorProposition;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.List;
@@ -55,6 +54,8 @@ public class Converter {
 
         customerJson.objective = convert(customer.getObjective());
 
+        customerJson.preferredContact = customer.getPreferredContact();
+
         return customerJson;
     }
 
@@ -76,6 +77,8 @@ public class Converter {
 
         customer.setAddress(convert(updatedCustomerJson.address));
         customer.setContactInfo(convert(updatedCustomerJson.contactInfo));
+
+        customer.setPreferredContact(updatedCustomerJson.preferredContact);
 
         return customer;
     }
@@ -106,9 +109,12 @@ public class Converter {
         json.updatedDate = new SimpleDateFormat("dd/MM/yyyy").format(lead.getUpdateDate());
 
         if (lead.isStrongLead()) {
-            json.customerLastName = lead.getCustomer().getLastName();
-            json.customerEmail = lead.getCustomer().getEmail();
-            json.customerContact = convert(lead.getCustomer().getContactInfo());
+            var customer =  lead.getCustomer();
+
+            json.customerLastName =customer.getLastName();
+            json.customerEmail = customer.getEmail();
+            json.customerContact = convert(customer.getContactInfo());
+            json.preferredContact = customer.getPreferredContact();
         }
 
         return json;
@@ -175,9 +181,9 @@ public class Converter {
     public ContactInfoJson convert(ContactInfo contact) {
         var contactJson = new ContactInfoJson();
 
-        contactJson.setCellphone(contact.getCellphone());
-
-        contactJson.setLinkToFacebook(contact.getLinkToFacebook());
+        contactJson.cellphone = contact.getCellphone();
+        contactJson.facebook = contact.getFacebook();
+        contactJson.instagram = contact.getInstagram();
 
         return contactJson;
     }
@@ -201,7 +207,8 @@ public class Converter {
         var contact = new ContactInfo();
 
         contact.setCellphone(contactInfoJson.cellphone);
-        contact.setLinkToFacebook(contactInfoJson.linkToFacebook);
+        contact.setFacebook(contactInfoJson.facebook);
+        contact.setInstagram(contactInfoJson.instagram);
 
         return contact;
     }

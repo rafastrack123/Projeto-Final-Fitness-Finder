@@ -21,7 +21,9 @@ public class LeadJson {
 
     public String customerObjective;
 
-    public ContactInfoJson customerContact;
+    public String preferredContact;
+
+    public ContactInfoJson customerContact = new ContactInfoJson();
 
     public boolean isStrongLead;
 
