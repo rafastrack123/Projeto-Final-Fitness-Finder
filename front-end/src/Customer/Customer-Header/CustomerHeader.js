@@ -14,19 +14,22 @@ class CustomerHeader extends Component {
         Cookies.remove('userType');
 
     }
-    
+
     render() {
         return (
-            <Navbar bg="primary" variant="dark">
+            <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
                 <Navbar.Brand href="/vendor-offer-search" >Fitness-Finder</Navbar.Brand>
-                <Nav className="mr-auto">
-                    <Nav.Link href="/vendor-offer-search">Pesquisar</Nav.Link>
-                    <Nav.Link href="/vendor-proposition">Ofertas</Nav.Link>
-                    <Nav.Link href="/evaluation-request">Avaliações</Nav.Link>
-                </Nav>
-                <Nav>
-                    <Nav.Link onClick={this.logout} >Sair</Nav.Link>
-                </Nav>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link href="/vendor-offer-search">Pesquisar</Nav.Link>
+                        <Nav.Link href="/vendor-proposition">Ofertas</Nav.Link>
+                        <Nav.Link href="/evaluation-request">Avaliações</Nav.Link>
+                    </Nav>
+                    <Nav>
+                        <Nav.Link onClick={this.logout} >Sair</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
         )
     }
