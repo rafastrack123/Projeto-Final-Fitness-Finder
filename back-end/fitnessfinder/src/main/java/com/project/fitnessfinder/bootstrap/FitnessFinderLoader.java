@@ -341,8 +341,8 @@ public class FitnessFinderLoader implements CommandLineRunner {
         return AvailableSchedule.builder()
                 .vendorOffer(vendorOffer)
                 .dayOfWeek(dayOfWeek)
-                .startTime(Time.valueOf(startTime))
-                .endTime(Time.valueOf(endTime))
+                .startTime(startTime)
+                .endTime(endTime)
                 .build();
     }
 

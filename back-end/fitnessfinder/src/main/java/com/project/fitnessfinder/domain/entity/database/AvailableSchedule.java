@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,9 +30,9 @@ public class AvailableSchedule {
     @Convert(converter = DayOfWeekIntegerConverter.class)
     private DayOfWeek dayOfWeek;
 
-    private Time startTime;
+    private String startTime;
 
-    private Time endTime;
+    private String endTime;
 
     @ManyToOne
     private VendorOffer vendorOffer;
