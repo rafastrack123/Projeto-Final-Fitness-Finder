@@ -484,9 +484,10 @@ class VendorOfferSearch extends Component {
                                                     <Row>
 
                                                         <Col xs={12} className="mb-2 text-center m-a">
-                                                            <Image style={{ height: '300px' }}
-                                                                src={vendorOffer.imageUrl ? vendorOffer.imageUrl : 'https://www.recreiodajuventude.com.br/userfiles/conteudos/academia-guarany1.jpg'}
-                                                                thumbnail />
+                                                            <Image style={{ height: '300px', width:'100%' }}
+                                                                src={vendorOffer.imageUrl ? vendorOffer.imageUrl : 
+                                                                    'https://www.recreiodajuventude.com.br/userfiles/conteudos/academia-guarany1.jpg'}
+                                                                fluid />
                                                         </Col>
 
                                                         <Col xs={12}>

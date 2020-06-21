@@ -167,6 +167,7 @@ class Leads extends Component {
                     </Alert>
 
                         <Row>
+                           
                             {this.state.leads.map(lead => (
                                 <Col className="mb-3 m-a" xs={12} md={4}>
                                     <Card className="text-center h-100  d-flex flex-column">
