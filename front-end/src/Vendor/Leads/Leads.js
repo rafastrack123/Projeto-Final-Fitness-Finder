@@ -13,7 +13,9 @@ class Leads extends Component {
 
         this.state = {
             leads: [],
-            selectedLead: {},
+            selectedLead: {
+                customerContact: {}
+            },
 
             // Modals
             showCustomerContactModal: false,
@@ -27,12 +29,11 @@ class Leads extends Component {
             showLoader: false,
             showErrorAlert: false
         }
-        this.postVendorProposition = this.postVendorProposition.bind(this);
 
+        this.postVendorProposition = this.postVendorProposition.bind(this);
         this.hideCustomerContactModal = this.hideCustomerContactModal.bind(this);
         this.hideSendOfferModal = this.hideSendOfferModal.bind(this);
         this.hideSuccessAlert = this.hideSuccessAlert.bind(this);
-
     }
 
     componentDidMount() {
@@ -91,6 +92,7 @@ class Leads extends Component {
     postVendorProposition() {
         this.setState({ showLoader: true });
         this.hideSendOfferModal();
+
         var vendorProposition = {
             vendorOfferId: this.state.selectedLead.vendorOfferId,
             customerId: this.state.selectedLead.customerId,
@@ -135,7 +137,6 @@ class Leads extends Component {
         this.setState({ showLoader: false });
         this.setState({ showErrorAlert: true });
     }
-
 
     render() {
         return (
@@ -221,9 +222,11 @@ class Leads extends Component {
                         <strong> Sobrenome: </strong>  {this.state.selectedLead.customerLastName}  <br />
                         <strong> Objetivo: </strong>  {this.state.selectedLead.customerObjective}  <br />
                         <strong> E-mail:</strong>  {this.state.selectedLead.customerEmail}  <br />
-                        {/* TODO: Lógica de contato */}
-                        {/* <strong>  Telefone:</strong>  this.state.selectedLead.customerLastName    <br /> */}
-
+                        <strong> Celular:</strong>  {this.state.selectedLead.customerContact.cellphone}  <br />
+                        <strong> Facebook:</strong>  {this.state.selectedLead.customerContact.facebook}  <br />
+                        <strong> Instagram:</strong>  {this.state.selectedLead.customerContact.instagram}  <br />
+                        <strong> Forma preferida de contato: </strong>
+                        <span className="text-success">{this.state.selectedLead.preferredContact}  </span><br />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="danger" onClick={this.hideCustomerContactModal} >Fechar </Button>

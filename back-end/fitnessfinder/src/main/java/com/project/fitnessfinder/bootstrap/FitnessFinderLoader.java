@@ -248,6 +248,8 @@ public class FitnessFinderLoader implements CommandLineRunner {
 
         customer.setObjective(objective);
 
+        customer.setPreferredContact("WhatsApp");
+
         return customerRepository.save(customer);
     }
 
@@ -286,7 +288,8 @@ public class FitnessFinderLoader implements CommandLineRunner {
         var contact = new ContactInfo();
 
         contact.setCellphone("51992465588");
-
+        contact.setFacebook("Facebook do herói");
+        contact.setInstagram("User do instagram");
         return contact;
     }
 

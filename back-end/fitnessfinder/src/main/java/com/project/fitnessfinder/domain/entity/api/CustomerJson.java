@@ -25,4 +25,6 @@ public class CustomerJson {
 
     public ObjectiveJson objective;
 
+    public String preferredContact;
+
 }

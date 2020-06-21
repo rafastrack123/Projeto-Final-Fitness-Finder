@@ -9,6 +9,7 @@ import lombok.Data;
 public class ContactInfo {
 
     private String cellphone;
-    private String linkToFacebook;
+    private String facebook;
+    private String instagram;
 
 }
