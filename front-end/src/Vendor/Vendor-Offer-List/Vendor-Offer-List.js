@@ -7,6 +7,7 @@ import { Container, Form, Button, Alert, Col, Row, Card } from 'react-bootstrap'
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from '../../Utils/Loader';
+const API_URL = process.env.REACT_APP_API_HOST;
 
 class VendorOfferList extends Component {
 
@@ -33,7 +34,7 @@ class VendorOfferList extends Component {
 
     fetchVendorOffers = () => {
         this.setState({ showLoader: true });
-        axios.get('http://localhost:8080/vendor-offer/' + this.state.vendorId)
+        axios.get(API_URL + '/vendor-offer/' + this.state.vendorId)
             .then(response => {
                 this.setState({ vendorOffers: response.data.vendorOffers });
                 this.setState({ showLoader: false });
@@ -45,7 +46,7 @@ class VendorOfferList extends Component {
 
     deleteVendorOffer(vendorOfferId) {
         this.setState({ showLoader: true });
-        axios.delete('http://localhost:8080/vendor-offer/' + vendorOfferId)
+        axios.delete(API_URL + '/vendor-offer/' + vendorOfferId)
             .then(response => {
 
                 this.fetchVendorOffers();

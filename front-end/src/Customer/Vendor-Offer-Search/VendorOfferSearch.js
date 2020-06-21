@@ -6,7 +6,8 @@ import CustomerHeader from '../Customer-Header/CustomerHeader';
 import { withRouter } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import TimeInput from 'react-time-input';
-import Loader from '../../Utils/Loader'
+import Loader from '../../Utils/Loader';
+const API_URL = process.env.REACT_APP_API_HOST;
 
 
 class VendorOfferSearch extends Component {
@@ -62,7 +63,7 @@ class VendorOfferSearch extends Component {
             daysOfTheWeekArray: this.buildDaysOfTheWeekArray(),
 
             // Alert
-            showErrorAlert:false
+            showErrorAlert: false
         }
 
         this.searchVendorOffer = this.searchVendorOffer.bind(this)
@@ -91,7 +92,7 @@ class VendorOfferSearch extends Component {
     }
 
     fetchServiceAreaArray = () => {
-        axios.get('http://localhost:8080/service-area/find-all')
+        axios.get(API_URL + '/service-area/find-all')
             .then(response => {
                 this.setState({ serviceAreaArray: response.data });
             }).catch(response => {
@@ -100,7 +101,7 @@ class VendorOfferSearch extends Component {
     }
 
     fetchServiceGroupArray = (serviceAreaId) => {
-        axios.get('http://localhost:8080/service-group/' + serviceAreaId)
+        axios.get(API_URL + '/service-group/' + serviceAreaId)
             .then(response => {
                 this.setState({ serviceGroupArray: response.data });
             }).catch(response => {
@@ -109,7 +110,7 @@ class VendorOfferSearch extends Component {
     }
 
     fetchServiceDetailArray = (serviceGroupId) => {
-        axios.get('http://localhost:8080/service-detail/' + serviceGroupId)
+        axios.get(API_URL + '/service-detail/' + serviceGroupId)
             .then(response => {
                 this.setState({ serviceDetailArray: response.data });
             }).catch(response => {
@@ -195,7 +196,7 @@ class VendorOfferSearch extends Component {
         console.log('searchVendorOffer:');
         this.setState({ showLoader: true });
 
-        axios.get('http://localhost:8080/vendor-offer', {
+        axios.get(API_URL + '/vendor-offer', {
             params: {
                 customerId: this.state.customerId,
                 serviceAreaId: this.state.serviceAreaIdSelected,
@@ -224,7 +225,7 @@ class VendorOfferSearch extends Component {
     sendStrongLead(vendorOfferId) {
         var customerId = this.state.customerId;
 
-        axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, null, {
+        axios.post(API_URL + '/lead/' + vendorOfferId + '/' + customerId, null, {
             params: {
                 isStrongLead: 'true'
             }
@@ -242,7 +243,7 @@ class VendorOfferSearch extends Component {
     }
 
     selectVendorOfferDetail(vendorOffer) {
-        axios.post('http://localhost:8080/lead/' + vendorOffer.id + '/' + this.state.customerId, null, {
+        axios.post(API_URL + '/lead/' + vendorOffer.id + '/' + this.state.customerId, null, {
             params: {
                 isStrongLead: 'false'
             }
@@ -254,7 +255,7 @@ class VendorOfferSearch extends Component {
     }
 
     getVendorOfferDetail(vendorOffer) {
-        axios.get('http://localhost:8080/vendor-offer/detail/' + vendorOffer.id)
+        axios.get(API_URL + '/vendor-offer/detail/' + vendorOffer.id)
             .then(response => {
                 console.log('getVendorOfferDetail:');
                 console.log(response.data);
@@ -484,8 +485,8 @@ class VendorOfferSearch extends Component {
                                                     <Row>
 
                                                         <Col xs={12} className="mb-2 text-center m-a">
-                                                            <Image style={{ height: '300px', width:'100%' }}
-                                                                src={vendorOffer.imageUrl ? vendorOffer.imageUrl : 
+                                                            <Image style={{ height: '300px', width: '100%' }}
+                                                                src={vendorOffer.imageUrl ? vendorOffer.imageUrl :
                                                                     'https://www.recreiodajuventude.com.br/userfiles/conteudos/academia-guarany1.jpg'}
                                                                 fluid />
                                                         </Col>

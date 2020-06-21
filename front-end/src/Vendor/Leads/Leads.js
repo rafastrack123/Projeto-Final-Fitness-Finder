@@ -5,6 +5,7 @@ import { Container, Card, Row, Button, Col, Modal, Form, Alert } from 'react-boo
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Loader from '../../Utils/Loader';
+const API_URL = process.env.REACT_APP_API_HOST;
 
 class Leads extends Component {
 
@@ -44,7 +45,7 @@ class Leads extends Component {
         this.setState({ showLoader: true });
         var vendorId = Cookies.get('userId');
 
-        axios.get('http://localhost:8080/lead/' + vendorId)
+        axios.get(API_URL + '/lead/' + vendorId)
             .then(response => {
                 this.setState({ leads: response.data })
                 this.setState({ showLoader: false });
@@ -99,7 +100,7 @@ class Leads extends Component {
             message: this.state.vendorPropositionMessage
         }
 
-        axios.post('http://localhost:8080/vendor-proposition', vendorProposition)
+        axios.post(API_URL + '/vendor-proposition', vendorProposition)
             .then(response => {
                 this.showSuccessAlert('Oferta enviada com sucesso!');
                 this.setState({ showLoader: false });
@@ -120,7 +121,7 @@ class Leads extends Component {
         var customerId = lead.customerId;
         var vendorOfferId = lead.vendorOfferId;
 
-        var url = 'http://localhost:8080/evaluation-request/customers/' + customerId + '/vendor-offers/' + vendorOfferId +
+        var url = API_URL + '/evaluation-request/customers/' + customerId + '/vendor-offers/' + vendorOfferId +
             '/leads/' + lead.id;
 
         axios.post(url)
@@ -167,7 +168,7 @@ class Leads extends Component {
                     </Alert>
 
                         <Row>
-                           
+
                             {this.state.leads.map(lead => (
                                 <Col className="mb-3 m-a" xs={12} md={4}>
                                     <Card className="text-center h-100  d-flex flex-column">

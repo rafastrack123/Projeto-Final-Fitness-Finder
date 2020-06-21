@@ -5,6 +5,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Container, Form, Button, Alert, Col, Row } from 'react-bootstrap';
 import Loader from '../../Utils/Loader';
+const API_URL = process.env.REACT_APP_API_HOST;
 
 class Resume extends Component {
 
@@ -36,7 +37,7 @@ class Resume extends Component {
 
     getVendorResume() {
         this.setState({ showLoader: true });
-        axios.get('http://localhost:8080/vendor/resume/' + this.state.vendorId)
+        axios.get(API_URL + '/vendor/resume/' + this.state.vendorId)
             .then(response => {
                 this.setState({ resume: response.data.resume });
                 this.setState({ showLoader: false });
@@ -52,7 +53,7 @@ class Resume extends Component {
             resume: this.state.resume
         };
 
-        axios.post('http://localhost:8080/vendor/resume/', vendorResumeJson)
+        axios.post(API_URL + '/vendor/resume/', vendorResumeJson)
             .then(response => {
                 this.setState({ showSuccessModal: true });
                 this.setState({ showLoader: false });

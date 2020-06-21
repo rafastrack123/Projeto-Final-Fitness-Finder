@@ -7,6 +7,7 @@ import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
 import history from '../../History';
 import { withRouter } from 'react-router-dom';
 import CryptoJS from 'crypto-js/';
+const API_URL = process.env.REACT_APP_API_HOST;
 
 class Login extends Component {
 
@@ -40,7 +41,7 @@ class Login extends Component {
         try {
             console.log('userLogin');
             console.log(userLogin);
-            var loginResponse = await axios.post('http://localhost:8080/login', userLogin);
+            var loginResponse = await axios.post(API_URL + '/login', userLogin);
             var authenticatedUser = loginResponse.data;
 
             this.setState({ loading: false });
@@ -113,9 +114,9 @@ class Login extends Component {
                             Loading...
                          </Button>
                             :
-                            <Button block variant="btn btn-primary btn-block mb-2" 
-                            bsSize="large"
-                                onClick={this.authenticate} 
+                            <Button block variant="btn btn-primary btn-block mb-2"
+                                bsSize="large"
+                                onClick={this.authenticate}
                                 type="button"
                                 disabled={!this.state.login || !this.state.password}>Entrar</Button>
                         }
