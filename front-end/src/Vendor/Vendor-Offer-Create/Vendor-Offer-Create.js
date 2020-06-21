@@ -9,6 +9,7 @@ import TimeInput from 'react-time-input';
 import history from '../../History';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Loader from '../../Utils/Loader';
 
 class VendorOfferCreate extends Component {
 
@@ -57,6 +58,12 @@ class VendorOfferCreate extends Component {
 
             invalidAvailableScheduleMessage: "",
             invalidVendorOfferMessage: "",
+
+            // Loader
+            showLoader: false,
+
+            // Alert
+            showErrorAlert: false
         }
 
 
@@ -97,21 +104,27 @@ class VendorOfferCreate extends Component {
         axios.get('http://localhost:8080/service-area/find-all')
             .then(response => {
                 this.setState({ serviceAreaArray: response.data });
-            });
+            }).catch(response => {
+                this.handleError();
+            });;;
     }
 
     fetchServiceGroupArray = (serviceAreaId) => {
         axios.get('http://localhost:8080/service-group/' + serviceAreaId)
             .then(response => {
                 this.setState({ serviceGroupArray: response.data });
-            });
+            }).catch(response => {
+                this.handleError();
+            });;;
     }
 
     fetchServiceDetailArray = (serviceGroupId) => {
         axios.get('http://localhost:8080/service-detail/' + serviceGroupId)
             .then(response => {
                 this.setState({ serviceDetailArray: response.data });
-            });
+            }).catch(response => {
+                this.handleError();
+            });;;
     }
 
     selectServiceArea = (event) => {
@@ -200,6 +213,7 @@ class VendorOfferCreate extends Component {
     }
 
     postVendorOffer() {
+        this.setState({ showLoader: true });
         if (this.validateVendorOffer()) {
             var vendorOffer = {
                 vendorId: this.state.vendorId,
@@ -225,13 +239,17 @@ class VendorOfferCreate extends Component {
             axios.post('http://localhost:8080/vendor-offer', vendorOffer)
                 .then(response => {
                     history.push('/vendor-offer/list');
+                    this.setState({ showLoader: false });
                 }).catch(response => {
                     this.setState({ invalidVendorOfferMessage: "Erro ao salvar oferta! Tente mais tarde" })
                     this.setState({ showInvalidVendorOfferAlert: true });
+                    this.setState({ showLoader: false });
                 });
         } else {
             this.setState({ showInvalidVendorOfferAlert: true });
+            this.setState({ showLoader: false });
         }
+       
     }
 
     addNewAvailableSchedule() {
@@ -278,9 +296,6 @@ class VendorOfferCreate extends Component {
         } else if (!this.state.serviceDetailIdSelected) {
             this.setState({ invalidVendorOfferMessage: "Especialização é obrigatório" })
             return false;
-        } else if (!this.state.imageUrl) {
-            this.setState({ invalidVendorOfferMessage: "Image da oferta é obrigatório" })
-            return false;
         }
 
         return true;
@@ -315,9 +330,17 @@ class VendorOfferCreate extends Component {
         this.setState({ availableOffers: availableScheduleList });
     }
 
+    handleError() {
+        this.setState({ showLoader: false });
+        this.setState({ showErrorAlert: true });
+    }
+
     render() {
         return (
             <div className="VendorOfferCreate">
+
+                {this.state.showLoader ? <Loader /> : null}
+
                 <VendorHeader />
 
                 <Container>
@@ -332,6 +355,13 @@ class VendorOfferCreate extends Component {
                         onClose={() => { this.setState({ showInvalidVendorOfferAlert: false }) }}
                         dismissible>{this.state.invalidVendorOfferMessage}
                     </Alert>
+
+                    <Alert
+                        show={this.state.showErrorAlert}
+                        className="text-center"
+                        variant="danger"
+                        onClose={() => { this.setState({ showErrorAlert: false }) }}
+                        dismissible>Ocorreu um erro! Tente novamente mais tarde.</Alert>
 
                     <Form>
                         <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">

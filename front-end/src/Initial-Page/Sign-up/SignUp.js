@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './SignUp.css';
-import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form, Alert } from "react-bootstrap";
 import axios from 'axios';
 import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
 //import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
@@ -8,6 +8,7 @@ import InitialPageHeader from '../Initial-Page-Header/InitialPageHeader';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import CryptoJS from 'crypto-js/';
 import history from '../../History';
+import Loader from '../../Utils/Loader'
 
 class SignUp extends Component {
 
@@ -20,7 +21,14 @@ class SignUp extends Component {
         address: "",
         objectives: [],
         selectedObjective: "",
-        userType: "Customer"
+        userType: "Customer",
+
+        // Alert
+        showErrorAlert: false,
+        errorMessage: '',
+
+        // Loader
+        showLoader: false
     }
 
     componentDidMount() {
@@ -28,11 +36,15 @@ class SignUp extends Component {
     }
 
     fetchObjectives = () => {
+        this.setState({ showLoader: true });
         axios.get('http://localhost:8080/objective/findAll')
             .then(response => {
                 this.setState({ selectedObjective: response.data[0].id });
                 this.setState({ objectives: response.data });
-            });
+                this.setState({ showLoader: false });
+            }).catch(response => {
+                this.handleError();
+            });;
     }
 
     firstNameChangeHandle = (event) => {
@@ -68,26 +80,73 @@ class SignUp extends Component {
     }
 
     signUp = () => {
+        this.setState({ showLoader: true });
         console.log("signUp:");
 
-        var user = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            password: CryptoJS.MD5(this.state.password).toString(),
-            address: {
-                fullAddress: this.state.address
-            },
-            contactInfo:{
-                cellphone: this.state.cellphone
-            }
-        };
+        if (this.formIsValid()) {
 
-        if (this.state.userType === "Customer") {
-            this.postCustomer(user);
-        } else {
-            this.postVendor(user);
+
+            var user = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                password: CryptoJS.MD5(this.state.password).toString(),
+                address: {
+                    fullAddress: this.state.address
+                },
+                contactInfo: {
+                    cellphone: this.state.cellphone
+                }
+            };
+
+            if (this.state.userType === "Customer") {
+                this.postCustomer(user);
+            } else {
+                this.postVendor(user);
+            }
         }
+        this.setState({ showLoader: false });
+    }
+
+    formIsValid() {
+        if (!this.state.firstName) {
+            this.setState({ showErrorAlert: true });
+            this.setState({ errorMessage: "Nome é obrigatório" });
+            window.scrollTo(0, 0);
+            return false;
+
+        } else if (!this.state.lastName) {
+            this.setState({ showErrorAlert: true });
+            this.setState({ errorMessage: "Sobrenome é obrigatório" });
+            window.scrollTo(0, 0);
+            return false;
+
+        } else if (!this.state.email) {
+            this.setState({ showErrorAlert: true });
+            this.setState({ errorMessage: "E-mail é obrigatório" });
+            window.scrollTo(0, 0);
+            return false;
+
+        } else if (!this.state.password) {
+            this.setState({ showErrorAlert: true });
+            this.setState({ errorMessage: "Senha é obrigatório" });
+            window.scrollTo(0, 0);
+            return false;
+
+        } else if (!this.state.cellphone) {
+            this.setState({ showErrorAlert: true });
+            this.setState({ errorMessage: "Celular é obrigatório" });
+            window.scrollTo(0, 0);
+            return false;
+        } else if (!this.state.address) {
+            this.setState({ showErrorAlert: true });
+            this.setState({ errorMessage: "Endereço é obrigatório" });
+            window.scrollTo(0, 0);
+            return false;
+
+        }
+
+        return true;
     }
 
     postCustomer = (customer) => {
@@ -103,8 +162,11 @@ class SignUp extends Component {
                 console.log('Post Customer Success');
                 console.log(response.data);
                 history.push('/login');
+            }).catch(response => {
+                this.handleError();
             });
     }
+
 
     postVendor = (vendor) => {
         console.log('Post Vendor');
@@ -113,19 +175,40 @@ class SignUp extends Component {
             console.log('Post Vendor Success');
             console.log(response.data);
             history.push('/login');
+        }).catch(response => {
+            this.handleError();
         });
+    }
+
+
+    handleError() {
+        this.setState({ showLoader: false });
+        this.setState({ showErrorAlert: true });
+        this.setState({ errorMessage: "Ocorreu um erro! Tente mais tarde" });
+        window.scrollTo(0, 0);
     }
 
     render() {
 
         return (
             <div>
+                {this.state.showLoader ? <Loader /> : null}
+
                 <InitialPageHeader />
+
                 <div className="SignUp">
                     <h3 id="sign-up-header">Cadastro</h3>
 
+
                     <form id="sign-up-from">
 
+                        <Alert
+                            show={this.state.showErrorAlert}
+                            className="text-center"
+                            variant="danger"
+                            onClose={() => { this.setState({ showErrorAlert: false }) }}
+                            dismissible> {this.state.errorMessage}
+                        </Alert>
                         {/* Remove to component */}
 
                         <Form.Group>
@@ -166,15 +249,6 @@ class SignUp extends Component {
                                 placeholder="Insira E-mail" />
                         </FormGroup>
 
-                        <FormGroup controlId="cellphone" bsSize="large">
-                            <Form.Label>Celular</Form.Label>
-                            <FormControl
-                                type="tel"
-                                value={this.state.cellphone}
-                                onChange={this.cellphoneChangeHandle}
-                                placeholder="Insira celular" />
-                        </FormGroup>
-
                         <FormGroup controlId="password" bsSize="large">
                             <Form.Label>Senha</Form.Label>
                             <FormControl
@@ -182,6 +256,15 @@ class SignUp extends Component {
                                 value={this.state.password}
                                 onChange={this.passwordChangeHandle}
                                 placeholder="Insira senha" />
+                        </FormGroup>
+
+                        <FormGroup controlId="cellphone" bsSize="large">
+                            <Form.Label>Celular</Form.Label>
+                            <FormControl
+                                type="tel"
+                                value={this.state.cellphone}
+                                onChange={this.cellphoneChangeHandle}
+                                placeholder="Insira celular" />
                         </FormGroup>
 
                         <FormGroup controlId="text" bsSize="large">

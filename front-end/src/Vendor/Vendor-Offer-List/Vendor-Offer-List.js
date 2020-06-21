@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { Container, Form, Button, Alert, Col, Row, Card } from 'react-bootstrap';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Loader from '../../Utils/Loader';
 
 class VendorOfferList extends Component {
 
@@ -16,6 +17,10 @@ class VendorOfferList extends Component {
             vendorId: Cookies.get('userId'),
             vendorOffers: [],
 
+            // Loader
+            showLoader: false,
+
+            // Alert
             showSuccessAlert: false,
             showErrorAlert: false
         }
@@ -27,28 +32,41 @@ class VendorOfferList extends Component {
 
 
     fetchVendorOffers = () => {
+        this.setState({ showLoader: true });
         axios.get('http://localhost:8080/vendor-offer/' + this.state.vendorId)
             .then(response => {
-                console.log(response.data);
                 this.setState({ vendorOffers: response.data.vendorOffers });
-            });
+                this.setState({ showLoader: false });
+
+            }).catch(response => {
+                this.handleError();
+            });;;
     }
 
     deleteVendorOffer(vendorOfferId) {
+        this.setState({ showLoader: true });
         axios.delete('http://localhost:8080/vendor-offer/' + vendorOfferId)
             .then(response => {
 
                 this.fetchVendorOffers();
                 this.setState({ showSuccessAlert: true });
+                this.setState({ showLoader: true });
             }).catch(response => {
-
-                this.setState({ showErrorAlert: true });
+                this.handleError();
             });
+    }
+
+    handleError() {
+        this.setState({ showLoader: false });
+        this.setState({ showErrorAlert: true });
     }
 
     render() {
         return (
             <div className="VendorOfferList">
+
+                {this.state.showLoader ? <Loader /> : null}
+
                 <VendorHeader />
 
                 <Container>
@@ -60,7 +78,7 @@ class VendorOfferList extends Component {
                         className="text-center"
                         variant="success"
                         onClose={() => { this.setState({ showSuccessAlert: false }) }}
-                        dismissible>Oferta deletada com sucesso</Alert>
+                        dismissible>Oferta deletada com sucesso!</Alert>
 
 
                     <Alert
@@ -68,7 +86,7 @@ class VendorOfferList extends Component {
                         className="text-center"
                         variant="danger"
                         onClose={() => { this.setState({ showErrorAlert: false }) }}
-                        dismissible>Erro ao deletar oferta! Tente novamente mais tarde</Alert>
+                        dismissible>Ocorreu um erro! Tente novamente mais tarde.</Alert>
 
 
                     <Row className="justify-content-center">

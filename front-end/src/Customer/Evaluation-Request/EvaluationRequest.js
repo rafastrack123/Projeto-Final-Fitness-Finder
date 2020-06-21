@@ -5,6 +5,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import CustomerHeader from '../Customer-Header/CustomerHeader';
 import StarRatings from 'react-star-ratings';
+import Loader from '../../Utils/Loader';
 
 class EvaluationRequest extends Component {
 
@@ -24,10 +25,14 @@ class EvaluationRequest extends Component {
             // Alert
             showSuccessAlert: false,
             successAlertMessage: '',
+            showErrorAlert: false,
 
             // Modal
             showEvaluationModal: false,
-            modalAlert: false
+            modalAlert: false,
+
+            // Loader
+            showLoader: false
         }
 
         this.hideEvaluationModal = this.hideEvaluationModal.bind(this);
@@ -41,6 +46,7 @@ class EvaluationRequest extends Component {
     }
 
     getEvaluationRequests(showEmptyMessage) {
+        this.setState({ showLoader: true });
         axios.get('http://localhost:8080/evaluation-request/customers/' + this.state.customerId)
             .then(response => {
 
@@ -48,7 +54,10 @@ class EvaluationRequest extends Component {
                 if (response.data.length === 0 && showEmptyMessage) {
                     this.showSuccessAlert('Nenhum pedido de avaliação foi encontrado!');
                 }
-            });
+                this.setState({ showLoader: false });
+            }).catch(response => {
+                this.handleError();
+            });;
     }
 
     showSuccessAlert(message) {
@@ -81,16 +90,21 @@ class EvaluationRequest extends Component {
     }
 
     deleteEvaluationRequest(evaluationRequestId) {
+        this.setState({ showLoader: true });
         console.log('deleteEvaluationRequest');
         axios.delete('http://localhost:8080/evaluation-request/' + evaluationRequestId)
             .then(response => {
                 this.showSuccessAlert("Pedido de avaliação deleteado!");
                 this.getEvaluationRequests(false);
+                this.setState({ showLoader: false });
+            }).catch(response => {
+                this.handleError();
             });
     }
 
     sendEvaluation() {
-
+        this.hideEvaluationModal();
+        this.setState({ showLoader: true });
         if (this.state.rating < 1) {
             this.setState({ modalAlert: true });
             return;
@@ -108,16 +122,28 @@ class EvaluationRequest extends Component {
 
         axios.post('http://localhost:8080/evaluation', evaluation)
             .then(response => {
-                this.hideEvaluationModal();
+
                 this.showSuccessAlert('Avaliação enviada com sucesso');
                 this.getEvaluationRequests(false);
-            })
+                this.setState({ showLoader: false });
+            }).catch(response => {
+                this.handleError();
+            });
+    }
+
+    handleError() {
+        this.setState({ showLoader: false });
+        this.setState({ showErrorAlert: true });
     }
 
     render() {
         return (
             <div className="EvaluationRequest">
+
+                {this.state.showLoader ? <Loader /> : null}
+
                 <CustomerHeader />
+
                 <Container>
 
                     <h3 className="m-a text-center mt-4 mb-4">Avaliações pendentes</h3>
@@ -130,6 +156,15 @@ class EvaluationRequest extends Component {
                         onClose={() => { this.setState({ showSuccessAlert: false }) }}
                         dismissible>{this.state.successAlertMessage}
                     </Alert>
+
+                    <Alert
+                        show={this.state.showErrorAlert}
+                        className="text-center"
+                        variant="danger"
+                        onClose={() => { this.setState({ showErrorAlert: false }) }}
+                        dismissible> Ocorreu um erro! Tente mais tarde.
+                    </Alert>
+
 
                     <Row>
                         {this.state.evaluationRequestArray.map(evaluationRequest => (

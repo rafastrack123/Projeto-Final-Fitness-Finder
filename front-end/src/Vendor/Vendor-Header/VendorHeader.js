@@ -21,7 +21,7 @@ class VendorHeader extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/leads">Leads</Nav.Link>
+                        <Nav.Link href="/leads">Oportunidades</Nav.Link>
                         <NavDropdown title="Serviços">
                             <NavDropdown.Item href="/vendor-offer/create">Ofertar</NavDropdown.Item>
                             <NavDropdown.Item href="/vendor-offer/list">Visualizar</NavDropdown.Item>
