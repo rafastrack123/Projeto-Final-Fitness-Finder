@@ -4,6 +4,7 @@ import VendorHeader from '../Vendor-Header/VendorHeader';
 import { Container, Card, Row, Button, Col, Modal, Form, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Loader from '../../Utils/Loader';
 
 class Leads extends Component {
 
@@ -21,7 +22,10 @@ class Leads extends Component {
             // vendorProposition
             vendorPropositionMessage: null,
             showSuccessAlert: false,
-            successAlertMessage: ''
+            successAlertMessage: '',
+
+            showLoader: false,
+            showErrorAlert: false
         }
         this.postVendorProposition = this.postVendorProposition.bind(this);
 
@@ -36,14 +40,16 @@ class Leads extends Component {
     }
 
     fetchLeads() {
+        this.setState({ showLoader: true });
         var vendorId = Cookies.get('userId');
 
         axios.get('http://localhost:8080/lead/' + vendorId)
             .then(response => {
-                console.log('fetchLeads');
-                console.log(response.data);
                 this.setState({ leads: response.data })
-            });
+                this.setState({ showLoader: false });
+            }).catch(response => {
+                this.handleError();
+            });;;
     }
 
     showCustomerContactModal(leadId) {
@@ -63,6 +69,7 @@ class Leads extends Component {
     }
 
     hideSendOfferModal() {
+        this.setState({ vendorPropositionMessage: null });
         this.setState({ showSendOfferModal: false });
     }
 
@@ -82,6 +89,8 @@ class Leads extends Component {
     }
 
     postVendorProposition() {
+        this.setState({ showLoader: true });
+        this.hideSendOfferModal();
         var vendorProposition = {
             vendorOfferId: this.state.selectedLead.vendorOfferId,
             customerId: this.state.selectedLead.customerId,
@@ -90,9 +99,11 @@ class Leads extends Component {
 
         axios.post('http://localhost:8080/vendor-proposition', vendorProposition)
             .then(response => {
-                this.hideSendOfferModal();
                 this.showSuccessAlert('Oferta enviada com sucesso!');
-            })
+                this.setState({ showLoader: false });
+            }).catch(response => {
+                this.handleError();
+            });;
 
     }
 
@@ -102,27 +113,35 @@ class Leads extends Component {
     }
 
     createCustomerEvaluationRequest(lead) {
-        console.log('createCustomerEvaluationRequest:');
-        console.log(lead);
+        this.setState({ showLoader: true });
 
         var customerId = lead.customerId;
         var vendorOfferId = lead.vendorOfferId;
 
-        var url = 'http://localhost:8080/evaluation-request/customers/' + customerId +'/vendor-offers/' + vendorOfferId+
-        '/leads/'+ lead.id;
-        
-        console.log(url);
+        var url = 'http://localhost:8080/evaluation-request/customers/' + customerId + '/vendor-offers/' + vendorOfferId +
+            '/leads/' + lead.id;
+
         axios.post(url)
             .then(response => {
                 console.log('sucesso: createCustomerEvaluationRequest')
                 this.showSuccessAlert('Avaliação será solicitada ao cliente');
                 this.fetchLeads();
+            }).catch(response => {
+                this.handleError();
             });
     }
+
+    handleError() {
+        this.setState({ showLoader: false });
+        this.setState({ showErrorAlert: true });
+    }
+
 
     render() {
         return (
             <div className="Leads">
+                {this.state.showLoader ? <Loader /> : null}
+
                 <VendorHeader />
 
                 <div className="Leads-body mt-5">
@@ -137,6 +156,14 @@ class Leads extends Component {
                             onClose={this.hideSuccessAlert}
                             dismissible> {this.state.successAlertMessage}
                         </Alert>
+
+                        <Alert
+                            show={this.state.showErrorAlert}
+                            className="text-center"
+                            variant="danger"
+                            onClose={() => { this.setState({ showErrorAlert: false }) }}
+                            dismissible> Ocorreu um erro! Tente mais tarde.
+                    </Alert>
 
                         <Row>
                             {this.state.leads.map(lead => (
@@ -227,7 +254,9 @@ class Leads extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="danger" onClick={this.hideSendOfferModal} >Fechar </Button>
-                        <Button variant="success" onClick={this.postVendorProposition} >Enviar Oferta </Button>
+                        <Button variant="success"
+                            onClick={this.postVendorProposition}
+                            disabled={!this.state.vendorPropositionMessage}>Enviar Oferta </Button>
                     </Modal.Footer>
                 </Modal>
 

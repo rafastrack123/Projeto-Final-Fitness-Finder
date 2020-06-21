@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './VendorOfferSearch.css';
-import { Form, Container, Button, Col, Table, Modal, Tabs, Tab, Row, Card, Image } from 'react-bootstrap';
+import { Form, Container, Button, Col, Alert, Modal, Tabs, Tab, Row, Card, Image } from 'react-bootstrap';
 import axios from 'axios';
 import CustomerHeader from '../Customer-Header/CustomerHeader';
 import { withRouter } from 'react-router-dom';
@@ -59,7 +59,10 @@ class VendorOfferSearch extends Component {
             // Loader
             showLoader: false,
 
-            daysOfTheWeekArray: this.buildDaysOfTheWeekArray()
+            daysOfTheWeekArray: this.buildDaysOfTheWeekArray(),
+
+            // Alert
+            showErrorAlert:false
         }
 
         this.searchVendorOffer = this.searchVendorOffer.bind(this)
@@ -91,6 +94,8 @@ class VendorOfferSearch extends Component {
         axios.get('http://localhost:8080/service-area/find-all')
             .then(response => {
                 this.setState({ serviceAreaArray: response.data });
+            }).catch(response => {
+                this.handleError();
             });
     }
 
@@ -98,6 +103,8 @@ class VendorOfferSearch extends Component {
         axios.get('http://localhost:8080/service-group/' + serviceAreaId)
             .then(response => {
                 this.setState({ serviceGroupArray: response.data });
+            }).catch(response => {
+                this.handleError();
             });
     }
 
@@ -105,6 +112,8 @@ class VendorOfferSearch extends Component {
         axios.get('http://localhost:8080/service-detail/' + serviceGroupId)
             .then(response => {
                 this.setState({ serviceDetailArray: response.data });
+            }).catch(response => {
+                this.handleError();
             });
     }
 
@@ -208,8 +217,7 @@ class VendorOfferSearch extends Component {
             this.setState({ vendorOffers: response.data.offers });
             this.setState({ showLoader: false });
         }).catch(err => {
-            console.log(err);
-            this.setState({ showLoader: false });
+            this.handleError();
         });
     }
 
@@ -268,6 +276,11 @@ class VendorOfferSearch extends Component {
         this.setState({ showDetailModal: false });
     }
 
+    handleError() {
+        this.setState({ showLoader: false });
+        this.setState({ showErrorAlert: true });
+    }
+
     render() {
         return (
             <div>
@@ -277,6 +290,16 @@ class VendorOfferSearch extends Component {
                     <Container>
                         <h3 className="m-a text-center mt-2">Busca por Profissionais Fitness</h3>
                         <hr />
+
+                        <Alert
+                            show={this.state.showErrorAlert}
+                            className="text-center"
+                            variant="danger"
+                            onClose={() => { this.setState({ showErrorAlert: false }) }}
+                            dismissible> Ocorreu um erro! Tente mais tarde.
+                        </Alert>
+
+
                         <Form>
                             <Form.Row className="justify-content-md-center mt-3 text-left pl-2 pr-2">
                                 <Col md={6} xs={11}>
