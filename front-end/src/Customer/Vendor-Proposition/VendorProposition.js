@@ -6,6 +6,8 @@ import CustomerHeader from '../Customer-Header/CustomerHeader';
 import { Container, Row, Toast, Col, Button, Modal, Alert } from 'react-bootstrap';
 import Loader from '../../Utils/Loader'
 
+const API_URL = process.env.REACT_APP_API_HOST;
+
 class VendorProposition extends Component {
 
     constructor(props) {
@@ -25,7 +27,7 @@ class VendorProposition extends Component {
             showLoader: false,
 
             // Alert
-            showErrorAlert:false
+            showErrorAlert: false
         }
 
         this.showRefusePropositionModal = this.showRefusePropositionModal.bind(this);
@@ -41,7 +43,7 @@ class VendorProposition extends Component {
     getVendorPropositions() {
         this.setState({ showLoader: true });
 
-        axios.get('http://localhost:8080/vendor-proposition/' + this.state.customerId)
+        axios.get(API_URL + '/vendor-proposition/' + this.state.customerId)
             .then(response => {
                 console.log('VendorPropositions:')
                 console.log(response.data);
@@ -57,7 +59,7 @@ class VendorProposition extends Component {
         this.setState({ showLoader: true });
         var customerId = this.state.customerId;
 
-        axios.post('http://localhost:8080/lead/' + vendorOfferId + '/' + customerId, null, {
+        axios.post(API_URL + '/lead/' + vendorOfferId + '/' + customerId, null, {
             params: {
                 isStrongLead: true
             }
@@ -77,7 +79,7 @@ class VendorProposition extends Component {
     markAsViewed(vendorPropositionId) {
         this.setState({ showLoader: true });
         console.log('markAsViewed');
-        axios.put('http://localhost:8080/vendor-proposition/' + vendorPropositionId)
+        axios.put(API_URL + '/vendor-proposition/' + vendorPropositionId)
             .then(response => {
                 this.getVendorPropositions();
             }).catch(response => {
@@ -98,7 +100,7 @@ class VendorProposition extends Component {
         this.setState({ showLeadSendModal: false });
     }
 
-    handleError(){
+    handleError() {
         this.setState({ showLoader: false });
         this.setState({ showErrorAlert: true });
     }

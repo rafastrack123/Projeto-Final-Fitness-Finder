@@ -10,6 +10,7 @@ import history from '../../History';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from '../../Utils/Loader';
+const API_URL = process.env.REACT_APP_API_HOST;
 
 class VendorOfferCreate extends Component {
 
@@ -101,7 +102,7 @@ class VendorOfferCreate extends Component {
     }
 
     fetchServiceAreaArray = () => {
-        axios.get('http://localhost:8080/service-area/find-all')
+        axios.get(API_URL + '/service-area/find-all')
             .then(response => {
                 this.setState({ serviceAreaArray: response.data });
             }).catch(response => {
@@ -110,7 +111,7 @@ class VendorOfferCreate extends Component {
     }
 
     fetchServiceGroupArray = (serviceAreaId) => {
-        axios.get('http://localhost:8080/service-group/' + serviceAreaId)
+        axios.get(API_URL + '/service-group/' + serviceAreaId)
             .then(response => {
                 this.setState({ serviceGroupArray: response.data });
             }).catch(response => {
@@ -119,7 +120,7 @@ class VendorOfferCreate extends Component {
     }
 
     fetchServiceDetailArray = (serviceGroupId) => {
-        axios.get('http://localhost:8080/service-detail/' + serviceGroupId)
+        axios.get(API_URL + '/service-detail/' + serviceGroupId)
             .then(response => {
                 this.setState({ serviceDetailArray: response.data });
             }).catch(response => {
@@ -236,7 +237,7 @@ class VendorOfferCreate extends Component {
             console.log('vendorOffer');
             console.log(vendorOffer);
 
-            axios.post('http://localhost:8080/vendor-offer', vendorOffer)
+            axios.post(API_URL + '/vendor-offer', vendorOffer)
                 .then(response => {
                     history.push('/vendor-offer/list');
                     this.setState({ showLoader: false });
@@ -249,7 +250,7 @@ class VendorOfferCreate extends Component {
             this.setState({ showInvalidVendorOfferAlert: true });
             this.setState({ showLoader: false });
         }
-       
+
     }
 
     addNewAvailableSchedule() {

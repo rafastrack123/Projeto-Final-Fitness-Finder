@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import CustomerHeader from '../Customer-Header/CustomerHeader';
 import StarRatings from 'react-star-ratings';
 import Loader from '../../Utils/Loader';
+const API_URL = process.env.REACT_APP_API_HOST;
 
 class EvaluationRequest extends Component {
 
@@ -47,7 +48,7 @@ class EvaluationRequest extends Component {
 
     getEvaluationRequests(showEmptyMessage) {
         this.setState({ showLoader: true });
-        axios.get('http://localhost:8080/evaluation-request/customers/' + this.state.customerId)
+        axios.get(API_URL + '/evaluation-request/customers/' + this.state.customerId)
             .then(response => {
 
                 this.setState({ evaluationRequestArray: response.data });
@@ -92,7 +93,7 @@ class EvaluationRequest extends Component {
     deleteEvaluationRequest(evaluationRequestId) {
         this.setState({ showLoader: true });
         console.log('deleteEvaluationRequest');
-        axios.delete('http://localhost:8080/evaluation-request/' + evaluationRequestId)
+        axios.delete(API_URL + '/evaluation-request/' + evaluationRequestId)
             .then(response => {
                 this.showSuccessAlert("Pedido de avaliação deleteado!");
                 this.getEvaluationRequests(false);
@@ -120,7 +121,7 @@ class EvaluationRequest extends Component {
         console.log('sendEvaluation');
         console.log(evaluation);
 
-        axios.post('http://localhost:8080/evaluation', evaluation)
+        axios.post(API_URL + '/evaluation', evaluation)
             .then(response => {
 
                 this.showSuccessAlert('Avaliação enviada com sucesso');

@@ -9,6 +9,7 @@ import 'react-google-places-autocomplete/dist/index.min.css';
 import CryptoJS from 'crypto-js/';
 import history from '../../History';
 import Loader from '../../Utils/Loader'
+const API_URL = process.env.REACT_APP_API_HOST;
 
 class SignUp extends Component {
 
@@ -40,7 +41,7 @@ class SignUp extends Component {
 
     fetchObjectives = () => {
         this.setState({ showLoader: true });
-        axios.get('http://localhost:8080/objective/findAll')
+        axios.get(API_URL + '/objective/findAll')
             .then(response => {
                 this.setState({ selectedObjective: response.data[0].id });
                 this.setState({ objectives: response.data });
@@ -175,7 +176,7 @@ class SignUp extends Component {
         customer.objective = this.state.objectives
             .find(objective => objective.id == this.state.selectedObjective)
 
-        axios.post('http://localhost:8080/customer', customer)
+        axios.post(API_URL + '/customer', customer)
             .then(response => {
                 console.log('Post Customer Success');
                 console.log(response.data);
@@ -189,7 +190,7 @@ class SignUp extends Component {
     postVendor = (vendor) => {
         console.log('Post Vendor');
 
-        axios.post('http://localhost:8080/vendor', vendor).then(response => {
+        axios.post(API_URL + '/vendor', vendor).then(response => {
             console.log('Post Vendor Success');
             console.log(response.data);
             history.push('/login');
