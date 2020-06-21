@@ -3,16 +3,16 @@
 # Documentação e Artefatos
 Esse documento tem como objetivo apresentar e descrever o projeto final, fornecendo informações e artefatos sobre a concepção do produto, o seu planejamento, as decisões arquiteturais, desenvolvimento, testes/validação e conclusões.
 
-## [Canvas do Produto](read-me/CanvasMvp.md)
+## [Canvas do Produto](Read-me/CanvasMvp.md)
 
-## [Tabela Comparativa](read-me/TabelaComparativa.md)
+## [Tabela Comparativa](Read-me/TabelaComparativa.md)
 
-## [Diagrama ER](read-me/DiagramaEr.md)
+## [Diagrama ER](Read-me/DiagramaEr.md)
 
-## [Diagrama de Classes](read-me/DiagramaClasse.md)
+## [Diagrama de Classes](Read-me/DiagramaClasse.md)
 
-## [User Stories](read-me/UserStories.md)
+## [User Stories](Read-me/UserStories.md)
 
-## [Representação da Arquitetura](read-me/Arquitetura.md)
+## [Representação da Arquitetura](Read-me/Arquitetura.md)
 
 
