@@ -113,8 +113,11 @@ class Login extends Component {
                             Loading...
                          </Button>
                             :
-                            <Button block variant="btn btn-primary btn-block mb-2" bsSize="large"
-                                onClick={this.authenticate} type="button">Entrar</Button>
+                            <Button block variant="btn btn-primary btn-block mb-2" 
+                            bsSize="large"
+                                onClick={this.authenticate} 
+                                type="button"
+                                disabled={!this.state.login || !this.state.password}>Entrar</Button>
                         }
 
                         <p className="forgot-password text-right">

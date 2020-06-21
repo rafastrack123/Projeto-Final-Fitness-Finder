@@ -21,6 +21,9 @@ class SignUp extends Component {
         address: "",
         objectives: [],
         selectedObjective: "",
+        preferredContact: "WhatsApp",
+        facebook: "",
+        instagram: "",
         userType: "Customer",
 
         // Alert
@@ -71,6 +74,18 @@ class SignUp extends Component {
         this.setState({ address: event.target.value });
     }
 
+    faceboookChangeHandle = (event) => {
+        this.setState({ facebook: event.target.value });
+    }
+
+    instagramChangeHandle = (event) => {
+        this.setState({ instagram: event.target.value });
+    }
+
+    preferredContactHandle = (event) => {
+        this.setState({ preferredContact: event.target.value });
+    }
+
     selectObjective = (event) => {
         this.setState({ selectedObjective: event.target.value });
     }
@@ -95,8 +110,11 @@ class SignUp extends Component {
                     fullAddress: this.state.address
                 },
                 contactInfo: {
-                    cellphone: this.state.cellphone
-                }
+                    cellphone: this.state.cellphone,
+                    facebook: this.state.facebook,
+                    instagram: this.state.instagram
+                },
+                preferredContact: this.state.preferredContact
             };
 
             if (this.state.userType === "Customer") {
@@ -266,6 +284,47 @@ class SignUp extends Component {
                                 onChange={this.cellphoneChangeHandle}
                                 placeholder="Insira celular" />
                         </FormGroup>
+
+                        {this.state.userType === "Customer" ?
+                            <FormGroup controlId="facebook" bsSize="large">
+                                <Form.Label>Facebook</Form.Label>
+                                <FormControl
+                                    type="tel"
+                                    value={this.state.facebook}
+                                    onChange={this.faceboookChangeHandle}
+                                    placeholder="Insira do facebook" />
+                            </FormGroup>
+                            : null
+                        }
+
+                        {this.state.userType === "Customer" ?
+                            <FormGroup controlId="instagram" bsSize="large">
+                                <Form.Label>Instagram</Form.Label>
+                                <FormControl
+                                    type="tel"
+                                    value={this.state.instagram}
+                                    onChange={this.instagramChangeHandle}
+                                    placeholder="Insira usuário do instagram" />
+                            </FormGroup>
+                            : null
+                        }
+
+
+                        {this.state.userType === "Customer" ?
+                            <Form.Group>
+                                <Form.Label>Forma preferida de contato</Form.Label>
+                                <Form.Control as="select"
+                                    onChange={this.preferredContactHandle}
+                                    value={this.state.preferredContact}>
+                                    <option key="WhatsApp" value="WhatsApp">WhatsApp</option>
+                                    <option key="Facebook" value="Facebook">Facebook</option>
+                                    <option key="Instagram" value="Instagram">Instagram</option>
+                                    <option key="SMS" value="SMS">SMS</option>
+                                </Form.Control>
+                            </Form.Group>
+                            : null
+                        }
+
 
                         <FormGroup controlId="text" bsSize="large">
                             <Form.Label>Endereço</Form.Label>
