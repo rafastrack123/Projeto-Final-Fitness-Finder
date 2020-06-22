@@ -215,6 +215,7 @@ class VendorOfferSearch extends Component {
             }
         }).then(response => {
             console.log('searchVendorOffer Success');
+            console.log(response.data.offers);
             this.setState({ vendorOffers: response.data.offers });
             this.setState({ showLoader: false });
         }).catch(err => {
@@ -604,7 +605,7 @@ class VendorOfferSearch extends Component {
 
                                             <Row>
                                                 <Col className="mr-2 ml-2">
-                                                    <p className="mt-2">{this.state.selectedVendorOffer.resume}</p>
+                                                    <p className="mt-2 ml-2">{this.state.selectedVendorOffer.resume}</p>
                                                 </Col>
                                             </Row>
 
