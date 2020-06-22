@@ -29,9 +29,9 @@ public class VendorOffer {
 
     private BigDecimal price;
 
-    private boolean isHomeService;
+    private boolean homeService;
 
-    private boolean isRemoteService;
+    private boolean remoteService;
 
     private boolean firstClassFree;
 

@@ -17,9 +17,9 @@ public class VendorOfferJson {
 
     public BigDecimal price;
 
-    public boolean isHomeService;
+    public boolean homeService;
 
-    public boolean isRemoteService;
+    public boolean remoteService;
 
     public boolean firstClassFree;
 

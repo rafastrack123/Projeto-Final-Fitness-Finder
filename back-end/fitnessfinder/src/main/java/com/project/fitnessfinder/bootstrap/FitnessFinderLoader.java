@@ -312,8 +312,8 @@ public class FitnessFinderLoader implements CommandLineRunner {
                 .price(price)
                 .serviceDescription(serviceDescription)
                 .serviceDetail(detail)
-                .isHomeService(Math.random() < 0.5)
-                .isRemoteService(Math.random() < 0.5)
+                .homeService(Math.random() < 0.5)
+                .remoteService(Math.random() < 0.5)
                 .firstClassFree(Math.random() < 0.5)
                 .imageUrl(imageUrl)
                 .build();
