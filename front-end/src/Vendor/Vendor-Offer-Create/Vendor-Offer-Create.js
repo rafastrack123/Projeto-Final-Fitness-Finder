@@ -227,8 +227,8 @@ class VendorOfferCreate extends Component {
                 price: this.state.price,
                 imageUrl: this.state.imageUrl,
 
-                isHomeService: this.state.isHomeService,
-                isRemoteService: this.state.isFirstClassFree,
+                homeService: this.state.isHomeService,
+                remoteService: this.state.isFirstClassFree,
                 firstClassFree: this.state.isRemoteService,
 
 
