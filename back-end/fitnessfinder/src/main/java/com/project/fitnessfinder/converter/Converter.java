@@ -364,9 +364,9 @@ public class Converter {
 
 
         // Offer Data
-        vendorOfferJson.isHomeService = vendorOffer.isHomeService();
+        vendorOfferJson.homeService = vendorOffer.isHomeService();
         vendorOfferJson.firstClassFree = vendorOffer.isFirstClassFree();
-        vendorOfferJson.isRemoteService = vendorOffer.isRemoteService();
+        vendorOfferJson.remoteService = vendorOffer.isRemoteService();
 
         vendorOfferJson.price = vendorOffer.getPrice();
 
@@ -408,8 +408,8 @@ public class Converter {
         vendorOffer.setImageUrl(json.imageUrl);
 
         vendorOffer.setFirstClassFree(json.firstClassFree);
-        vendorOffer.setRemoteService(json.isRemoteService);
-        vendorOffer.setHomeService(json.isHomeService);
+        vendorOffer.setRemoteService(json.remoteService);
+        vendorOffer.setHomeService(json.homeService);
 
         // Entities
         vendorOffer.setAvailableSchedule(json.availableSchedule.stream().map(this::convert).collect(Collectors.toList()));

@@ -8,6 +8,11 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
@@ -81,7 +86,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
         addEndTimeClause(querySb, endTime);
 
         // Add group by to remove duplicates
-        querySb.append("    GROUP BY vendor_offer.id;");
+//        querySb.append("    GROUP BY vendor_offer.id;");
 
         var query = querySb.toString();
 
@@ -157,7 +162,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
     private void addIsHomeServiceClause(StringBuilder querySb, Boolean isHomeService) {
         if (isHomeService) {
-            var clause = "  AND vendor_offer.is_home_service = true \n";
+            var clause = "  AND vendor_offer.home_service = true \n";
 
             querySb.append(clause);
         }
@@ -165,7 +170,7 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
     private void addIsRemoteServiceClause(StringBuilder querySb, Boolean isRemoteService) {
         if (isRemoteService) {
-            var clause = "  AND vendor_offer.is_remote_service = true \n";
+            var clause = "  AND vendor_offer.remote_service = true \n";
 
             querySb.append(clause);
         }
@@ -218,14 +223,13 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
 
         for (Tuple tuple : tupleList) {
 
-
             var vendorOfferJson = new VendorOfferJson();
 
             vendorOfferJson.id = tuple.get("id", BigInteger.class).longValue();
 
             vendorOfferJson.firstClassFree = tuple.get("first_class_free", Boolean.class);
-            vendorOfferJson.isHomeService = tuple.get("is_home_service", Boolean.class);
-            vendorOfferJson.isRemoteService = tuple.get("is_remote_service", Boolean.class);
+            vendorOfferJson.homeService = tuple.get("home_service", Boolean.class);
+            vendorOfferJson.remoteService = tuple.get("remote_service", Boolean.class);
 
             vendorOfferJson.price = tuple.get("price", BigDecimal.class);
 
@@ -246,7 +250,15 @@ public class VendorOfferRepositoryImpl implements VendorOfferRepositoryCustom {
             vendorOfferJsonList.add(vendorOfferJson);
         }
 
-        return vendorOfferJsonList;
+        return vendorOfferJsonList
+                .stream()
+                .filter(distinctByKey(VendorOfferJson::getId))
+                .collect(Collectors.toList());
     }
 
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
+    }
 }

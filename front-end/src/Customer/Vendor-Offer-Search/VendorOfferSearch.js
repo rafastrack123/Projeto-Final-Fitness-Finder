@@ -215,6 +215,7 @@ class VendorOfferSearch extends Component {
             }
         }).then(response => {
             console.log('searchVendorOffer Success');
+            console.log(response.data.offers);
             this.setState({ vendorOffers: response.data.offers });
             this.setState({ showLoader: false });
         }).catch(err => {
@@ -568,9 +569,9 @@ class VendorOfferSearch extends Component {
                                                         <br />
                                                         <strong>Profissional:</strong> {this.state.selectedVendorOffer.vendorFirstName + ' ' + this.state.selectedVendorOffer.vendorLastName}
                                                         <br />
-                                                        <strong>Atendimento a Domicílio:</strong> {this.state.selectedVendorOffer.isHomeService ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
+                                                        <strong>Atendimento a Domicílio:</strong> {this.state.selectedVendorOffer.homeService ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
                                                         <br />
-                                                        <strong>Atendimento Remoto:</strong> {this.state.selectedVendorOffer.isRemoteService ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
+                                                        <strong>Atendimento Remoto:</strong> {this.state.selectedVendorOffer.remoteService ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
                                                         <br />
                                                         <strong>Primeiro Atendimento Grátis:</strong> {this.state.selectedVendorOffer.firstClassFree ? <span className="text-success">Sim</span> : <span className="text-danger">Não</span>}
                                                         <br />
@@ -604,7 +605,7 @@ class VendorOfferSearch extends Component {
 
                                             <Row>
                                                 <Col className="mr-2 ml-2">
-                                                    <p className="mt-2">{this.state.selectedVendorOffer.resume}</p>
+                                                    <p className="mt-2 ml-2">{this.state.selectedVendorOffer.resume}</p>
                                                 </Col>
                                             </Row>
 
