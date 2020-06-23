@@ -348,7 +348,7 @@ class VendorOfferSearch extends Component {
 
                                 <Col md={6} xs={11}>
                                     <Form.Group>
-                                        <Form.Label>Area do Serviço: </Form.Label>
+                                        <Form.Label>Área do Serviço: </Form.Label>
                                         <Form.Control as="select"
                                             onChange={this.selectServiceArea}
                                             value={this.state.serviceAreaIdSelected}>

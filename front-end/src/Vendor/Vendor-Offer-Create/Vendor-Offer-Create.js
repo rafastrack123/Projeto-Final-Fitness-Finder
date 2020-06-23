@@ -287,7 +287,7 @@ class VendorOfferCreate extends Component {
             return false;
 
         } else if (!this.state.serviceAreaIdSelected) {
-            this.setState({ invalidVendorOfferMessage: "Area do Serviço é obrigatório" })
+            this.setState({ invalidVendorOfferMessage: "Área do Serviço é obrigatório" })
             return false;
 
         } else if (!this.state.serviceGroupIdSelected) {
@@ -369,7 +369,7 @@ class VendorOfferCreate extends Component {
 
                             <Col md={6} xs={11}>
                                 <Form.Group>
-                                    <Form.Label>Area do Serviço: </Form.Label>
+                                    <Form.Label>Área do Serviço: </Form.Label>
                                     <Form.Control as="select"
                                         onChange={this.selectServiceArea}
                                         value={this.state.serviceAreaIdSelected}>
