@@ -186,14 +186,17 @@ class VendorOfferCreate extends Component {
     }
 
     dayOfWeekChangeHandle = (event) => {
+        this.setState({ showAvailableScheduledCreated: false });
         this.setState({ newDayOfWeekSchedule: event.target.value });
     }
 
     startTimeChangeHandle = (val) => {
+        this.setState({ showAvailableScheduledCreated: false });
         this.setState({ newStartTimeSchedule: val });
     }
 
     endTimeChangeHandle = (val) => {
+        this.setState({ showAvailableScheduledCreated: false });
         this.setState({ newEndTimeSchedule: val });
     }
 

@@ -97,13 +97,16 @@ class Leads extends Component {
         var vendorProposition = {
             vendorOfferId: this.state.selectedLead.vendorOfferId,
             customerId: this.state.selectedLead.customerId,
-            message: this.state.vendorPropositionMessage
+            message: this.state.vendorPropositionMessage,
+            leadId: this.state.selectedLead.id
+
         }
 
         axios.post(API_URL + '/vendor-proposition', vendorProposition)
             .then(response => {
                 this.showSuccessAlert('Oferta enviada com sucesso!');
                 this.setState({ showLoader: false });
+                this.fetchLeads();
             }).catch(response => {
                 this.handleError();
             });;

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import VendorHeader from '../Vendor-Header/VendorHeader';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Container, Form, Button, Alert, Col, Row, Card } from 'react-bootstrap';
+import { Container, Image, Button, Alert, Col, Row, Card } from 'react-bootstrap';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from '../../Utils/Loader';
@@ -95,14 +95,27 @@ class VendorOfferList extends Component {
                             <Col md={4} xs={8} className="text-center">
                                 <Card className="mb-4">
                                     <Card.Body >
-                                        <Card.Title>{offer.groupName} {offer.detailName}</Card.Title>
-                                        <Card.Subtitle className="mb-2 text-muted">{offer.areaName}</Card.Subtitle>
-                                        <Card.Text>
-                                            {offer.serviceDescription}
-                                        </Card.Text>
-
                                         <Row>
-                                            <Col className="text-center">
+
+                                            <Col xs={12} className="mb-2 text-center m-a">
+                                                <Image style={{ height: '200px', width: '100%' }}
+                                                    src={offer.imageUrl ? offer.imageUrl :
+                                                        'https://www.recreiodajuventude.com.br/userfiles/conteudos/academia-guarany1.jpg'}
+                                                    fluid />
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Card.Title>{offer.groupName} {offer.detailName}</Card.Title>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Card.Subtitle className="mb-2 text-muted">{offer.areaName}</Card.Subtitle>
+                                            </Col>
+                                            <Col xs={12}>
+                                                <Card.Text>
+                                                    {offer.serviceDescription}
+                                                </Card.Text>
+                                            </Col>
+
+                                            <Col className="text-center mt-2">
                                                 <Button className="btn btn-default"
                                                     variant="danger"
                                                     type="button"
