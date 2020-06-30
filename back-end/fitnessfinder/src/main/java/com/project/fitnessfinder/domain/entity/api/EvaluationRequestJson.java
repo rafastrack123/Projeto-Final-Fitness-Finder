@@ -16,10 +16,11 @@ public class EvaluationRequestJson {
     public Long id;
 
     public Long vendorOfferid;
-
-    public Long vendorId;
+    public String vendorOfferImage;
 
     public Long customerId;
+
+    public Long vendorId;
 
     public String vendorFirstName;
     public String vendorLastName;

@@ -18,6 +18,7 @@ public class VendorPropositionService {
     private final Converter converter;
     private final VendorOfferService vendorOfferService;
     private final CustomerService customerService;
+    private final LeadService leadService;
     private final VendorPropositionRepository vendorPropositionRepository;
 
 
@@ -44,6 +45,8 @@ public class VendorPropositionService {
         vendorProposition.setCustomer(customer);
 
         vendorProposition.setMessage(vendorPropositionJson.message);
+
+        leadService.deleteById(vendorPropositionJson.leadId);
 
         vendorPropositionRepository.save(vendorProposition);
 

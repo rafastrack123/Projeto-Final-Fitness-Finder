@@ -430,6 +430,7 @@ public class Converter {
                 .id(evaluationRequest.getId())
                 .customerId(evaluationRequest.getCustomer().getId())
                 .vendorOfferid(vendorOffer.getId())
+                .vendorOfferImage(vendorOffer.getImageUrl())
                 .vendorId(vendor.getId())
                 .vendorFirstName(vendor.getFirstName())
                 .vendorLastName(vendor.getLastName())

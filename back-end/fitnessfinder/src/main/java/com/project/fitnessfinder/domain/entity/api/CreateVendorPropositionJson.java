@@ -15,6 +15,8 @@ public class CreateVendorPropositionJson {
 
     public Long customerId;
 
+    public Long leadId;
+
     public String message;
 
 }
