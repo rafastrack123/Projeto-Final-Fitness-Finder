@@ -171,8 +171,6 @@ class EvaluationRequest extends Component {
                         {this.state.evaluationRequestArray.map(evaluationRequest => (
                             <Col xs={6} md={3} className="text-center m-a">
                                 <Card>
-                                    <Card.Img variant="top"
-                                        src="https://sportsregras.com/wp-content/uploads/2016/04/boxe-combate-1024x662.jpg" />
                                     <Card.Body>
 
                                         <Card.Title>{evaluationRequest.vendorFirstName + ' ' + evaluationRequest.vendorLastName}</Card.Title>

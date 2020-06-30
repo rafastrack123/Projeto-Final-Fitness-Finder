@@ -332,7 +332,7 @@ class VendorOfferSearch extends Component {
                                         <Form.Control type="number"
                                             value={this.state.maxDistanceInKm}
                                             onChange={this.maxDistanceChangeHandle}
-                                            placeholder="Distância Máxima KM" />
+                                            placeholder="Distância Máxima Km" />
 
                                     </Form.Group>
                                 </Col>
@@ -581,7 +581,7 @@ class VendorOfferSearch extends Component {
                                             : null}
 
                                     </Tab>
-                                    {this.state.selectedVendorOffer && this.state.selectedVendorOffer.availableSchedules.length > 1 ?
+                                    {this.state.selectedVendorOffer && this.state.selectedVendorOffer.availableSchedules.length > 0 ?
                                         <Tab eventKey="schedule" title="Horários" >
 
                                             <Row className="mt-2 ml-1 mb-2" id="vendor-offer-modal-body">
